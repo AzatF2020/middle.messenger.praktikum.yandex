@@ -1,0 +1,27 @@
+@use '../utilities/variables.scss';
+
+.button {
+    --btn-padding-x:    #{variables.$btn-padding-x};
+    --btn-padding-y:    #{variables.$btn-padding-y};
+    --btn-color-white:  #{variables.$white};
+    --btn-bg:           #{variables.$blue-500};
+    --btn-hover-bg:     #{variables.$blue-600};
+    --btn-fz:           #{variables.$text-4};
+    --btn-radius:       #{variables.$rounded-3};
+
+    padding: var(--btn-padding-y) var(--btn-padding-x);
+    background-color: var(--btn-bg);
+    color: var(--btn-color-white);
+    font-size: var(--btn-fz);
+    border-radius: var(--btn-radius);
+    border: none;
+    cursor: pointer;
+    transition: background-color .15s ease;
+    display: inline-block;
+
+    @media (hover: hover) {
+        &:hover {
+            background-color: var(--btn-hover-bg);
+        }
+    }
+}

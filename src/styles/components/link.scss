@@ -1,0 +1,18 @@
+@use "../utilities/variables.scss";
+
+.link {
+    --link-fz:      #{variables.$text-5};
+    --link-color:   #{variables.$blue-500};
+    --link-hover:   #{variables.$opacity};
+
+    font-size: var(--link-fz);
+    color: var(--link-color);
+    line-height: 1.2;
+    text-decoration: none;
+
+    @media (hover: hover) {
+        &:hover {
+            opacity: var(--link-hover);
+        }
+    }
+}
