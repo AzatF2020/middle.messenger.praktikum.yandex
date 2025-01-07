@@ -21,6 +21,7 @@
     --input-border-color:       #{variables.$gray-600};
     --input-border-focus-color: #{variables.$blue-500};
     --input-border-error-color: #{variables.$red-500};
+    --input-error-color:        #{variables.$red-500};
     --input-color:              #{variables.$black-900};
     --input-fz:                 #{variables.$text-4};
 
@@ -39,8 +40,8 @@
     }
 
     & + label {
-        --label-color:              #{variables.$gray-400};
-        --label-fz:                 #{variables.$text-4};
+        --label-color:           #{variables.$gray-400};
+        --label-fz:              #{variables.$text-4};
         
         font-size: var(--label-fz);
         color: var(--label-color);
@@ -72,6 +73,63 @@
     }
 }
 
-.input-group:has(.input-group > .error-feedback) .input-group {
-    display: none;
+.input-outlined {
+    --input-bg:                  #{variables.$gray-100};
+    --input-radius:              #{variables.$rounded-1};
+    --input-color:               #{variables.$gray-300};
+    --input-padding-outlined-x:  #{variables.$input-padding-outlined-x};
+    --input-padding-outlined-y:  #{variables.$input-padding-outlined-y};
+    
+    cursor: auto;
+    padding: var(--input-padding-outlined-y) var(--input-padding-outlined-x);
+    background-color: var(--input-bg);
+    border-radius: var(--input-radius);
+    border: none;
+
+    &:focus {
+        border-color: inherit;
+    }
+
+    &::placeholder {
+        color: var(--input-color);
+        pointer-events: none;
+    }
+}
+
+.input-group {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.input-group > .input {
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+}
+
+.input-group-text {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding-inline: .75rem;
+    border-radius: .5rem 0 0 .5rem;
+    background-color: variables.$gray-100;
+}
+
+.input-group:has(.input-group-text) .input {
+    border-radius: 0 var(--input-radius) var(--input-radius) 0;
+    padding-left: 0;
+}
+
+// # Errors
+.input-group:has(.error-feedback) .input[type=password] {
+    border-color: var(--input-border-error-color);
+    color: var(--input-error-color)
+}
+
+.input-group:has(.error-feedback) .input:not([type=password]) {
+    border-color: var(--input-border-error-color);
 }
