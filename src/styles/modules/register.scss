@@ -1,4 +1,4 @@
-@use '../utilities/variables.scss';
+@use '../utilities';
 
 .register-form {
     width: 34rem;
@@ -6,7 +6,7 @@
     padding: 5rem 3rem 3rem;
     display: flex;
     flex-direction: column;
-    border-radius: variables.$rounded-4;
+    border-radius: utilities.$rounded-4;
     box-shadow: 0px 0px 8px 1px rgba(34, 60, 80, 0.1);
 
     &__title {

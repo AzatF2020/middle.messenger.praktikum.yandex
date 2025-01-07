@@ -1,9 +1,9 @@
-@use "../utilities/variables.scss";
+@use "../utilities";
 
 .link {
-    --link-fz:      #{variables.$text-5};
-    --link-color:   #{variables.$blue-500};
-    --link-hover:   #{variables.$opacity};
+    --link-fz:      #{utilities.$text-5};
+    --link-color:   #{utilities.$blue-500};
+    --link-hover:   #{utilities.$opacity};
 
     font-size: var(--link-fz);
     color: var(--link-color);

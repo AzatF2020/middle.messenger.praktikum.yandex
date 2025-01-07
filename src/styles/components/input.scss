@@ -1,4 +1,4 @@
-@use '../utilities/variables.scss';
+@use '../utilities';
 
 .input-floating {
     position: relative;
@@ -10,20 +10,20 @@
 .error-feedback {
     margin-top: .7rem;
     font-weight: 400;
-    font-size: variables.$text-6;
-    color: variables.$red-500;
+    font-size: utilities.$text-6;
+    color: utilities.$red-500;
 }
 
 .input {
-    --input-padding-x:          #{variables.$input-padding-x};
-    --input-padding-y:          #{variables.$input-padding-y};
-    --input-border-width:       #{variables.$border-width};
-    --input-border-color:       #{variables.$gray-600};
-    --input-border-focus-color: #{variables.$blue-500};
-    --input-border-error-color: #{variables.$red-500};
-    --input-error-color:        #{variables.$red-500};
-    --input-color:              #{variables.$black-900};
-    --input-fz:                 #{variables.$text-4};
+    --input-padding-x:          #{utilities.$input-padding-x};
+    --input-padding-y:          #{utilities.$input-padding-y};
+    --input-border-width:       #{utilities.$border-width};
+    --input-border-color:       #{utilities.$gray-600};
+    --input-border-focus-color: #{utilities.$blue-500};
+    --input-border-error-color: #{utilities.$red-500};
+    --input-error-color:        #{utilities.$red-500};
+    --input-color:              #{utilities.$black-900};
+    --input-fz:                 #{utilities.$text-4};
 
     border: none;
     outline: none;
@@ -40,9 +40,9 @@
     }
 
     & + label {
-        --label-color:           #{variables.$gray-400};
-        --label-fz:              #{variables.$text-4};
-        
+        --label-color:           #{utilities.$gray-400};
+        --label-fz:              #{utilities.$text-4};
+
         font-size: var(--label-fz);
         color: var(--label-color);
         font-weight: 500;
@@ -56,7 +56,7 @@
         pointer-events: none;
         transform: translateY(-50%) scale(1) translateX(0);
         transform-origin: 0 0;
-    
+
         transition: transform .15s ease, font-size .15s ease;
     }
 
@@ -74,12 +74,12 @@
 }
 
 .input-outlined {
-    --input-bg:                  #{variables.$gray-100};
-    --input-radius:              #{variables.$rounded-1};
-    --input-color:               #{variables.$gray-300};
-    --input-padding-outlined-x:  #{variables.$input-padding-outlined-x};
-    --input-padding-outlined-y:  #{variables.$input-padding-outlined-y};
-    
+    --input-bg:                  #{utilities.$gray-100};
+    --input-radius:              #{utilities.$rounded-1};
+    --input-color:               #{utilities.$gray-300};
+    --input-padding-outlined-x:  #{utilities.$input-padding-outlined-x};
+    --input-padding-outlined-y:  #{utilities.$input-padding-outlined-y};
+
     cursor: auto;
     padding: var(--input-padding-outlined-y) var(--input-padding-outlined-x);
     background-color: var(--input-bg);
@@ -116,7 +116,7 @@
     align-items: center;
     padding-inline: .75rem;
     border-radius: .5rem 0 0 .5rem;
-    background-color: variables.$gray-100;
+    background-color: utilities.$gray-100;
 }
 
 .input-group:has(.input-group-text) .input {
@@ -125,11 +125,7 @@
 }
 
 // # Errors
-.input-group:has(.error-feedback) .input[type=password] {
-    border-color: var(--input-border-error-color);
-    color: var(--input-error-color)
-}
 
-.input-group:has(.error-feedback) .input:not([type=password]) {
+.input-group:has(.error-feedback) .input {
     border-color: var(--input-border-error-color);
 }

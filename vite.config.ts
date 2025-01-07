@@ -4,11 +4,6 @@ import path from 'node:path';
 import fs from 'node:fs';
 import pageData from './pages-data';
 
-
-const inputHTMLFiles = fs.readdirSync(__dirname)
-    .filter((item) => item.includes('.html'))
-    .map((file) => path.resolve(__dirname, `/${file}`))
-
 export default defineConfig({
     plugins: [
         handlebars({
@@ -27,14 +22,28 @@ export default defineConfig({
             output: {
                 dir: path.resolve(__dirname, 'dist'),
             },
-            input: inputHTMLFiles
+            input: [
+                'chat-popups.html',
+                'chat-search.html',
+                'chat.html',
+                'chats.html',
+                'index.html',
+                'login.html',
+                'modal.html',
+                'not-found.html',
+                'profile-change-data.html',
+                'profile-new-password.html',
+                'profile.html',
+                'register.html',
+                'server-error.html'
+            ]
         }
     },
     css: {
         preprocessorOptions: {
             scss: {
                 api: 'modern-compiler'
-            }   
+            }
         }
     }
 })
