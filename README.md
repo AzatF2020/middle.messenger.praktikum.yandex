@@ -10,8 +10,8 @@
 
 ## Запуск проекта
 
-- В режиме разработки, __3000__ порт ``` npm run dev ```
-- Сборка и запуск проекта после сборки, __4173__ порт ``` npm run start ``` 
+- В режиме разработки, __3000__ порт ``` npm run start ```
+- Сборка и запуск проекта после сборки, __4173__ порт ``` npm run build && npm run preview ``` 
 
 ## Ссылки на страницы (Верстка) 
 [messanger-middle-praktikum.netlify.app](https://messanger-middle-praktikum.netlify.app/)
