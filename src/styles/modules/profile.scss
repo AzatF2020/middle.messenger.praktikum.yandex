@@ -7,7 +7,7 @@
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
 
-    &__aside { 
+    &__aside {
         height: inherit;
         width: 6.4rem;
         background-color: utilities.$gray-50;
@@ -66,7 +66,7 @@
         justify-content: center;
         transition: background-color .1s ease;
         overflow: hidden;
-        
+
         @media (hover: hover) {
             &:hover {
                 background-color: rgba(0, 0, 0, .5);
@@ -80,7 +80,7 @@
 
     &__form-header-avatar-wrapper:has(.profile__form-header-avatar-input[readonly]) {
         pointer-events: none;
-    }   
+    }
 
     &__form-header-avatar-plug {
         position: absolute;
@@ -89,6 +89,9 @@
         bottom: 0;
         right: 0;
         z-index: -1;
+        width: 100%;
+        max-width: 130px;
+        height: auto;
     }
 
     &__form-header-avatar-label {
@@ -151,7 +154,7 @@
         font-weight: 500;
     }
 
-    &__form-item-input { 
+    &__form-item-input {
         border: none;
         outline: none;
         color: utilities.$gray-400;

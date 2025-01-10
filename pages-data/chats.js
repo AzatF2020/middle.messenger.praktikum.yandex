@@ -1,5 +1,5 @@
 const chats = {
-    '/chats.html': {
+    '/src/pages/chats.html': {
         data: [
             {
                 name: 'Андрей',

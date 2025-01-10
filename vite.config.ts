@@ -23,11 +23,11 @@ export default defineConfig({
                 dir: path.resolve(__dirname, 'dist'),
             },
             input: [
+                './index.html',
                 './src/pages/chat-popups.html',
                 './src/pages/chat-search.html',
                 './src/pages/chat.html',
                 './src/pages/chats.html',
-                './src/pages/index.html',
                 './src/pages/login.html',
                 './src/pages/modal.html',
                 './src/pages/not-found.html',

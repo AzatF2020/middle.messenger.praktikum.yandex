@@ -1,5 +1,5 @@
 const chatPopups = {
-    '/chat-popups.html': {
+    '/src/pages/chat-popups.html': {
         data: [
             {
                 name: 'Андрей',
