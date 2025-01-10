@@ -1,0 +1,18 @@
+@use "../utilities";
+
+.link {
+    --link-fz:      #{utilities.$text-5};
+    --link-color:   #{utilities.$blue-500};
+    --link-hover:   #{utilities.$opacity};
+
+    font-size: var(--link-fz);
+    color: var(--link-color);
+    line-height: 1.2;
+    text-decoration: none;
+
+    @media (hover: hover) {
+        &:hover {
+            opacity: var(--link-hover);
+        }
+    }
+}

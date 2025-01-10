@@ -1,0 +1,17 @@
+.user-modal {
+    width: 34rem;
+
+    &__title {
+        text-align: center;
+        margin-bottom: 6rem;
+    }
+
+    &__group {
+        padding: 0;
+        margin-bottom: 3.3rem;
+    }
+
+    &__button {
+        width: 100%;
+    }
+}

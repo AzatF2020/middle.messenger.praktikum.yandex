@@ -1,0 +1,130 @@
+@use '../utilities';
+
+.input-floating {
+    position: relative;
+    height: max-content;
+    width: 100%;
+}
+
+.error-feedback {
+    margin-top: .7rem;
+    font-weight: 400;
+    font-size: utilities.$text-6;
+    color: utilities.$red-500;
+}
+
+.input {
+    --input-padding-x:          #{utilities.$input-padding-x};
+    --input-padding-y:          #{utilities.$input-padding-y};
+    --input-border-width:       #{utilities.$border-width};
+    --input-border-color:       #{utilities.$gray-600};
+    --input-border-focus-color: #{utilities.$blue-500};
+    --input-border-error-color: #{utilities.$red-500};
+    --input-error-color:        #{utilities.$red-500};
+    --input-color:              #{utilities.$black-900};
+    --input-fz:                 #{utilities.$text-4};
+
+    border: none;
+    outline: none;
+    font-weight: 500;
+    display: inline-block;
+    font-size: var(--input-fz);
+    padding: var(--input-padding-y) var(--input-padding-x);
+    border-bottom: var(--input-border-width) solid var(--input-border-color);
+    line-height: 1.2;
+    width: inherit;
+
+    &::placeholder {
+        color: transparent;
+    }
+
+    & + label {
+        --label-color:           #{utilities.$gray-400};
+        --label-fz:              #{utilities.$text-4};
+
+        font-size: var(--label-fz);
+        color: var(--label-color);
+        font-weight: 500;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        overflow: hidden;
+        text-align: start;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        pointer-events: none;
+        transform: translateY(-50%) scale(1) translateX(0);
+        transform-origin: 0 0;
+
+        transition: transform .15s ease, font-size .15s ease;
+    }
+
+    &:focus, &:not(:placeholder-shown) {
+        border-color: var(--input-border-focus-color);
+    }
+
+    &:focus + label {
+        transform: translateY(-175%) scale(.85);
+    }
+
+    &:not(:placeholder-shown) + label {
+        transform: translateY(-175%) scale(.85);
+    }
+}
+
+.input-outlined {
+    --input-bg:                  #{utilities.$gray-100};
+    --input-radius:              #{utilities.$rounded-1};
+    --input-color:               #{utilities.$gray-300};
+    --input-padding-outlined-x:  #{utilities.$input-padding-outlined-x};
+    --input-padding-outlined-y:  #{utilities.$input-padding-outlined-y};
+
+    cursor: auto;
+    padding: var(--input-padding-outlined-y) var(--input-padding-outlined-x);
+    background-color: var(--input-bg);
+    border-radius: var(--input-radius);
+    border: none;
+
+    &:focus {
+        border-color: inherit;
+    }
+
+    &::placeholder {
+        color: var(--input-color);
+        pointer-events: none;
+    }
+}
+
+.input-group {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.input-group > .input {
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+}
+
+.input-group-text {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding-inline: .75rem;
+    border-radius: .5rem 0 0 .5rem;
+    background-color: utilities.$gray-100;
+}
+
+.input-group:has(.input-group-text) .input {
+    border-radius: 0 var(--input-radius) var(--input-radius) 0;
+    padding-left: 0;
+}
+
+// # Errors
+
+.input-group:has(.error-feedback) .input {
+    border-color: var(--input-border-error-color);
+}
