@@ -1,0 +1,39 @@
+class EventBus {
+    private _listeners: Record<string, Function[]>
+
+    constructor() {
+        this._listeners = {}
+    }
+
+    private _isEventExist(event: string) {
+        if (!this._listeners[event]) {
+            throw new Error(`Событие ${event} не существует`);
+        }
+    }
+
+    public on(event: string, callback: Function) {
+        if (!this._listeners[event]) {
+            this._listeners[event] = []
+        }
+
+        this._listeners[event].push(callback)
+    }
+
+    public off(event: string, callback: Function) {
+        this._isEventExist(event)
+
+        this._listeners[event] = this._listeners[event].filter((listener) =>
+            listener !== callback
+        );
+    }
+
+    public emit(event: string, ...args: any[]) {
+        this._isEventExist(event)
+
+        this._listeners[event].forEach((listener) => {
+            listener(...args)
+        })
+    }
+}
+
+export default EventBus
