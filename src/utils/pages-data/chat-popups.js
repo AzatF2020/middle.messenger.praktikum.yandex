@@ -1,6 +1,4 @@
-const chatPopups = {
-    '/src/pages/chat-popups.html': {
-        data: [
+const chatPopups = [
             {
                 name: 'Андрей',
                 time: '23:49',
@@ -98,7 +96,5 @@ const chatPopups = {
                 is_active: false
             },
         ]
-    }
-}
 
 export default chatPopups;

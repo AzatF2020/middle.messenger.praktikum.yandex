@@ -7,7 +7,7 @@ class EventBus {
 
     private _isEventExist(event: string) {
         if (!this._listeners[event]) {
-            throw new Error(`Событие ${event} не существует`);
+            throw new Error(`События ${event} не существует`);
         }
     }
 

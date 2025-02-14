@@ -1,21 +1,29 @@
 import { Component } from "../../core";
+import './style.scss';
+
+interface ButtonProps {
+    onClick: () => any;
+    label: string;
+    disabled: boolean;
+    class: string;
+    type: 'button' | 'submit' | 'reset';
+}
 
 class Button extends Component {
-    constructor({ onClick, disabled }: any) {
-        super({ onClick, disabled });
+    constructor(props: ButtonProps) {
+        super(props);
 
-        this.state = {
-            count: 0
-        }
-    }
-
-    public componentDidMount(): void {
+        this.listeners = { click: this.props.onClick }
     }
 
     render() {
         return `
-            <button type="button">
-                ${this.state.count}
+            <button
+                class="button ${this.props.class ?? ''}"
+                type="${this.props.type ?? 'button'}"
+                ${this.props.disabled ? 'disabled' : ''}
+            >
+                ${this.props.label}
             </button>
         `
     }

@@ -1,6 +1,4 @@
-const chat = {
-    '/src/pages/chat.html': {
-        data: [
+const chat =  [
             {
                 name: 'Андрей',
                 time: '23:49',
@@ -98,7 +96,5 @@ const chat = {
                 is_active: false
             },
         ]
-    }
-}
 
 export default chat;

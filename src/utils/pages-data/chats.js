@@ -1,6 +1,4 @@
-const chats = {
-    '/src/pages/chats.html': {
-        data: [
+const chats = [
             {
                 name: 'Андрей',
                 time: '23:49',
@@ -86,7 +84,5 @@ const chats = {
                 myself_sender: false,
             },
         ]
-    }
-}
 
 export default chats;

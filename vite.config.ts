@@ -1,17 +1,19 @@
 import { defineConfig } from 'vite'
-import handlebars from 'vite-plugin-handlebars';
 import path from 'node:path';
-import pageData from './pages-data';
 
 export default defineConfig({
-    plugins: [
-        handlebars({
-            context(pagePath: string | number) {
-                return pageData[pagePath];
-            },
-            partialDirectory: path.resolve(__dirname, `src/modules`),
-        })
-    ],
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, 'src'),
+            '@pages': path.resolve(__dirname, 'src/pages'),
+            '@modules': path.resolve(__dirname, 'src/modules'),
+            '@components': path.resolve(__dirname, 'src/components'),
+            '@ui': path.resolve(__dirname, 'src/ui'),
+            '@styles': path.resolve(__dirname, 'src/styles'),
+            '@utils': path.resolve(__dirname, 'src/utils'),
+            '@core': path.resolve(__dirname, 'src/core'),
+        }
+    },
     server: {
         port: 3000,
         host: true,

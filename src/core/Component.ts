@@ -1,7 +1,7 @@
 import Handlebars from 'handlebars';
 import EventBus from "./EventBus";
-import uuid from '../utils/helpers/uuid';
-import tick from '../utils/helpers/tick';
+import uuid from '@utils/helpers/uuid';
+import tick from '@utils/helpers/tick';
 
 class Component<P = any> {
     static EVENTS = {
@@ -17,22 +17,21 @@ class Component<P = any> {
     private _weakSet: WeakSet<any>
     _id: string;
 
-    listeners: {}
-
-    protected readonly props: object = {}
+    protected readonly props: P
+    protected listeners: {}
     protected state: any = {}
     protected children: Record<string, Component>
 
     constructor(props?: P) {
         const eventBus = new EventBus()
-
         this._weakSet = new WeakSet()
+
         this._id = uuid()
 
         this.children = {};
         this.listeners = {};
 
-        this.props = this._makePropsProxy({ ...props, __id: this._id })
+        this.props = this._makePropsProxy({ ...props, __id: this._id }) as P
         this.state = this._makePropsProxy(this.state)
 
         this.eventBus = () => eventBus;
@@ -51,7 +50,7 @@ class Component<P = any> {
         return document.createElement('div')
     }
 
-    private _makePropsProxy(props: any = {}) {
+    private _makePropsProxy(props: unknown) {
         const proxyObject = new Proxy(props as unknown as object, {
             get(target: Record<string, unknown>, prop: string) {
                 const value = target[prop]
@@ -73,6 +72,8 @@ class Component<P = any> {
 
     private _addEvents() {
         Object.entries(this.listeners).forEach(([event, callback]) => {
+            if (!callback) return;
+
             this._element!.addEventListener(event, (event: Event) => {
                 event.stopImmediatePropagation();
                 (callback as Function)(event)
@@ -82,7 +83,12 @@ class Component<P = any> {
 
     private _removeEvents() {
         Object.entries(this.listeners).forEach(([event, callback]) => {
-            this._element!.removeEventListener(event, (event: Event) => (callback as Function)(event))
+            if (!callback) return;
+
+            this._element!.removeEventListener(event, (event: Event) => {
+                event.stopImmediatePropagation();
+                (callback as Function)(event)
+            })
         })
     }
 
@@ -101,9 +107,17 @@ class Component<P = any> {
         Object.entries(this.children).forEach(([key, value]) => {
             const stub = fragment.content.querySelector(`[data-id="${key}"]`)
 
-            if (stub) {
-                stub!.replaceWith(value.getElement!)
+            if (!stub) return;
+
+            const stubInnerHTML = stub.innerHTML.trim()
+            const element = value.getElement!
+
+            // # Если внутри element есть контент, то вставляем с stub в сам element, как на примере <slot />
+            if (stubInnerHTML.length > 0) {
+                element.innerHTML = stubInnerHTML
             }
+
+            stub!.replaceWith(element)
         })
 
         return fragment.content;

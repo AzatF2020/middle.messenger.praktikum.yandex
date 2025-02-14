@@ -1,16 +1,11 @@
-import { Component } from "../../core";
+import { Component } from "@core/index";
 
 class LoginPage extends Component {
-
-
-    public componentDidMount(): void {
-    }
-
     public render() {
         return `
-            <div>
-                {{{ Button }}}
-            </div>
+            <section class="container--centered">
+                {{{ LoginForm }}}
+            </section>
         `
     }
 }
