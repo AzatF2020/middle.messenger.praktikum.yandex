@@ -2,13 +2,14 @@ import { Component } from "../../core";
 import './style.scss';
 
 interface InputProps {
-    onChange: () => any;
+    onChange?: () => void;
+    onInput?: () => void;
     value: string;
-    placeholder: string;
-    disabled: boolean;
-    class: string;
-    id: string;
-    type: string;
+    placeholder?: string;
+    disabled?: boolean;
+    class?: string;
+    id?: string;
+    type?: string;
 }
 
 class Input extends Component {
@@ -22,12 +23,12 @@ class Input extends Component {
         return `
             <input
                 type="${this.props.type ?? 'text'}"
-                ${this.props.id ? `id="${this.props.id}"` : ''}
-                ${this.props.name ? `name="${this.props.name}"` : ''}
-                ${this.props.placeholder ? `placeholder="${this.props.placeholder}"` : ''}
-                ${this.props.disabled ? 'disabled' : ''}
-                value="${this.props.value}"
                 class="input ${this.props.class ?? ''}"
+                ${this.props.disabled ? 'disabled' : ''}
+                id="{{ id }}"
+                name="{{ name }}"
+                placeholder="{{ placeholder }}"
+                value="{{ value }}"
             />
         `
     }

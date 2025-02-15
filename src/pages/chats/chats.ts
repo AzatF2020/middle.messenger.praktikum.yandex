@@ -9,6 +9,7 @@ class Chats extends Component {
                 <div class="chats__container">
                     {{{ ChatUsers }}}
                     {{{ ChatMessages }}}
+                    {{{ ModalAddUser }}}
                 </div>
             </section>
         `

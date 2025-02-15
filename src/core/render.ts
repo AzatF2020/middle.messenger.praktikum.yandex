@@ -15,6 +15,8 @@ const render = (block: Component) => {
 
     block.eventBus().emit(Component.EVENTS.FLOW_CDM);
 
+    block.eventBus().emit(Component.EVENTS.FLOW_CWU);
+
     return root;
 }
 

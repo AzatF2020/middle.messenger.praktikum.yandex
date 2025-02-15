@@ -1,0 +1,44 @@
+@use '@styles/utilities';
+
+.popup-attachments {
+    &__button-attach {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        width: fit-content;
+        height: auto;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @media (hover: hover) {
+            &:hover path {
+                fill: utilities.$blue-500;
+            }
+
+            &:hover {
+                background-color: transparent;
+            }
+        }
+    }
+
+    &__button-attach--active {
+        path {
+            fill: utilities.$blue-500;
+        }
+    }
+
+    &__attach-popup {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        bottom: 5rem;
+        width: 16rem;
+        transform: translateY(1rem);
+    }
+
+    .popup--active.chat__attach-popup {
+        transform: translateY(0);
+    }
+}

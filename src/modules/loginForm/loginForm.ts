@@ -2,15 +2,16 @@ import { Component } from "@core/index";
 import './style.scss';
 
 class LoginForm extends Component {
-    public state = {
-        login: '',
-        password: ''
-    }
+    constructor() {
+        super();
 
-    public listeners = {
-        handleInputChange: this.handleInputChange.bind(this),
-        onSubmit: this.onSubmit.bind(this)
-    };
+        this.state = { login: '', password: '' };
+
+        this.listeners = {
+            handleChangeInput: this.handleInputChange.bind(this),
+            onSubmit: this.onSubmit.bind(this)
+        }
+    }
 
     public handleInputChange(event: Event) {
         const { name, value } = event.target as HTMLInputElement
@@ -20,6 +21,7 @@ class LoginForm extends Component {
 
     onSubmit(event: Event) {
         event.preventDefault()
+        console.log(event);
     }
 
     public render() {
@@ -39,7 +41,7 @@ class LoginForm extends Component {
                 </fieldset>
 
                 <div class="login-form__bottom">
-                    {{{ Button onClick=onSubmit class="login-form__bottom-button" type="submit" label="Авторизоваться" }}}
+                    {{{ Button onClick=onSubmit class="button login-form__bottom-button" type="submit" label="Авторизоваться" }}}
                     <a href="/#" class="link">Нет аккаунта?</a>
                 </div>
             </form>

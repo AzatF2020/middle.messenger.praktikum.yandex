@@ -6,17 +6,6 @@ const walkDomParentContainer = (container: any[] | NodeListOf<ChildNode>, option
     for (let i = 0; i <= container?.length!; i++) {
         if (container[i] && container[i].nodeType === Node.ELEMENT_NODE) {
             if (container[i].hasAttribute('data-id')) {
-                // if (container[i].childNodes.length >= 1) {
-                //     const result = walkDomParentContainer(container[i].childNodes, options, component)
-
-                //     if (result) {
-                //         return result
-                //     }
-                // }
-
-                /* # Если дочерний компонент уже создан, то удаляем его
-                при ререндере родителя, сохраняя состояние самого дочернего компнента и заменяя его */
-
                 const ATTR_DATA_ID = container[i].getAttribute('data-id')
 
                 // # Заменяем дочерний компонент на новый
@@ -24,13 +13,14 @@ const walkDomParentContainer = (container: any[] | NodeListOf<ChildNode>, option
 
                 // # Тригерим события
                 component.eventBus().emit(Component.EVENTS.INIT)
+                component.eventBus().emit(Component.EVENTS.FLOW_CDM)
+                component.eventBus().emit(Component.EVENTS.FLOW_CWU)
 
                 // # Удаляем дочерний компонент
                 container[i].remove()
 
                 return `
-                    <div data-id="${ATTR_DATA_ID}">
-                    </div>
+                    <div data-id="${ATTR_DATA_ID}"></div>
                 `
             } else if (container[i].childNodes.length >= 1) {
                 const result = walkDomParentContainer(container[i].childNodes, options, component)
@@ -49,6 +39,10 @@ const registerComponent = (componentName: string, Component: Component) => {
         function (this: any, options: HelperOptions) {
             if (!options.data.root?.children) {
                 options.data.root.children = {}
+            }
+
+            if (!options.data.root?.refs) {
+                options.data.root.refs = {}
             }
 
             (Object.keys(options.hash) as any).forEach((key) => {
@@ -70,13 +64,10 @@ const registerComponent = (componentName: string, Component: Component) => {
 
             component.eventBus().emit(Component.EVENTS.INIT)
             component.eventBus().emit(Component.EVENTS.FLOW_CDM)
-
-            const content = options.fn ? options.fn(this) : '';
+            component.eventBus().emit(Component.EVENTS.FLOW_CWU)
 
             return `
-                <div data-id="${component._id}">
-                    ${content}
-                </div>
+                <div data-id="${component._id}"></div>
             `
         }
     )

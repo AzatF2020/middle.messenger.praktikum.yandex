@@ -8,6 +8,7 @@ class Component<P = any> {
         INIT: 'INIT',
         FLOW_CDM: 'flow:component_did_mount',
         FLOW_CDU: 'flow:component_did_update',
+        FLOW_CWU: 'flow:component_will_unmount',
         FLOW_RENDER: 'flow:render'
     }
 
@@ -21,6 +22,7 @@ class Component<P = any> {
     protected listeners: {}
     protected state: any = {}
     protected children: Record<string, Component>
+    protected refs: Record<string, HTMLElement>
 
     constructor(props?: P) {
         const eventBus = new EventBus()
@@ -43,6 +45,7 @@ class Component<P = any> {
         eventBus.on(Component.EVENTS.INIT, this._init.bind(this))
         eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
         eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this))
+        eventBus.on(Component.EVENTS.FLOW_CWU, this._componentWillUnmount.bind(this))
         eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this))
     }
 
@@ -57,8 +60,9 @@ class Component<P = any> {
                 return typeof value === 'function' ? value.bind(target) : value;
             },
             set: (target: Record<string, unknown>, prop: string, value: unknown) => {
+                const oldValue = structuredClone(target);
                 target[prop] = value
-                this.eventBus().emit(Component.EVENTS.FLOW_CDU, { ...target }, target)
+                this.eventBus().emit(Component.EVENTS.FLOW_CDU, oldValue, target)
                 return true;
             }
         })
@@ -99,6 +103,7 @@ class Component<P = any> {
             ...this.props,
             ...this.state,
             ...this.listeners,
+            refs: this.refs,
             children: this.children
         })
 
@@ -129,8 +134,8 @@ class Component<P = any> {
         this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
     }
 
-    private _componentDidUpdate() {
-        this.componentDidUpdate()
+    private _componentDidUpdate(oldProps, newProps) {
+        this.componentDidUpdate(oldProps, newProps)
         this._render()
     }
 
@@ -141,6 +146,12 @@ class Component<P = any> {
     }
 
     public componentDidMount() {}
+
+    private _componentWillUnmount() {
+        tick(() => this.componentWillUnmount())
+    }
+
+    public componentWillUnmount() {}
 
     public setState = (nextState: P) => {
         if (!nextState) return;

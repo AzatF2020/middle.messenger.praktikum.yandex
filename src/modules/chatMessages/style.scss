@@ -47,40 +47,6 @@
         text-decoration: none;
     }
 
-    &__user-button-more {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        width: 2.5rem;
-        height: 2.5rem;
-        border-radius: utilities.$rounded-6;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color .15s ease;
-
-        @media (hover: hover) {
-            &:hover {
-                background-color: utilities.$gray-50;
-            }
-
-            &:hover circle {
-                fill: utilities.$blue-500;
-            }
-        }
-    }
-
-    &__header-more-popup {
-        width: 21rem;
-        left: -18.25rem;
-        top: 5rem;
-        transform: translateY(-1rem);
-    }
-
-    .popup--active.chat__header-more-popup {
-        transform: translateY(0);
-    }
-
     // # Main
     &__main {
         padding-block: 3rem;
@@ -194,31 +160,12 @@
     }
 
     // # Footer
-
     &__footer {
         display: flex;
         align-items: center;
         column-gap: 1rem;
         padding-top: 1rem;
         border-top: utilities.$gray-100 1px solid;
-    }
-
-    &__footer-button-attach {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        width: fit-content;
-        height: auto;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        @media (hover: hover) {
-            &:hover path {
-                fill: utilities.$blue-500;
-            }
-        }
     }
 
     &__footer-search {
@@ -229,6 +176,7 @@
     &__footer-button-submit {
         width: 3.2rem;
         height: 3.2rem;
+        padding: 0;
         border-radius: utilities.$rounded-6;
         display: flex;
         align-items: center;
@@ -243,18 +191,5 @@
                 background-color: utilities.$blue-600;
             }
         }
-    }
-
-    &__footer-attach-popup {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        bottom: 5rem;
-        width: 16rem;
-        transform: translateY(1rem);
-    }
-
-    .popup--active.chat__footer-attach-popup {
-        transform: translateY(0);
     }
 }

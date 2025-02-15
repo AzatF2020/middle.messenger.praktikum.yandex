@@ -1,11 +1,13 @@
 import { Button } from "./button";
 import { Input } from "./input";
-import { Popup } from "./popup";
+import { PopupAttachments } from "./popupAttachments";
+import { PopupOptions } from "./popupOptions";
 
 const components = {
     Button,
     Input,
-    Popup,
+    PopupAttachments,
+    PopupOptions,
 }
 
 export default components;

@@ -3,17 +3,18 @@ import chats from "@utils/pages-data/chats";
 import './style.scss';
 
 class ChatUsers extends Component {
-    state = {
-        data: chats,
-        message: '',
+    constructor() {
+        super();
+
+        this.state = { data: chats, message: '' }
+
+        this.listeners = {
+            handleInputChange: this.handleInputChange.bind(this)
+        }
     }
 
-    listeners = {
-        handleInputChange: this.handleInputChange.bind(this)
-    };
-
     searchUsers(value: string) {
-        const usersBySearch = chats.filter(({ name }: { name: string }) => name.trim() === value)
+        const usersBySearch = chats.filter(({ name }: { name: string }) => name.trim() === value.trim())
         return !value.length ? chats : usersBySearch
     }
 
@@ -22,7 +23,7 @@ class ChatUsers extends Component {
 
         this.setState({
             data: this.searchUsers(value),
-            [name]: value
+            [name]: value.trim()
         })
     }
 

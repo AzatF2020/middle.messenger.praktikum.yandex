@@ -1,0 +1,38 @@
+@use '@styles/utilities';
+
+.popup-options {
+    &__button-more {
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: utilities.$rounded-6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color .15s ease;
+
+        @media (hover: hover) {
+            &:hover {
+                background-color: utilities.$gray-50;
+            }
+
+            &:hover circle {
+                fill: utilities.$blue-500;
+            }
+        }
+    }
+
+    &__list {
+        width: 21rem;
+        left: -18.25rem;
+        top: 5rem;
+        transform: translateY(-1rem);
+    }
+
+    .popup--active.chat__list {
+        transform: translateY(0);
+    }
+}
