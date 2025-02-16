@@ -10,6 +10,7 @@ interface InputProps {
     class?: string;
     id?: string;
     type?: string;
+    readonly?: boolean
 }
 
 class Input extends Component {
@@ -25,6 +26,7 @@ class Input extends Component {
                 type="${this.props.type ?? 'text'}"
                 class="input ${this.props.class ?? ''}"
                 ${this.props.disabled ? 'disabled' : ''}
+                ${this.props.readonly ? 'readonly' : ''}
                 id="{{ id }}"
                 name="{{ name }}"
                 placeholder="{{ placeholder }}"

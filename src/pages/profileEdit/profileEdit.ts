@@ -1,13 +1,13 @@
 import Component from "@core/Component";
 
-class Profile extends Component {
+class ProfileEdit extends Component {
     render() {
         return `
             <main>
-                {{{ Profile }}}
+                {{{ ProfileEdit }}}
             </main>
         `
     }
 }
 
-export default Profile;
+export default ProfileEdit;
