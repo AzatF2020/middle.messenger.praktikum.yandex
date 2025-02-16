@@ -13,8 +13,8 @@ const walkDomParentContainer = (container: any[] | NodeListOf<ChildNode>, option
 
                 // # Тригерим события
                 component.eventBus().emit(Component.EVENTS.INIT)
-                component.eventBus().emit(Component.EVENTS.FLOW_CDM)
                 component.eventBus().emit(Component.EVENTS.FLOW_CWU)
+                component.eventBus().emit(Component.EVENTS.FLOW_CDM)
 
                 // # Удаляем дочерний компонент
                 container[i].remove()
@@ -63,8 +63,8 @@ const registerComponent = (componentName: string, Component: Component) => {
             options.data.root.children[component._id] = component;
 
             component.eventBus().emit(Component.EVENTS.INIT)
-            component.eventBus().emit(Component.EVENTS.FLOW_CDM)
             component.eventBus().emit(Component.EVENTS.FLOW_CWU)
+            component.eventBus().emit(Component.EVENTS.FLOW_CDM)
 
             return `
                 <div data-id="${component._id}"></div>

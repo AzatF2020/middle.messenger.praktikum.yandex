@@ -1,5 +1,7 @@
-.user-modal {
-    width: 34rem;
+.user-add-modal {
+    &__form {
+        width: 34rem;
+    }
 
     &__title {
         text-align: center;

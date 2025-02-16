@@ -5,12 +5,37 @@ class ChatMessages extends Component {
     constructor(props: any) {
         super(props);
 
-        this.state = { message: '', disabledSendButton: true }
+        this.state = {
+            message: '',
+            disabledSendButton: true,
+            modalAddUserOpened: false,
+            modalDeleteUserOpened: false
+        }
 
         this.listeners = {
+            openAddUserModal: this.openAddUserModal.bind(this),
+            closeAddUserModal: this.closeAddUserModal.bind(this),
+            openDeleteUserModal: this.openDeleteUserModal.bind(this),
+            closeDeleteUserModal: this.closeDeleteUserModal.bind(this),
             handleInputChange: this.handleInputChange.bind(this),
             onSubmit: this.onSubmit.bind(this)
         }
+    }
+
+    openAddUserModal() {
+        this.setState({ ...this.state, modalAddUserOpened: true })
+    }
+
+    closeAddUserModal() {
+        this.setState({ ...this.state, modalAddUserOpened: false})
+    }
+
+    openDeleteUserModal() {
+        this.setState({ ...this.state, modalDeleteUserOpened: true })
+    }
+
+    closeDeleteUserModal() {
+        this.setState({ ...this.state, modalDeleteUserOpened: false})
     }
 
     handleInputChange(event: Event) {
@@ -25,7 +50,6 @@ class ChatMessages extends Component {
 
     onSubmit(event: Event) {
         event.preventDefault();
-        console.log(event);
     }
 
     public render() {
@@ -36,7 +60,7 @@ class ChatMessages extends Component {
                         <div class="chat__user-header-plug"></div>
                         <a href="/#" target="_blank" rel="noopener noreferrer" class="link text-4 chat__user-header-name">Андрей</a>
                     </div>
-                    {{{ PopupOptions }}}
+                    {{{ PopupOptions openAddUserModal=openAddUserModal openDeleteUserModal=openDeleteUserModal }}}
                 </div>
                 <div class="chat__main">
                     <div class="chat__main-group">
@@ -66,11 +90,15 @@ class ChatMessages extends Component {
                         </div>
                     </div>
                 </div>
+
                 <form class="chat__footer" novalidate>
                     {{{ PopupAttachments }}}
                     {{{ Input onChange=handleInputChange value=message name="message" placeholder="Сообщение" class="input-outlined chat__footer-search" }}}
                     {{{ Button disabled=disabledSendButton onClick=onSubmit type="submit" class="button chat__footer-button-submit" imgSource="/icons/arrow-right-white.svg" }}}
                 </form>
+
+                {{{ ModalAddUser isActive=modalAddUserOpened handleCloseModal=closeAddUserModal }}}
+                {{{ ModalDeleteUser isActive=modalDeleteUserOpened handleCloseModal=closeDeleteUserModal }}}
             </div>
         `
     }

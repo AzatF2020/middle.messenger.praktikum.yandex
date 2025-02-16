@@ -8,6 +8,7 @@ import LoginPage from '@pages/login/login';
 import RegisterPage from '@pages/register/register';
 import NotFound from '@pages/notFound/notFound';
 import Chats from '@pages/chats/chats';
+import Profile from '@pages/profile/profile';
 
 conditionalsHelper()
 
@@ -15,4 +16,4 @@ Object.entries(Object.assign(components, modules)).forEach(([componentName, comp
     registerComponent(componentName, componentInstance)
 })
 
-render(new Chats)
+render(new Profile)

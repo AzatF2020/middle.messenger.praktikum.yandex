@@ -22,7 +22,6 @@ class Component<P = any> {
     protected listeners: {}
     protected state: any = {}
     protected children: Record<string, Component>
-    protected refs: Record<string, HTMLElement>
 
     constructor(props?: P) {
         const eventBus = new EventBus()
@@ -103,7 +102,6 @@ class Component<P = any> {
             ...this.props,
             ...this.state,
             ...this.listeners,
-            refs: this.refs,
             children: this.children
         })
 

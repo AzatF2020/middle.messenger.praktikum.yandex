@@ -16,7 +16,7 @@ class Input extends Component {
     constructor(props: InputProps) {
         super(props);
 
-        this.listeners = { change: this.props.onChange }
+        this.listeners = { change: this.props.onChange, input: this.props.onInput }
     }
 
     render() {

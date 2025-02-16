@@ -9,11 +9,10 @@ class Chats extends Component {
                 <div class="chats__container">
                     {{{ ChatUsers }}}
                     {{{ ChatMessages }}}
-                    {{{ ModalAddUser }}}
                 </div>
             </section>
         `
     }
 }
 
-export default Chats
+export default Chats;
