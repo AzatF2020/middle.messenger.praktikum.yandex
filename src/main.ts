@@ -10,6 +10,7 @@ import NotFound from '@pages/notFound/notFound';
 import Chats from '@pages/chats/chats';
 import Profile from '@pages/profile/profile';
 import ProfileEdit from '@pages/profileEdit/profileEdit';
+import ProfileNewPassword from '@pages/profileNewPassword/profileNewPassword';
 
 conditionalsHelper()
 
@@ -17,4 +18,4 @@ Object.entries(Object.assign(components, modules)).forEach(([componentName, comp
     registerComponent(componentName, componentInstance)
 })
 
-render(new ProfileEdit)
+render(new ProfileNewPassword)

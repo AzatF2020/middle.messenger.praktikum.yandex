@@ -6,7 +6,8 @@ import { ChatMessages } from './chatMessages';
 import { ModalAddUser } from './modalAddUser';
 import { ModalDeleteUser } from './modalDeleteUser';
 import { Profile } from './profile';
-import { ProfileEdit } from './profileEdit'
+import { ProfileEdit } from './profileEdit';
+import { ProfileNewPassword } from './profileNewPassword';
 
 const modules = {
     LoginForm,
@@ -17,7 +18,8 @@ const modules = {
     ProfileEdit,
     ChatUsers,
     Error,
-    Profile
+    Profile,
+    ProfileNewPassword
 }
 
 export default modules;
