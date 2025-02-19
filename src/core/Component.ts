@@ -115,7 +115,6 @@ class Component<P = any> {
             const stubInnerHTML = stub.innerHTML.trim()
             const element = value.getElement!
 
-            // # Если внутри element есть контент, то вставляем с stub в сам element, как на примере <slot />
             if (stubInnerHTML.length > 0) {
                 element.innerHTML = stubInnerHTML
             }

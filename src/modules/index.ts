@@ -1,3 +1,4 @@
+import Component from '@core/Component';
 import { LoginForm } from './loginForm';
 import { RegisterForm } from './registerForm';
 import { Error } from './error';
@@ -9,7 +10,7 @@ import { Profile } from './profile';
 import { ProfileEdit } from './profileEdit';
 import { ProfileNewPassword } from './profileNewPassword';
 
-const modules = {
+const modules: Record<string, typeof Component> = {
     LoginForm,
     RegisterForm,
     ChatMessages,

@@ -8,7 +8,7 @@ class LoginForm extends Component {
         this.state = { login: '', password: '' };
 
         this.listeners = {
-            handleChangeInput: this.handleInputChange.bind(this),
+            handleInputChange: this.handleInputChange.bind(this),
             onSubmit: this.onSubmit.bind(this)
         }
     }

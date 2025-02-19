@@ -30,7 +30,6 @@ class ProfileNewPassword extends Component {
            <section class="profile-new-password">
                 {{{ AsideBackNavigation }}}
                 <form class="container--centered profile-new-password__form">
-                {{{ oldPassword }}} {{{ newPassword }}}
                     <fieldset class="profile-new-password__form-header">
                         {{{ Avatar readonly=true }}}
                     </fieldset>
