@@ -1,51 +1,82 @@
 import { Component } from "@core/index";
-import './style.scss';
+import FormValidator from "@utils/helpers/FormValidator";
+import template from "./template.hbs?raw";
+import {
+    minLength,
+    maxLength,
+    acceptedSigns,
+    hasAlphanumericContent,
+    requiredMinimumUpperCaseAndNumbers,
+    isLatin,
+} from "@utils/constants/validationRules";
+import "./style.scss";
+
+const validation = new FormValidator({
+    formSelector: ".login-form",
+    rules: {
+        login: {
+            isLatin,
+            hasAlphanumericContent,
+            minLength: minLength(3),
+            maxLength: maxLength(20),
+            acceptedSigns: acceptedSigns("_", "-"),
+        },
+        password: {
+            minLength: minLength(8),
+            maxLength: maxLength(40),
+            requiredMinimumUpperCaseAndNumbers,
+        },
+    },
+});
 
 class LoginForm extends Component {
     constructor() {
         super();
 
-        this.state = { login: '', password: '' };
+        this.state = {
+            login: "",
+            password: "",
+            isButtonDisabled: false,
+            errors: {},
+        };
 
         this.listeners = {
+            handleInputBlur: this.validateInput.bind(this),
             handleInputChange: this.handleInputChange.bind(this),
-            onSubmit: this.onSubmit.bind(this)
-        }
+            onSubmit: this.onSubmit.bind(this),
+        };
     }
 
     public handleInputChange(event: Event) {
-        const { name, value } = event.target as HTMLInputElement
+        const { name, value } = event.target as HTMLInputElement;
+        this.setState({ ...this.state, [name]: value });
+    }
 
-        this.setState({ ...this.state, [name]: value })
+    public validateInput(event: InputEvent) {
+        validation.handleValidateInput(event);
+        this.setState({
+            ...this.state,
+            isButtonDisabled: validation.hasFormErrors(),
+            errors: validation.errors,
+        });
     }
 
     onSubmit(event: Event) {
-        event.preventDefault()
-        console.log(event);
+        event.preventDefault();
+
+        const isValid = validation.validate();
+
+        this.setState({
+            ...this.state,
+            isButtonDisabled: isValid,
+            errors: validation.errors,
+        });
+
+        if (!isValid) return;
     }
 
     public render() {
-        return `
-            <form class="login-form" action="/" novalidate method="POST">
-                <h1 class="heading-6 login-form__title">Вход</h1>
-
-                <fieldset class="login-form__group">
-                    <div class="input-floating">
-                        {{{ Input value=login onChange=handleInputChange type="text" id="login" name="login" placeholder="Логин" }}}
-                        <label for="login" class="label">Логин</label>
-                    </div>
-                    <div class="input-floating">
-                        {{{ Input value=password onChange=handleInputChange type="password" id="password" name="password" placeholder="Пароль" }}}
-                        <label for="password" class="label">Пароль</label>
-                    </div>
-                </fieldset>
-
-                <div class="login-form__bottom">
-                    {{{ Button onClick=onSubmit class="button login-form__bottom-button" type="submit" label="Авторизоваться" }}}
-                    <a href="/#" class="link">Нет аккаунта?</a>
-                </div>
-            </form>
-        `
+        return template;
     }
 }
 

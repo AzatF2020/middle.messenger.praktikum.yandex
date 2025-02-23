@@ -1,4 +1,4 @@
-@use '../utilities';
+@use "../utilities";
 
 .input-floating {
     position: relative;
@@ -7,22 +7,24 @@
 }
 
 .error-feedback {
-    margin-top: .7rem;
+    margin-top: 0.7rem;
     font-weight: 400;
     font-size: utilities.$text-6;
     color: utilities.$red-500;
+    display: grid;
+    row-gap: 0.2rem;
 }
 
 .input {
-    --input-padding-x:          #{utilities.$input-padding-x};
-    --input-padding-y:          #{utilities.$input-padding-y};
-    --input-border-width:       #{utilities.$border-width};
-    --input-border-color:       #{utilities.$gray-600};
+    --input-padding-x: #{utilities.$input-padding-x};
+    --input-padding-y: #{utilities.$input-padding-y};
+    --input-border-width: #{utilities.$border-width};
+    --input-border-color: #{utilities.$gray-600};
     --input-border-focus-color: #{utilities.$blue-500};
     --input-border-error-color: #{utilities.$red-500};
-    --input-error-color:        #{utilities.$red-500};
-    --input-color:              #{utilities.$black-900};
-    --input-fz:                 #{utilities.$text-4};
+    --input-error-color: #{utilities.$red-500};
+    --input-color: #{utilities.$black-900};
+    --input-fz: #{utilities.$text-4};
 
     border: none;
     outline: none;
@@ -39,8 +41,8 @@
     }
 
     & + label {
-        --label-color:           #{utilities.$gray-400};
-        --label-fz:              #{utilities.$text-4};
+        --label-color: #{utilities.$gray-400};
+        --label-fz: #{utilities.$text-4};
 
         font-size: var(--label-fz);
         color: var(--label-color);
@@ -56,28 +58,29 @@
         transform: translateY(-50%) scale(1) translateX(0);
         transform-origin: 0 0;
 
-        transition: transform .15s ease, font-size .15s ease;
+        transition: transform 0.15s ease, font-size 0.15s ease;
     }
 
-    &:focus, &:not(:placeholder-shown) {
+    &:focus,
+    &:not(:placeholder-shown) {
         border-color: var(--input-border-focus-color);
     }
 
     &:focus + label {
-        transform: translateY(-175%) scale(.85);
+        transform: translateY(-175%) scale(0.85);
     }
 
     &:not(:placeholder-shown) + label {
-        transform: translateY(-175%) scale(.85);
+        transform: translateY(-175%) scale(0.85);
     }
 }
 
 .input-outlined {
-    --input-bg:                  #{utilities.$gray-100};
-    --input-radius:              #{utilities.$rounded-1};
-    --input-color:               #{utilities.$gray-300};
-    --input-padding-outlined-x:  #{utilities.$input-padding-outlined-x};
-    --input-padding-outlined-y:  #{utilities.$input-padding-outlined-y};
+    --input-bg: #{utilities.$gray-100};
+    --input-radius: #{utilities.$rounded-1};
+    --input-color: #{utilities.$gray-300};
+    --input-padding-outlined-x: #{utilities.$input-padding-outlined-x};
+    --input-padding-outlined-y: #{utilities.$input-padding-outlined-y};
 
     cursor: auto;
     padding: var(--input-padding-outlined-y) var(--input-padding-outlined-x);
@@ -113,8 +116,8 @@
     text-align: center;
     display: flex;
     align-items: center;
-    padding-inline: .75rem;
-    border-radius: .5rem 0 0 .5rem;
+    padding-inline: 0.75rem;
+    border-radius: 0.5rem 0 0 0.5rem;
     background-color: utilities.$gray-100;
 }
 

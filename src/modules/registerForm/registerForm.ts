@@ -1,87 +1,100 @@
 import Component from "@core/Component";
-import './style.scss';
+import template from "./template.hbs?raw";
+import FormValidator from "@utils/helpers/FormValidator";
+import {
+    isEmail,
+    maxLength,
+    minLength,
+    requiredMinimumUpperCaseAndNumbers,
+    hasAlphanumericContent,
+    firstLetterUppercase,
+    acceptedSigns,
+    isLatin,
+    excludeNumbers,
+    onlyNumbers,
+} from "@utils/constants/validationRules";
+import "./style.scss";
+
+const validation = new FormValidator({
+    formSelector: ".register-form",
+    rules: {
+        email: {
+            isEmail,
+        },
+        login: {
+            isLatin,
+            hasAlphanumericContent,
+            minLength: minLength(3),
+            maxLength: maxLength(20),
+            acceptedSigns: acceptedSigns("_", "-"),
+        },
+        first_name: {
+            excludeNumbers,
+            firstLetterUppercase,
+            acceptedSigns: acceptedSigns("-"),
+        },
+        second_name: {
+            excludeNumbers,
+            firstLetterUppercase,
+            acceptedSigns: acceptedSigns("-"),
+        },
+        phone: {
+            onlyNumbers,
+        },
+        password: {
+            minLength: minLength(8),
+            maxLength: maxLength(40),
+            requiredMinimumUpperCaseAndNumbers,
+        },
+    },
+});
 
 class RegisterForm extends Component {
     constructor() {
         super();
 
         this.state = {
-            email: '',
-            login: '',
-            first_name: '',
-            second_name: '',
-            phone: '',
-            password: ''
-        }
+            email: "",
+            login: "",
+            first_name: "",
+            second_name: "",
+            phone: "",
+            password: "",
+            isButtonDisabled: false,
+            errors: {},
+        };
 
         this.listeners = {
+            handleInputBlur: this.validateInput.bind(this),
             handleInputChange: this.handleInputChange.bind(this),
-            onSubmit: this.onSubmit.bind(this)
-        }
+            onSubmit: this.onSubmit.bind(this),
+        };
     }
 
-    handleInputChange(event: Event) {
+    public handleInputChange(event: Event) {
         const { name, value } = event.target as HTMLInputElement;
 
         this.setState({
             ...this.state,
-            [name]: value
-        })
+            [name]: value,
+        });
+    }
+
+    public validateInput(event: InputEvent) {
+        validation.handleValidateInput(event);
+        this.setState({
+            ...this.state,
+            isButtonDisabled: validation.hasFormErrors(),
+            errors: validation.errors,
+        });
     }
 
     onSubmit(event: Event) {
-        event.preventDefault()
+        event.preventDefault();
     }
 
     public render() {
-        return `
-            <form class="register-form" novalidate>
-                <h1 class="heading-6 register-form__title">Регистрация</h1>
-
-                <fieldset class="register-form__group">
-                    <div class="input-floating">
-                        {{{ Input value=email onChange=handleInputChange type="email" id="email" name="email" placeholder="Почта" }}}
-                        <label for="email" class="label">Почта</label>
-                    </div>
-                    <div class="input-floating">
-                        {{{ Input type="text" value=login onChange=handleInputChange id="login" name="login" placeholder="Логин" }}}
-                        <label for="login" class="label">Логин</label>
-                    </div>
-                    <div class="input-floating">
-                        {{{ Input type="text" value=first_name onChange=handleInputChange id="first_name" name="first_name" placeholder="Имя" }}}
-                        <label for="first_name" class="label">Имя</label>
-                    </div>
-                    <div class="input-floating">
-                        {{{ Input type="text" value=second_name onChange=handleInputChange id="second_name" name="second_name" placeholder="Фамилия" }}}
-                        <label for="second_name" class="label">Фамилия</label>
-                    </div>
-                    <div class="input-group">
-                        <div class="input-floating">
-                            {{{ Input type="phone" value=phone id="phone" name="phone" placeholder="Телефон" onChange=handleInputChange }}}
-                            <label for="phone" class="label">Телефон</label>
-                        </div>
-                        <div class="error-feedback">
-                            Обязательное поле.
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <div class="input-floating">
-                            {{{ Input type="password" value=password id="password" name="password" placeholder="Пароль" onChange=handleInputChange }}}
-                            <label for="password" class="label">Пароль</label>
-                        </div>
-                        <div class="error-feedback">
-                            Обязательное поле.
-                        </div>
-                    </div>
-                </fieldset>
-
-                <div class="register-form__bottom">
-                    {{{ Button class="button register-form__bottom-button" type="submit" label="Зарегистрироваться" onClick=onSubmit }}}
-                    <a href="/#" class="link">Войти</a>
-                </div>
-            </form>
-        `
+        return template;
     }
 }
 

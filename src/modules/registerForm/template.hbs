@@ -1,0 +1,143 @@
+<form class="register-form" novalidate>
+    <h1 class="heading-6 register-form__title">Регистрация</h1>
+
+    <fieldset class="register-form__group">
+        <div class="input-group">
+            <div class="input-floating">
+                {{{Input
+                    value=email
+                    onChange=handleInputChange
+                    onBlur=handleInputBlur
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Почта"
+                }}}
+                <label for="email" class="label">Почта</label>
+            </div>
+            {{#if errors.email.length}}
+                <div class="error-feedback">
+                    {{#each errors.email}}
+                        <span>{{this}}</span>
+                    {{/each}}
+                </div>
+            {{/if}}
+        </div>
+        <div class="input-group">
+            <div class="input-floating">
+                {{{Input
+                    type="text"
+                    value=login
+                    onChange=handleInputChange
+                    onBlur=handleInputBlur
+                    id="login"
+                    name="login"
+                    placeholder="Логин"
+                }}}
+                <label for="login" class="label">Логин</label>
+            </div>
+            {{#if errors.login.length}}
+                <div class="error-feedback">
+                    {{#each errors.login}}
+                        <span>{{this}}</span>
+                    {{/each}}
+                </div>
+            {{/if}}
+        </div>
+        <div class="input-group">
+            <div class="input-floating">
+                {{{Input
+                    type="text"
+                    value=first_name
+                    id="first_name"
+                    name="first_name"
+                    placeholder="Имя"
+                    onChange=handleInputChange
+                    onBlur=handleInputBlur
+                }}}
+                <label for="first_name" class="label">Имя</label>
+            </div>
+            {{#if errors.first_name.length}}
+                <div class="error-feedback">
+                    {{#each errors.first_name}}
+                        <span>{{this}}</span>
+                    {{/each}}
+                </div>
+            {{/if}}
+        </div>
+        <div class="input-group">
+            <div class="input-floating">
+                {{{Input
+                    type="text"
+                    value=second_name
+                    id="second_name"
+                    name="second_name"
+                    placeholder="Фамилия"
+                    onChange=handleInputChange
+                    onBlur=handleInputBlur
+                }}}
+                <label for="second_name" class="label">Фамилия</label>
+            </div>
+            {{#if errors.second_name.length}}
+                <div class="error-feedback">
+                    {{#each errors.second_name}}
+                        <span>{{this}}</span>
+                    {{/each}}
+                </div>
+            {{/if}}
+        </div>
+        <div class="input-group">
+            <div class="input-floating">
+                {{{Input
+                    type="phone"
+                    value=phone
+                    id="phone"
+                    name="phone"
+                    placeholder="Телефон"
+                    onChange=handleInputChange
+                    onBlur=handleInputBlur
+                }}}
+                <label for="phone" class="label">Телефон</label>
+            </div>
+            {{#if errors.phone.length}}
+                <div class="error-feedback">
+                    {{#each errors.phone}}
+                        <span>{{this}}</span>
+                    {{/each}}
+                </div>
+            {{/if}}
+        </div>
+
+        <div class="input-group">
+            <div class="input-floating">
+                {{{Input
+                    type="password"
+                    value=password
+                    id="password"
+                    name="password"
+                    placeholder="Пароль"
+                    onChange=handleInputChange
+                    onBlur=handleInputBlur
+                }}}
+                <label for="password" class="label">Пароль</label>
+            </div>
+            {{#if errors.password.length}}
+                <div class="error-feedback">
+                    {{#each errors.password}}
+                        <span>{{this}}</span>
+                    {{/each}}
+                </div>
+            {{/if}}
+        </div>
+    </fieldset>
+
+    <div class="register-form__bottom">
+        {{{Button
+            class="button register-form__bottom-button"
+            type="submit"
+            label="Зарегистрироваться"
+            onClick=onSubmit
+        }}}
+        <a href="/#" class="link">Войти</a>
+    </div>
+</form>
