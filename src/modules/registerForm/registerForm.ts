@@ -91,6 +91,17 @@ class RegisterForm extends Component {
 
     onSubmit(event: Event) {
         event.preventDefault();
+        console.log(this.state);
+
+        const isValid = validation.validate();
+
+        this.setState({
+            ...this.state,
+            isButtonDisabled: isValid,
+            errors: validation.errors,
+        });
+
+        if (!isValid) return;
     }
 
     public render() {

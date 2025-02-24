@@ -1,4 +1,4 @@
-@use '@styles/utilities';
+@use "@styles/utilities";
 
 .popup-attachments {
     &__button-attach {
@@ -36,9 +36,12 @@
         bottom: 5rem;
         width: 16rem;
         transform: translateY(1rem);
+        opacity: 0;
+        transition: 0.3s transform ease, 0.3s opacity ease;
     }
 
-    .popup--active.chat__attach-popup {
+    &__attach-popup.popup--active {
         transform: translateY(0);
+        opacity: 1;
     }
 }

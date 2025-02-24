@@ -1,60 +1,50 @@
 import Component from "@core/Component";
-import './style.scss';
+import template from "./template.hbs?raw";
+import "./style.scss";
 
-interface ModalDeleteUserProps {
-    handleCloseModal: () => void;
-    isActive: boolean;
+interface IModalDeleteUser {
+    closeByOverlay: (event: Event) => void;
+    handleInputChange: (event: Event) => void;
 }
 
-class ModalDeleteUser extends Component {
+type ModalDeleteUserProps = {
+    handleCloseModal: (event: Event) => void;
+    isActive: boolean;
+};
+
+class ModalDeleteUser extends Component implements IModalDeleteUser {
     constructor(props: ModalDeleteUserProps) {
         super(props);
 
-        this.state = { login: '' }
+        this.state = { login: "" };
 
         this.listeners = {
             click: this.closeByOverlay.bind(this),
-            handleInputChange: this.handleInputChange.bind(this)
+            handleInputChange: this.handleInputChange.bind(this),
+        };
+    }
+
+    public closeByOverlay(event: Event) {
+        const modalInner = document.querySelector(
+            ".user-delete-modal__inner"
+        ) as HTMLElement;
+
+        if (!modalInner.contains(event.target as HTMLElement)) {
+            this.props.handleCloseModal(event);
         }
     }
 
-    closeByOverlay(event: Event) {
-        const modalInner = document.querySelector('.user-delete-modal__inner') as HTMLElement;
-
-        if (!modalInner.contains((event.target as HTMLElement))) {
-            this.props.handleCloseModal();
-        }
-    }
-
-    handleInputChange(event: Event) {
+    public handleInputChange(event: Event) {
         const { name, value } = event.target as HTMLInputElement;
 
         this.setState({
             ...this.state,
-            [name]: value
-        })
+            [name]: value,
+        });
     }
 
-    render() {
-        return `
-            <div class="modal {{#if isActive}} modal--active {{/if}}" id="modal-delete-user">
-                {{ isActive }}
-                <div class="modal__wrapper user-delete-modal__inner">
-                    {{{ Button onClick=handleCloseModal imgSource="/icons/close.svg" class="modal__close-button" title="Закрыть" }}}
-
-                    <h1 class="heading-6 user-delete-modal__title">Удалить пользователя</h1>
-
-                    <p class="text-4 user-delete-modal__text">
-                        Вы уверены, что хотите удалить пользователя?
-                    </p>
-
-                    <div class="user-delete-modal__footer">
-                        {{{ Button class="button" onClick=handleCloseModal label="Отменить" }}}
-                        {{{ Button class="button user-delete-modal__button" label="Удалить" }}}
-                    </div>
-                </div>
-            </div>
-        `
+    public render() {
+        return template;
     }
 }
 

@@ -1,16 +1,26 @@
 import Component from "@core/Component";
-import './style.scss';
+import template from "./template.hbs?raw";
+import "./style.scss";
 
-class ChatMessages extends Component {
-    constructor(props: any) {
-        super(props);
+interface ChatMessages {
+    openAddUserModal(): void;
+    closeAddUserModal(): void;
+    openDeleteUserModal(): void;
+    closeDeleteUserModal(): void;
+    handleInputChange(event: Event): void;
+    onSubmit(event: Event): void;
+}
+
+class ChatMessages extends Component implements ChatMessages {
+    constructor() {
+        super();
 
         this.state = {
-            message: '',
+            message: "",
             disabledSendButton: true,
             modalAddUserOpened: false,
-            modalDeleteUserOpened: false
-        }
+            modalDeleteUserOpened: false,
+        };
 
         this.listeners = {
             openAddUserModal: this.openAddUserModal.bind(this),
@@ -18,89 +28,42 @@ class ChatMessages extends Component {
             openDeleteUserModal: this.openDeleteUserModal.bind(this),
             closeDeleteUserModal: this.closeDeleteUserModal.bind(this),
             handleInputChange: this.handleInputChange.bind(this),
-            onSubmit: this.onSubmit.bind(this)
-        }
+            onSubmit: this.onSubmit.bind(this),
+        };
     }
 
-    openAddUserModal() {
-        this.setState({ ...this.state, modalAddUserOpened: true })
+    public openAddUserModal() {
+        this.setState({ ...this.state, modalAddUserOpened: true });
     }
 
-    closeAddUserModal() {
-        this.setState({ ...this.state, modalAddUserOpened: false})
+    public closeAddUserModal() {
+        this.setState({ ...this.state, modalAddUserOpened: false });
     }
 
-    openDeleteUserModal() {
-        this.setState({ ...this.state, modalDeleteUserOpened: true })
+    public openDeleteUserModal() {
+        this.setState({ ...this.state, modalDeleteUserOpened: true });
     }
 
-    closeDeleteUserModal() {
-        this.setState({ ...this.state, modalDeleteUserOpened: false})
+    public closeDeleteUserModal() {
+        this.setState({ ...this.state, modalDeleteUserOpened: false });
     }
 
-    handleInputChange(event: Event) {
+    public handleInputChange(event: Event) {
         const { name, value } = event.target as HTMLInputElement;
 
         this.setState({
             ...this.state,
             disabledSendButton: !value.trim().length,
-            [name]: value
-        })
+            [name]: value,
+        });
     }
 
-    onSubmit(event: Event) {
+    public onSubmit(event: Event) {
         event.preventDefault();
     }
 
     public render() {
-        return `
-            <div class="chat">
-                <div class="chat__user-header">
-                    <div class="chat__user-header-left-column">
-                        <div class="chat__user-header-plug"></div>
-                        <a href="/#" target="_blank" rel="noopener noreferrer" class="link text-4 chat__user-header-name">Андрей</a>
-                    </div>
-                    {{{ PopupOptions openAddUserModal=openAddUserModal openDeleteUserModal=openDeleteUserModal }}}
-                </div>
-                <div class="chat__main">
-                    <div class="chat__main-group">
-                        <time datetime="19 июня" class="text-5 chat__main-time">19 июня</time>
-                        <div class="chat__main-message chat__main-message--sender">
-                            Привет! Смотри, тут всплыл интересный кусок лунной космической истории&nbsp;&mdash; НАСА в&nbsp;какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на&nbsp;Луну. Сейчас мы&nbsp;все знаем что астронавты летали с&nbsp;моделью 500&nbsp;EL&nbsp;&mdash; и&nbsp;к&nbsp;слову говоря, все тушки этих камер все еще находятся на&nbsp;поверхности Луны, так как астронавты с&nbsp;собой забрали только кассеты с&nbsp;пленкой.
-
-                            Хассельблад в&nbsp;итоге адаптировал SWC для космоса, но&nbsp;что-то пошло не&nbsp;так и&nbsp;на&nbsp;ракету они так никогда и&nbsp;не&nbsp;попали. Всего их&nbsp;было произведено 25&nbsp;штук, одну из&nbsp;них недавно продали на&nbsp;аукционе за&nbsp;45000&nbsp;евро.
-                            <time datetime="" class="text-7 chat__main-message-time">11:56</time>
-                        </div>
-                        <div class="chat__main-message chat__main-message--sender">
-                            <img src="/img/image.png" alt="Изображение">
-                            <time datetime="" class="text-7 chat__main-message-time">11:56</time>
-                        </div>
-                        <div class="chat__main-message chat__main-message--myself">
-                            Круто!
-                            <time datetime="" class="text-7 chat__main-message-time">11:58</time>
-                        </div>
-                        <div class="chat__main-message chat__main-message--myself">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos tempore impedit officiis, ut dolorum recusandae nisi blanditiis dolor atque dolorem repudiandae doloribus magni sunt dolore quam iure eveniet. Nesciunt, debitis.
-                            <time datetime="" class="text-7 chat__main-message-time">11:58</time>
-                        </div>
-
-                        <div class="chat__main-message chat__main-message--sender">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos tempore impedit officiis, ut dolorum recusandae nisi blanditiis dolor atque dolorem repudiandae doloribus magni sunt dolore quam iure eveniet. Nesciunt, debitis.
-                            <time datetime="" class="text-7 chat__main-message-time">11:58</time>
-                        </div>
-                    </div>
-                </div>
-
-                <form class="chat__footer" novalidate>
-                    {{{ PopupAttachments }}}
-                    {{{ Input onChange=handleInputChange value=message name="message" placeholder="Сообщение" class="input-outlined chat__footer-search" }}}
-                    {{{ Button disabled=disabledSendButton onClick=onSubmit type="submit" class="button chat__footer-button-submit" imgSource="/icons/arrow-right-white.svg" }}}
-                </form>
-
-                {{{ ModalAddUser isActive=modalAddUserOpened handleCloseModal=closeAddUserModal }}}
-                {{{ ModalDeleteUser isActive=modalDeleteUserOpened handleCloseModal=closeDeleteUserModal }}}
-            </div>
-        `
+        return template;
     }
 }
 

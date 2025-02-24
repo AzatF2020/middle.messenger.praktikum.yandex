@@ -1,10 +1,11 @@
 import Component from "@core/Component";
-import './style.scss';
+import template from "./template.hbs?raw";
+import "./style.scss";
 
 interface AvatarProps {
     setImg: () => void;
     imgSrc?: string;
-    readonly?: boolean
+    readonly?: boolean;
 }
 
 class Avatar extends Component {
@@ -13,17 +14,11 @@ class Avatar extends Component {
         readonly = false,
         setImg = () => {},
     }: AvatarProps) {
-        super({ imgSrc, readonly, setImg })
+        super({ imgSrc, readonly, setImg });
     }
 
-    render() {
-        return `
-            <div class="avatar">
-                <img src="{{ imgSrc }}" alt="Заглушка" class="avatar__plug">
-                <label class="text-4 avatar__label" for="avatar">Поменять аватар</label>
-                {{{ Input onChange=setImg class="avatar__input" id="avatar" type="file" readonly=readonly name="avatar" }}}
-            </div>
-        `
+    public render() {
+        return template;
     }
 }
 

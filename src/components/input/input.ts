@@ -1,4 +1,5 @@
 import { Component } from "../../core";
+import template from "./template.hbs?raw";
 import "./style.scss";
 
 interface InputProps {
@@ -27,19 +28,7 @@ class Input extends Component {
     }
 
     render() {
-        return `
-            <input
-                type="${this.props.type ?? "text"}"
-                class="input ${this.props.class ?? ""}"
-                ${this.props.disabled ? "disabled" : ""}
-                ${this.props.readonly ? "readonly" : ""}
-                id="{{ id }}"
-                name="{{ name }}"
-                placeholder="{{ placeholder }}"
-                value="{{ value }}"
-                ${this.props.required ? "required" : ""}
-            />
-        `;
+        return template;
     }
 }
 

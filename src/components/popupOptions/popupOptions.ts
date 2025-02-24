@@ -1,5 +1,6 @@
 import Component from "@core/Component";
-import './style.scss';
+import template from "./template.hbs?raw";
+import "./style.scss";
 
 interface PopupOptions {
     openAddUserModal: () => void;
@@ -10,46 +11,41 @@ class PopupOptions extends Component {
     constructor(props: PopupOptions) {
         super(props);
 
-        this.state = { show: false }
+        this.listeners = {
+            togglePopup: this.togglePopup.bind(this),
+        };
     }
 
-    togglePopup(event: Event) {
-        const popupWrapper = document.querySelector('.popup-options');
-        const button = popupWrapper!.querySelector('.popup-options__button-more');
+    public togglePopup(event: Event) {
+        const popupWrapper = document.querySelector(".popup-options");
+        const popup = popupWrapper!.querySelector(".popup");
+        const button = popupWrapper!.querySelector(
+            ".popup-options__button-more"
+        );
 
-        if (this.state.show && button?.contains((event.target as HTMLElement))) {
-            this.setState({ ...this.state, show: false });
-            return
+        if (
+            button?.contains(event.target as HTMLElement) &&
+            popup?.classList.contains("popup--active")
+        ) {
+            popup?.classList.remove("popup--active");
+            return;
         }
 
-        this.setState({
-            ...this.state,
-            show: popupWrapper!.contains((event.target as HTMLElement))
-        })
+        popupWrapper!.contains(event.target as HTMLElement)
+            ? popup?.classList.add("popup--active")
+            : popup?.classList.remove("popup--active");
     }
 
-    componentDidMount() {
-        document.addEventListener('click', this.togglePopup.bind(this))
+    public componentDidMount() {
+        window.addEventListener("click", this.togglePopup.bind(this));
     }
 
-    componentWillUnmount() {
-        document.removeEventListener('click', this.togglePopup.bind(this))
+    public componentWillUnmount() {
+        window.removeEventListener("click", this.togglePopup.bind(this));
     }
 
-    render() {
-        return `
-            <div class="popup-wrapper popup-options">
-                {{{ Button class="button popup-options__button-more" title="Опции" imgSource="/icons/more-icon.svg" }}}
-                <ul class="popup {{#if show}} popup--active {{/if}} popup-options__list">
-                    <li class="popup-item">
-                        {{{ Button onClick=openAddUserModal class="text-5 popup-button" label="Добавить пользователя" imgSource="/icons/add.svg" }}}
-                    </li>
-                    <li class="popup-item">
-                        {{{ Button onClick=openDeleteUserModal class="text-5 popup-button" label="Удалить пользователя" imgSource="/icons/remove.svg" }}}
-                    </li>
-                </ul>
-            </div>
-        `
+    public render() {
+        return template;
     }
 }
 

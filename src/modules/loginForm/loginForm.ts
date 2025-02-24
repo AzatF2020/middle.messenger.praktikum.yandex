@@ -11,6 +11,12 @@ import {
 } from "@utils/constants/validationRules";
 import "./style.scss";
 
+interface ILoginForm {
+    handleInputChange: (event: Event) => void;
+    validateInput: (event: InputEvent) => void;
+    onSubmit: (event: Event) => void;
+}
+
 const validation = new FormValidator({
     formSelector: ".login-form",
     rules: {
@@ -29,7 +35,7 @@ const validation = new FormValidator({
     },
 });
 
-class LoginForm extends Component {
+class LoginForm extends Component implements ILoginForm {
     constructor() {
         super();
 
@@ -61,8 +67,9 @@ class LoginForm extends Component {
         });
     }
 
-    onSubmit(event: Event) {
+    public onSubmit(event: Event) {
         event.preventDefault();
+        console.log(this.state);
 
         const isValid = validation.validate();
 

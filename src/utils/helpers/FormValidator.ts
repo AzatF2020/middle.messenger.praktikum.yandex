@@ -59,7 +59,7 @@ class FormValidator implements IFormValidator {
             throw new Error("Атрибут name обязательный.");
         }
 
-        if (!this.rules[target.name]) {
+        if (!(target.name in this.rules)) {
             return;
         }
 
@@ -70,7 +70,9 @@ class FormValidator implements IFormValidator {
         this._getFormElements();
 
         this._formInputElements?.forEach((target) => {
-            this._setFormErrors(target);
+            if (target.name in this.rules) {
+                this._setFormErrors(target);
+            }
         });
 
         return this.hasFormErrors();

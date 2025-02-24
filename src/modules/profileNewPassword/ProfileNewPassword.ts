@@ -1,68 +1,66 @@
 import Component from "@core/Component";
-import './style.scss';
+import template from "./template.hbs?raw";
+import FormValidator from "@utils/helpers/FormValidator";
+import {
+    minLength,
+    maxLength,
+    requiredMinimumUpperCaseAndNumbers,
+    required,
+} from "@utils/constants/validationRules";
+import "./style.scss";
+
+interface IProfileNewPassword {}
+
+const validation = new FormValidator({
+    formSelector: ".profile-new-password__form",
+    rules: {
+        newPassword: {
+            required,
+            minLength: minLength(8),
+            maxLength: maxLength(40),
+            requiredMinimumUpperCaseAndNumbers,
+        },
+    },
+});
 
 class ProfileNewPassword extends Component {
-    state = {
-        oldPassword: 'SamplePass321',
-        newPassword: 'SamplePass321'
+    constructor() {
+        super();
+        this.state = {
+            oldPassword: "SamplePass321",
+            newPassword: "",
+            isButtonDisabled: false,
+            errors: {},
+        };
+
+        this.listeners = {
+            handleInputBlur: this.validateInput.bind(this),
+            onSubmit: this.onSubmit.bind(this),
+            handleChangeInput: this.handleChangeInput.bind(this),
+        };
     }
 
-    listeners = {
-        onSubmit: this.onSubmit.bind(this),
-        handleChangeInput: this.handleChangeInput.bind(this)
-    };
-
-    handleChangeInput(event: Event) {
+    public handleChangeInput(event: Event) {
         const { name, value } = event.target as HTMLInputElement;
+        this.setState({ ...this.state, [name]: value });
+    }
 
+    public validateInput(event: InputEvent) {
+        validation.handleValidateInput(event);
         this.setState({
             ...this.state,
-            [name]: value
-        })
+            isButtonDisabled: validation.hasFormErrors(),
+            errors: validation.errors,
+        });
     }
 
-    onSubmit(event: Event) {
-        event.preventDefault()
+    public onSubmit(event: Event) {
+        event.preventDefault();
+        console.log(event);
     }
 
-    render() {
-        return `
-           <section class="profile-new-password">
-                {{{ AsideBackNavigation }}}
-                <form class="container--centered profile-new-password__form">
-                    <fieldset class="profile-new-password__form-header">
-                        {{{ Avatar readonly=true }}}
-                    </fieldset>
-                    <fieldset class="profile-new-password__form-list-group">
-                        <ul class="profile-new-password__form-list">
-                            <li class="profile-new-password__form-item">
-                                <label class="text-4 profile-new-password__form-item-label" for="oldPassword">Старый пароль</label>
-                                {{{ Input
-                                    onChange=handleChangeInput
-                                    class="text-4 profile-new-password__form-item-input"
-                                    name="oldPassword"
-                                    value=oldPassword
-                                    id="oldPassword"
-                                    type="password"
-                                }}}
-                            </li>
-                            <li class="profile-new-password__form-item">
-                                <label class="text-4 profile-new-password__form-item-label" for="newPassword">Новый пароль</label>
-                                {{{ Input
-                                    onChange=handleChangeInput
-                                    class="text-4 profile-new-password__form-item-input"
-                                    name="newPassword"
-                                    value=newPassword
-                                    id="newPassword"
-                                    type="password"
-                                }}}
-                            </li>
-                        </ul>
-                    </fieldset>
-                    {{{ Button onClick=onSubmit class="button profile-new-password__form-item-button" type="submit" label="Сохранить" }}}
-                </form>
-            </section>
-        `
+    public render() {
+        return template;
     }
 }
 

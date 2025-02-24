@@ -1,0 +1,120 @@
+<section class="profile">
+    {{{AsideBackNavigation}}}
+    <form class="container--centered profile__form">
+        <fieldset class="profile__form-header">
+            {{{Avatar readonly=true}}}
+            <h1 class="text-3 profile__form-header-title">
+                Иван
+            </h1>
+        </fieldset>
+        <fieldset class="profile__form-list-group">
+            <ul class="profile__form-list">
+                <li class="profile__form-item">
+                    <label
+                        class="text-4 profile__form-item-label"
+                        for="email"
+                    >Почта</label>
+                    <input
+                        class="text-4 profile__form-item-input"
+                        readonly
+                        name="email"
+                        value="pochta@yandex.ru"
+                        id="email"
+                        type="email"
+                    />
+                </li>
+                <li class="profile__form-item">
+                    <label
+                        class="text-4 profile__form-item-label"
+                        for="login"
+                    >Логин</label>
+                    <input
+                        class="text-4 profile__form-item-input"
+                        readonly
+                        name="login"
+                        value="ivanivanov"
+                        id="login"
+                        type="text"
+                    />
+                </li>
+                <li class="profile__form-item">
+                    <label
+                        class="text-4 profile__form-item-label"
+                        for="first_name"
+                    >Имя</label>
+                    <input
+                        class="text-4 profile__form-item-input"
+                        readonly
+                        name="first_name"
+                        value="Иван"
+                        id="first_name"
+                        type="text"
+                    />
+                </li>
+                <li class="profile__form-item">
+                    <label
+                        class="text-4 profile__form-item-label"
+                        for="second_name"
+                    >Фамилия</label>
+                    <input
+                        class="text-4 profile__form-item-input"
+                        readonly
+                        name="second_name"
+                        value="Иванов"
+                        id="second_name"
+                        type="text"
+                    />
+                </li>
+                <li class="profile__form-item">
+                    <label
+                        class="text-4 profile__form-item-label"
+                        for="display_name"
+                    >Имя в чате</label>
+                    <input
+                        class="text-4 profile__form-item-input"
+                        readonly
+                        name="display_name"
+                        value="Иван"
+                        id="display_name"
+                        type="text"
+                    />
+                </li>
+                <li class="profile__form-item">
+                    <label
+                        class="text-4 profile__form-item-label"
+                        for="phone"
+                    >Телефон</label>
+                    <input
+                        class="text-4 profile__form-item-input"
+                        readonly
+                        name="phone"
+                        value="+7 (909) 967 30 30"
+                        id="phone"
+                        type="phone"
+                    />
+                </li>
+            </ul>
+
+            <ul class="profile__form-list">
+                <li class="profile__form-item">
+                    <a
+                        href="/#"
+                        class="text-4 link profile__form-submit"
+                    >Изменить данные</a>
+                </li>
+                <li class="profile__form-item">
+                    <a
+                        href="/#"
+                        class="text-4 link profile__form-password-link"
+                    >Изменить пароль</a>
+                </li>
+                <li class="profile__form-item">
+                    <button
+                        type="button"
+                        class="text-4 link profile__form-logout-link"
+                    >Выйти</button>
+                </li>
+            </ul>
+        </fieldset>
+    </form>
+</section>

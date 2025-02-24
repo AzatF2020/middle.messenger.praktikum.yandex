@@ -1,4 +1,4 @@
-@use '@styles/utilities';
+@use "@styles/utilities";
 
 .popup-options {
     &__button-more {
@@ -12,7 +12,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background-color .15s ease;
+        transition: background-color 0.15s ease;
 
         @media (hover: hover) {
             &:hover {
@@ -30,9 +30,12 @@
         left: -18.25rem;
         top: 5rem;
         transform: translateY(-1rem);
+        opacity: 0;
+        transition: 0.3s transform ease, 0.3s opacity ease;
     }
 
-    .popup--active.chat__list {
+    &__list.popup--active {
+        opacity: 1;
         transform: translateY(0);
     }
 }

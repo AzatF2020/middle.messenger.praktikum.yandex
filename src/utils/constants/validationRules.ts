@@ -2,7 +2,7 @@ const required = (value: string): string => {
     return !value.length ? "Обязательно поле." : "";
 };
 
-const requiredMinimumUpperCaseAndNumbers = (value): string => {
+const requiredMinimumUpperCaseAndNumbers = (value: string): string => {
     return !value.match(/(?=.*[A-Z])(?=.*[0-9])/)
         ? "Пароль должен содержать минимум одну заглавную букву и одну цифру."
         : "";

@@ -1,127 +1,128 @@
 import Component from "@core/Component";
-import './style.scss';
+import template from "./template.hbs?raw";
+import FormValidator from "@utils/helpers/FormValidator";
+import {
+    isEmail,
+    maxLength,
+    minLength,
+    requiredMinimumUpperCaseAndNumbers,
+    hasAlphanumericContent,
+    firstLetterUppercase,
+    acceptedSigns,
+    isLatin,
+    excludeNumbers,
+    onlyNumbers,
+    required,
+} from "@utils/constants/validationRules";
+import "./style.scss";
 
-class ProfileEdit extends Component {
-    state = {
-        email: 'pochta@yandex.ru',
-        login: 'ivanivanov',
-        first_name: 'Иван',
-        second_name: 'Иванов',
-        display_name: 'Иван',
-        phone: '+7 (909) 967 30 30',
-        avatar: '/img/plug.png',
-    }
+interface IProfileEdit {
+    setAvatarImg(event: Event): void;
+    handleInputChange(event: Event): void;
+    validateInput(event: InputEvent): void;
+    onSubmit(event: Event): void;
+}
 
-    listeners = {
-        onSubmit: this.onSubmit.bind(this),
-        setAvatarImg: this.setAvatarImg.bind(this),
-        handleInputChange: this.handleInputChange.bind(this)
+const validation = new FormValidator({
+    formSelector: ".profile-edit__form",
+    rules: {
+        email: {
+            required,
+            isEmail,
+        },
+        login: {
+            required,
+            isLatin,
+            hasAlphanumericContent,
+            minLength: minLength(3),
+            maxLength: maxLength(20),
+            acceptedSigns: acceptedSigns("_", "-"),
+        },
+        first_name: {
+            excludeNumbers,
+            firstLetterUppercase,
+            acceptedSigns: acceptedSigns("-"),
+        },
+        second_name: {
+            excludeNumbers,
+            firstLetterUppercase,
+            acceptedSigns: acceptedSigns("-"),
+        },
+        display_name: {
+            required,
+            excludeNumbers,
+        },
+        phone: {
+            onlyNumbers,
+            minLength: minLength(10),
+            maxLength: maxLength(15),
+        },
+        password: {
+            required,
+            minLength: minLength(8),
+            maxLength: maxLength(40),
+            requiredMinimumUpperCaseAndNumbers,
+        },
+    },
+});
+
+class ProfileEdit extends Component implements IProfileEdit {
+    public state = {
+        email: "pochta@yandex.ru",
+        login: "ivanivanov",
+        first_name: "Иван",
+        second_name: "Иванов",
+        display_name: "Иван",
+        phone: "",
+        avatar: "/img/plug.png",
+        isButtonDisabled: false,
+        errors: {},
     };
 
-    setAvatarImg(event: Event) {
-        const file = (event.target as HTMLInputElement).files?.[0]
+    public listeners = {
+        handleInputBlur: this.validateInput.bind(this),
+        onSubmit: this.onSubmit.bind(this),
+        setAvatarImg: this.setAvatarImg.bind(this),
+        handleInputChange: this.handleInputChange.bind(this),
+    };
 
+    public setAvatarImg(event: Event) {
+        const file = (event.target as HTMLInputElement).files?.[0];
         if (!file) return;
-
-        this.setState({ ...this.state, avatar: URL.createObjectURL(file) })
-        console.log(this.state)
+        this.setState({ ...this.state, avatar: URL.createObjectURL(file) });
     }
 
-    handleInputChange(event: Event) {
-        const { name, value } = event.target as HTMLInputElement
-        this.setState({ ...this.state, [name]: value })
+    public handleInputChange(event: Event) {
+        const { name, value } = event.target as HTMLInputElement;
+        this.setState({ ...this.state, [name]: value });
     }
 
-    onSubmit(event: Event) {
-        event.preventDefault()
+    public validateInput(event: InputEvent) {
+        validation.handleValidateInput(event);
+        this.setState({
+            ...this.state,
+            isButtonDisabled: validation.hasFormErrors(),
+            errors: validation.errors,
+        });
     }
 
-    render() {
-        return `
-            <section class="profile-edit">
-                {{{ AsideBackNavigation }}}
-                <form class="container--centered profile-edit__form">
-                    <fieldset class="profile-edit__form-header">
-                        {{{ Avatar setImg=setAvatarImg imgSrc=avatar }}}
-                        <h1 class="text-3 profile-edit__form-header-title">
-                            Иван
-                        </h1>
-                    </fieldset>
-                    <fieldset class="profile-edit__form-list-group">
-                        <ul class="profile-edit__form-list">
-                            <li class="profile-edit__form-item">
-                                <label class="text-4 profile-edit__form-item-label" for="email">Почта</label>
-                                {{{ Input
-                                    onChange=handleInputChange
-                                    value=email
-                                    class="text-4 profile-edit__form-item-input"
-                                    name="email"
-                                    id="email"
-                                    type="email"
-                                }}}
-                            </li>
-                            <li class="profile-edit__form-item">
-                                <label class="text-4 profile-edit__form-item-label" for="login">Логин</label>
-                                {{{ Input
-                                    onChange=handleInputChange
-                                    value=login
-                                    class="text-4 profile-edit__form-item-input"
-                                    name="login"
-                                    id="login"
-                                }}}
-                            </li>
-                            <li class="profile-edit__form-item">
-                                <label class="text-4 profile-edit__form-item-label" for="first_name">Имя</label>
-                                {{{ Input
-                                    onChange=handleInputChange
-                                    value=first_name
-                                    class="text-4 profile-edit__form-item-input"
-                                    name="first_name"
-                                    id="first_name"
-                                }}}
-                            </li>
-                            <li class="profile-edit__form-item">
-                                <label class="text-4 profile-edit__form-item-label" for="second_name">Фамилия</label>
-                                {{{ Input
-                                    onChange=handleInputChange
-                                    value=second_name
-                                    class="text-4 profile-edit__form-item-input"
-                                    name="second_name"
-                                    id="second_name"
-                                }}}
-                            </li>
-                            <li class="profile-edit__form-item">
-                                <label class="text-4 profile-edit__form-item-label" for="display_name">Имя в чате</label>
-                                {{{ Input
-                                    onChange=handleInputChange
-                                    value=display_name
-                                    class="text-4 profile-edit__form-item-input"
-                                    name="display_name"
-                                    id="display_name"
-                                }}}
-                            </li>
-                            <li class="profile-edit__form-item">
-                                <label class="text-4 profile-edit__form-item-label" for="phone">Телефон</label>
-                                {{{ Input
-                                    onChange=handleInputChange
-                                    value=phone
-                                    class="text-4 profile-edit__form-item-input"
-                                    name="phone"
-                                    id="phone"
-                                    type="phone"
-                                }}}
-                            </li>
-                        </ul>
-                    </fieldset>
-                    {{{ Button
-                        class="button button-primary profile-edit__form-item-button"
-                        label="Сохранить"
-                        type="submit"
-                        onClick=onSubmit
-                    }}}
-                </form>
-            </section>
-        `
+    public onSubmit(event: Event) {
+        event.preventDefault();
+        console.log(this.state);
+
+        const isValid = validation.validate();
+
+        this.setState({
+            ...this.state,
+            isButtonDisabled: isValid,
+            errors: validation.errors,
+        });
+
+        if (!isValid) return;
+    }
+
+    public render() {
+        return template;
     }
 }
 

@@ -1,49 +1,47 @@
 import Component from "@core/Component";
-import './style.scss';
+import template from "./template.hbs?raw";
+import "./style.scss";
 
 class PopupAttachments extends Component {
-    state = { show: false }
+    constructor() {
+        super();
+        this.listeners = {
+            togglePopup: this.togglePopup.bind(this),
+        };
+    }
 
-    togglePopup(event: Event) {
-        const popupWrapper = document.querySelector('.popup-attachments__button-attach-wrapper');
-        const button = popupWrapper!.querySelector('.popup-attachments__button-attach');
+    public togglePopup(event: Event) {
+        const popupWrapper = document.querySelector(
+            ".popup-attachments__button-attach-wrapper"
+        );
+        const popup = popupWrapper!.querySelector(".popup");
+        const button = popupWrapper!.querySelector(
+            ".popup-attachments__button-attach"
+        );
 
-        if (this.state.show && button?.contains((event.target as HTMLElement))) {
-            this.setState({ ...this.state, show: false });
-            return
+        if (
+            button?.contains(event.target as HTMLElement) &&
+            popup?.classList.contains("popup--active")
+        ) {
+            popup?.classList.remove("popup--active");
+            return;
         }
 
-        this.setState({
-            ...this.state,
-            show: popupWrapper!.contains((event.target as HTMLElement))
-        })
+        popupWrapper!.contains(event.target as HTMLElement)
+            ? popup?.classList.add("popup--active")
+            : popup?.classList.remove("popup--active");
     }
 
-    componentDidMount() {
-        window.addEventListener('click', this.togglePopup.bind(this))
+    public componentDidMount() {
+        window.addEventListener("click", this.togglePopup.bind(this));
     }
 
-    componentWillUnmount() {
-        window.removeEventListener('click', this.togglePopup.bind(this))
+    public componentWillUnmount() {
+        window.removeEventListener("click", this.togglePopup.bind(this));
     }
 
     public render() {
-        return `
-            <div class="popup-wrapper popup-attachments__button-attach-wrapper">
-                <ul class="popup {{#if show}} popup--active {{/if}} popup-attachments__attach-popup">
-                    <li class="popup-item popup-attachments__attach-item">
-                        {{{ Button class="text-5 popup-button popup-attachments__button-attach-item-button" label="Фото или Видео" imgSource="/icons/photo.svg" }}}
-                    </li>
-                    <li class="popup-item popup-attachments__attach-item">
-                        {{{ Button class="text-5 popup-button popup-attachments__button-attach-item-button" label="Локация" imgSource="/icons/file.svg" }}}
-                    </li>
-                    <li class="popup-item popup-attachments__attach-item">
-                        {{{ Button class="text-5 popup-button popup-attachments__button-attach-item-button" label="Локация" imgSource="/icons/location.svg" }}}
-                    </li>
-                </ul>
-                {{{ Button imgSource="/icons/attach-icon.svg" class="button popup-attachments__button-attach" title="Прикрепить" }}}
-            </div>
-        `
+        return template;
     }
 }
 
