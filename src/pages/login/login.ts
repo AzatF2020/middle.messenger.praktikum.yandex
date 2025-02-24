@@ -1,12 +1,9 @@
-import { Component } from "@core/index";
+import Component from "@core/Component";
+import template from "./template.hbs?raw";
 
 class LoginPage extends Component {
     public render() {
-        return `
-            <section class="container--centered">
-                {{{ LoginForm }}}
-            </section>
-        `
+        return template;
     }
 }
 

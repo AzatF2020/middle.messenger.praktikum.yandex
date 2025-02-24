@@ -15,6 +15,12 @@ import {
 } from "@utils/constants/validationRules";
 import "./style.scss";
 
+interface IRegisterForm {
+    handleInputChange(event: Event): void;
+    validateInput(event: InputEvent): void;
+    onSubmit(event: Event): void;
+}
+
 const validation = new FormValidator({
     formSelector: ".register-form",
     rules: {
@@ -49,7 +55,7 @@ const validation = new FormValidator({
     },
 });
 
-class RegisterForm extends Component {
+class RegisterForm extends Component implements IRegisterForm {
     constructor() {
         super();
 

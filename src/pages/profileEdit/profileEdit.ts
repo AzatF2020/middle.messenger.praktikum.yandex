@@ -1,12 +1,9 @@
 import Component from "@core/Component";
+import template from "./template.hbs?raw";
 
 class ProfileEdit extends Component {
-    render() {
-        return `
-            <main>
-                {{{ ProfileEdit }}}
-            </main>
-        `
+    public render() {
+        return template;
     }
 }
 

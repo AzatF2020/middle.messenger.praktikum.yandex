@@ -1,6 +1,10 @@
 import Component from "./Component";
 import Handlebars, { HelperOptions } from "handlebars";
 
+export interface ComponentConstructable<Props extends Record<string, unknown>> {
+    new (props: Props): Component;
+}
+
 /* # Рекурсивный проход по DOM-дереву относительно найденного родительского контейнера, где произошел триггер */
 const walkDomParentContainer = (
     container: any[] | NodeListOf<ChildNode>,
@@ -41,7 +45,10 @@ const walkDomParentContainer = (
     }
 };
 
-const registerComponent = (componentName: string, Component: Component) => {
+const registerComponent = (
+    componentName: string,
+    componentClass: ComponentConstructable<any>
+) => {
     Handlebars.registerHelper(
         componentName,
         function (this: any, options: HelperOptions) {
@@ -53,16 +60,18 @@ const registerComponent = (componentName: string, Component: Component) => {
                 options.data.root.refs = {};
             }
 
-            (Object.keys(options.hash) as any).forEach((key) => {
-                if (this[key] && typeof this[key] === "string") {
-                    options.hash[key] = options.hash[key].replace(
-                        new RegExp(`{{${String(key)}}}`, "i"),
-                        this[key]
-                    );
+            (Object.keys(options.hash) as any).forEach(
+                (key: string | never) => {
+                    if (this[key] && typeof this[key] === "string") {
+                        options.hash[key] = options.hash[key].replace(
+                            new RegExp(`{{${String(key)}}}`, "i"),
+                            this[key]
+                        );
+                    }
                 }
-            });
+            );
 
-            const component = new Component(options.hash);
+            const component = new (componentClass as any)(options.hash);
 
             // # Получаем родительский контейнер, где произошел триггер
             const containerNodes = document.querySelector(

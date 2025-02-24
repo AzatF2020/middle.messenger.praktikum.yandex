@@ -148,12 +148,12 @@ class Component<P = any> {
         this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
     }
 
-    private _componentDidUpdate(oldProps, newProps) {
+    private _componentDidUpdate(oldProps: P, newProps: P) {
         this.componentDidUpdate(oldProps, newProps);
         this._render();
     }
 
-    public componentDidUpdate() {}
+    public componentDidUpdate(_oldProps: P, _newProps: P) {}
 
     private _componentDidMount() {
         tick(() => this.componentDidMount());

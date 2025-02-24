@@ -2,13 +2,17 @@ import Component from "@core/Component";
 import template from "./template.hbs?raw";
 import "./style.scss";
 
-interface PopupOptions {
-    openAddUserModal: () => void;
-    openDeleteUserModal: () => void;
+interface IPopupOptions {
+    togglePopup(event: Event): void;
 }
 
-class PopupOptions extends Component {
-    constructor(props: PopupOptions) {
+type PopupProps = {
+    openAddUserModal(): void;
+    openDeleteUserModal(): void;
+};
+
+class PopupOptions extends Component implements IPopupOptions {
+    constructor(props: PopupProps) {
         super(props);
 
         this.listeners = {

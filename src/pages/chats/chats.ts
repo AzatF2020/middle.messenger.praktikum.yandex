@@ -1,17 +1,10 @@
 import Component from "@core/Component";
-import './style.scss';
-
+import template from "./template.hbs?raw";
+import "./style.scss";
 
 class Chats extends Component {
-    render() {
-        return `
-            <section class="chats">
-                <div class="chats__container">
-                    {{{ ChatUsers }}}
-                    {{{ ChatMessages }}}
-                </div>
-            </section>
-        `
+    public render() {
+        return template;
     }
 }
 

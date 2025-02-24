@@ -1,12 +1,9 @@
 import Component from "@core/Component";
+import template from "./template.hbs?raw";
 
 class ProfileNewPassword extends Component {
-    render() {
-        return `
-            <main>
-                {{{ ProfileNewPassword }}}
-            </main>
-        `
+    public render() {
+        return template;
     }
 }
 

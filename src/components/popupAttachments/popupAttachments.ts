@@ -2,7 +2,11 @@ import Component from "@core/Component";
 import template from "./template.hbs?raw";
 import "./style.scss";
 
-class PopupAttachments extends Component {
+interface IPopupAttachments {
+    togglePopup(event: Event): void;
+}
+
+class PopupAttachments extends Component implements IPopupAttachments {
     constructor() {
         super();
         this.listeners = {

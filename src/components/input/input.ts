@@ -27,7 +27,7 @@ class Input extends Component {
         };
     }
 
-    render() {
+    public render() {
         return template;
     }
 }

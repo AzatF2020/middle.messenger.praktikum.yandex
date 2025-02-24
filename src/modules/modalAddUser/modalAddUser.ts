@@ -11,16 +11,16 @@ import {
 import "./style.scss";
 
 interface IModalAddUser {
-    handleCloseModal: (event: Event) => void;
-    closeByOverlay: (event: Event) => void;
-    handleInputChange: (event: Event) => void;
-    validateInput: (event: InputEvent) => void;
-    onSubmit: (event: Event) => void;
+    handleCloseModal(event: Event): void;
+    closeByOverlay(event: Event): void;
+    handleInputChange(event: Event): void;
+    validateInput(event: InputEvent): void;
+    onSubmit(event: Event): void;
 }
 
 type ModalAddUserProps = {
-    handleCloseModal: (event: Event) => void;
-    isActive: boolean;
+    handleCloseModal?: (event: Event) => void;
+    isActive?: boolean;
 };
 
 const validation = new FormValidator({

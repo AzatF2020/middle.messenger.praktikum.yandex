@@ -1,14 +1,9 @@
 import { Component } from "@core/index";
+import template from "./template.hbs?raw";
 
 class RegisterPage extends Component {
     public render() {
-        return `
-            <main class="container--centered">
-                <section>
-                    {{{ RegisterForm }}}
-                </section>
-            </main>
-        `
+        return template;
     }
 }
 

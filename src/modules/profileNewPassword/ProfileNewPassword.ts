@@ -9,11 +9,18 @@ import {
 } from "@utils/constants/validationRules";
 import "./style.scss";
 
-interface IProfileNewPassword {}
+interface IProfileNewPassword {
+    handleChangeInput(event: Event): void;
+    validateInput(event: InputEvent): void;
+    onSubmit(event: Event): void;
+}
 
 const validation = new FormValidator({
     formSelector: ".profile-new-password__form",
     rules: {
+        oldPassword: {
+            required,
+        },
         newPassword: {
             required,
             minLength: minLength(8),
@@ -23,7 +30,7 @@ const validation = new FormValidator({
     },
 });
 
-class ProfileNewPassword extends Component {
+class ProfileNewPassword extends Component implements IProfileNewPassword {
     constructor() {
         super();
         this.state = {
@@ -56,7 +63,17 @@ class ProfileNewPassword extends Component {
 
     public onSubmit(event: Event) {
         event.preventDefault();
-        console.log(event);
+        console.log(this.state);
+
+        const isValid = validation.validate();
+
+        this.setState({
+            ...this.state,
+            isButtonDisabled: isValid,
+            errors: validation.errors,
+        });
+
+        if (!isValid) return;
     }
 
     public render() {

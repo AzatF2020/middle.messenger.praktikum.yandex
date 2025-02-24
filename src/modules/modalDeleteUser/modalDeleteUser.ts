@@ -3,8 +3,8 @@ import template from "./template.hbs?raw";
 import "./style.scss";
 
 interface IModalDeleteUser {
-    closeByOverlay: (event: Event) => void;
-    handleInputChange: (event: Event) => void;
+    closeByOverlay(event: Event): void;
+    handleInputChange(event: Event): void;
 }
 
 type ModalDeleteUserProps = {
