@@ -28,7 +28,7 @@
         "@ui/*": ["src/ui/*"],
         "@styles/*": ["src/styles/*"],
         "@utils/*": ["src/utils/*"],
-        "@core/*": ["src/core/*"],
+        "@core/*": ["src/core/*"]
     }
   },
   "include": ["src"]
