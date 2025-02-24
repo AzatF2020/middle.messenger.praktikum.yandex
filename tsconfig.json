@@ -6,13 +6,11 @@
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
-
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
-
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
@@ -21,7 +19,6 @@
     "noUnusedParameters": true,
     "sourceMap": true,
     "strictNullChecks": true,
-
     "baseUrl": "./",
     "paths": {
         "@/*": ["src"],
