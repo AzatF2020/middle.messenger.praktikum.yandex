@@ -40,7 +40,7 @@
         color: transparent;
     }
 
-    label {
+    & + label {
       --label-color: #{utilities.$gray-400};
       --label-fz: #{utilities.$text-4};
 

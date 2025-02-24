@@ -28,8 +28,8 @@ const walkDomParentContainer = (
         }
 
         return `
-                    <div data-id="${ATTR_DATA_ID}"></div>
-                `;
+          <div data-id="${ATTR_DATA_ID}"></div>
+        `;
       } if (container[i].childNodes.length >= 1) {
         const result = walkDomParentContainer(
           container[i].childNodes,
@@ -93,8 +93,8 @@ const registerComponent = (
       component.eventBus().emit(Component.EVENTS.FLOW_CDM);
 
       return `
-                <div data-id="${component._id}"></div>
-            `;
+        <div data-id="${component._id}"></div>
+      `;
     },
   );
 };
