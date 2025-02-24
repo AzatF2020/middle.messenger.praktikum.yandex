@@ -1,0 +1,38 @@
+@use '@styles/utilities';
+
+.back-navigation {
+    height: inherit;
+    width: 6.4rem;
+    background-color: utilities.$gray-50;
+    border-right: utilities.$gray-100 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    @media (hover: hover) {
+        &:hover .profile__link-back {
+            background-color: utilities.$blue-600;
+        }
+    }
+
+    &__link-back {
+        width: 2.8rem;
+        height: 2.8rem;
+        background-color: utilities.$blue-500;
+        border-radius: utilities.$rounded-5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color .15s ease;
+
+        &::after{
+            content: "";
+            display: block;
+            inset: 0;
+            position: absolute;
+            z-index: 1000;
+            cursor: pointer;
+        }
+    }
+}

@@ -1,0 +1,59 @@
+<form class="login-form" novalidate>
+    <h1 class="heading-6 login-form__title">Вход</h1>
+
+    <fieldset class="login-form__group">
+        <div class="input-group">
+            <div class="input-floating">
+                {{{Input
+                    value=login
+                    onChange=handleInputChange
+                    onBlur=handleInputBlur
+                    type="text"
+                    id="login"
+                    name="login"
+                    placeholder="Логин"
+                }}}
+                <label for="login" class="label">Логин</label>
+            </div>
+            {{#if errors.login.length}}
+                <div class="error-feedback">
+                    {{#each errors.login}}
+                        <span>{{this}}</span>
+                    {{/each}}
+                </div>
+            {{/if}}
+        </div>
+        <div class="input-group">
+            <div class="input-floating">
+                {{{Input
+                    value=password
+                    onChange=handleInputChange
+                    onBlur=handleInputBlur
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Пароль"
+                }}}
+                <label for="password" class="label">Пароль</label>
+            </div>
+            {{#if errors.password.length}}
+                <div class="error-feedback">
+                    {{#each errors.password}}
+                        <span>{{this}}</span>
+                    {{/each}}
+                </div>
+            {{/if}}
+        </div>
+    </fieldset>
+
+    <div class="login-form__bottom">
+        {{{Button
+            onClick=onSubmit
+            class="button login-form__bottom-button"
+            type="submit"
+            disabled=isButtonDisabled
+            label="Авторизоваться"
+        }}}
+        <a href="/#" class="link">Нет аккаунта?</a>
+    </div>
+</form>

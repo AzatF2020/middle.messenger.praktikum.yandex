@@ -1,24 +1,35 @@
 {
   "compilerOptions": {
+    "outDir": "dist",
     "target": "ES2020",
     "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
-
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
-
-    /* Linting */
     "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "baseUrl": "./",
+    "paths": {
+        "@/*": ["src"],
+        "@pages/*": ["src/pages/*"],
+        "@modules/*": ["src/modules/*"],
+        "@components/*": ["src/components/*"],
+        "@ui/*": ["src/ui/*"],
+        "@styles/*": ["src/styles/*"],
+        "@utils/*": ["src/utils/*"],
+        "@core/*": ["src/core/*"]
+    }
   },
   "include": ["src"]
 }

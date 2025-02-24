@@ -1,0 +1,26 @@
+<div class="popup-wrapper popup-options">
+    {{{Button
+        onClick=togglePopup
+        class="button popup-options__button-more"
+        title="Опции"
+        imgSource="/icons/more-icon.svg"
+    }}}
+    <ul class="popup popup-options__list">
+        <li class="popup-item">
+            {{{Button
+                onClick=openAddUserModal
+                class="text-5 popup-button"
+                label="Добавить пользователя"
+                imgSource="/icons/add.svg"
+            }}}
+        </li>
+        <li class="popup-item">
+            {{{Button
+                onClick=openDeleteUserModal
+                class="text-5 popup-button"
+                label="Удалить пользователя"
+                imgSource="/icons/remove.svg"
+            }}}
+        </li>
+    </ul>
+</div>

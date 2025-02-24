@@ -1,0 +1,21 @@
+@use "@styles/utilities";
+
+.pages {
+    &__title {
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1.2rem;
+        text-align: center;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    a {
+        color: utilities.$blue-500;
+    }
+}

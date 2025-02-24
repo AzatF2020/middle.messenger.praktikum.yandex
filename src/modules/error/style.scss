@@ -1,0 +1,18 @@
+@use '@styles/utilities';
+
+.error {
+    text-align: center;
+
+    &__title {
+        margin-bottom: 2rem;
+    }
+
+    &__text {
+        text-align: center;
+        margin-bottom: 7rem;
+    }
+
+    &__link {
+        color: utilities.$blue-500;
+    }
+}

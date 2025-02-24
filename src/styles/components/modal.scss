@@ -1,20 +1,42 @@
 @use "../utilities";
 
 .modal {
+    inset: 0;
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin: 0;
-    padding: 0;
-    border: none;
-    border-radius: utilities.$rounded-3;
-    background-color: utilities.$white;
-    position: relative;
     z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(0 0 0 / 0%);
+    cursor: pointer;
 
     &__wrapper {
+        position: relative;
+        margin: 0;
+        border: none;
+        border-radius: utilities.$rounded-3;
+        background-color: utilities.$white;
+        opacity: 0;
+        pointer-events: none;
+        overflow: hidden;
         padding: 3rem;
+        cursor: default;
+    }
+
+    &--active {
+        opacity: 1;
+        overflow: visible;
+        pointer-events: all;
+        background-color: rgb(0 0 0 / 50%);
+    }
+
+    &--active .modal__wrapper {
+        opacity: 1;
+        overflow: visible;
+        pointer-events: all;
     }
 
     &__close-button {
@@ -34,9 +56,4 @@
             }
         }
     }
-}
-
-dialog::backdrop {
-    background-color: rgba(0, 0, 0, .5);
-    transition: background-color .15s ease;
 }

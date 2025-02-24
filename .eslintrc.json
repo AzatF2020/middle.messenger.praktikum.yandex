@@ -1,0 +1,28 @@
+{
+    "extends": "airbnb",
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "rules": {
+        "max-len": [2, 120],
+        "@typescript-eslint/no-unused-vars": 2,
+        "no-undef": "off",
+        "react/no-unused-class-component-methods": "off",
+        "no-unused-expressions": "off",
+        "class-methods-use-this": "off",
+        "import/no-unresolved": "off",
+        "react/destructuring-assignment": "off",
+        "react/prop-types": "off",
+        "new-cap": "off",
+        "no-useless-return": "off",
+        "react/no-access-state-in-setstate": "off",
+        "no-bitwise": "off",
+        "no-underscore-dangle": "off",
+        "import/extensions": "off",
+        "import/prefer-default-export": "warn",
+        "no-useless-constructor": "warn",
+        "no-param-reassign": "off",
+        "no-useless-escape": "off",
+        "import/no-extraneous-dependencies": "warn",
+        "no-use-before-define": "off"
+    }
+}
