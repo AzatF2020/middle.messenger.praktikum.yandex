@@ -40,25 +40,24 @@
         color: transparent;
     }
 
-    & + label {
-        --label-color: #{utilities.$gray-400};
-        --label-fz: #{utilities.$text-4};
+    label {
+      --label-color: #{utilities.$gray-400};
+      --label-fz: #{utilities.$text-4};
 
-        font-size: var(--label-fz);
-        color: var(--label-color);
-        font-weight: 500;
-        position: absolute;
-        top: 50%;
-        left: 0;
-        overflow: hidden;
-        text-align: start;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        pointer-events: none;
-        transform: translateY(-50%) scale(1) translateX(0);
-        transform-origin: 0 0;
-
-        transition: transform 0.15s ease, font-size 0.15s ease;
+      font-size: var(--label-fz);
+      color: var(--label-color);
+      font-weight: 500;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      overflow: hidden;
+      text-align: start;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      pointer-events: none;
+      transform: translateY(-50%) scale(1) translateX(0);
+      transform-origin: 0 0;
+      transition: transform 0.15s ease, font-size 0.15s ease;
     }
 
     &:focus,
