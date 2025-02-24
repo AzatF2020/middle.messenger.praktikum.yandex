@@ -1,1 +1,1 @@
-export { default as ChatUsers } from './chatUsers'
+export { default as ChatUsers } from './chatUsers';

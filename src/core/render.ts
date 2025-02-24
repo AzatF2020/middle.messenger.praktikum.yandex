@@ -1,23 +1,23 @@
-import { Component } from ".";
+import { Component } from '.';
 
-const render = (block: Component) => {
-    const root: HTMLElement = document.querySelector('#app')!
+const render = (block: Component): HTMLElement | null => {
+  const root: HTMLElement = document.querySelector('#app')!;
 
-    if (!root) return;
+  if (!root) return null;
 
-    root.innerHTML = '';
+  root.innerHTML = '';
 
-    block.eventBus().emit(Component.EVENTS.INIT);
+  block.eventBus().emit(Component.EVENTS.INIT);
 
-    if (!block.getElement!) return;
+  if (!block.getElement!) return null;
 
-    root.appendChild(block.getElement!);
+  root.appendChild(block.getElement!);
 
-    block.eventBus().emit(Component.EVENTS.FLOW_CDM);
+  block.eventBus().emit(Component.EVENTS.FLOW_CDM);
 
-    block.eventBus().emit(Component.EVENTS.FLOW_CWU);
+  block.eventBus().emit(Component.EVENTS.FLOW_CWU);
 
-    return root;
-}
+  return root;
+};
 
 export default render;

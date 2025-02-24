@@ -1,6 +1,6 @@
-import Component from "@core/Component";
-import template from "./template.hbs?raw";
-import "./style.scss";
+import Component from '@core/Component';
+import template from './template.hbs?raw';
+import './style.scss';
 
 interface AvatarProps {
     setImg: () => void;
@@ -9,17 +9,17 @@ interface AvatarProps {
 }
 
 class Avatar extends Component {
-    constructor({
-        imgSrc = "/img/plug.png",
-        readonly = false,
-        setImg = () => {},
-    }: AvatarProps) {
-        super({ imgSrc, readonly, setImg });
-    }
+  constructor({
+    imgSrc = '/img/plug.png',
+    readonly = false,
+    setImg = () => {},
+  }: AvatarProps) {
+    super({ imgSrc, readonly, setImg });
+  }
 
-    public render() {
-        return template;
-    }
+  public render() {
+    return template;
+  }
 }
 
 export default Avatar;
