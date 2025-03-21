@@ -1,15 +1,15 @@
 import Component from '@core/Component';
 import template from './template.hbs?raw';
-import './style.scss';
 
-type AsideBackNavigationProps = {
+type LinkProps = {
+  class: string;
+  label: string;
   onClick: () => void;
 }
 
-class AsideBackNavigation extends Component {
-  constructor(props: AsideBackNavigationProps) {
+class Link extends Component {
+  constructor(props: LinkProps) {
     super(props);
-
     this.listeners = { click: this.props.onClick };
   }
 
@@ -18,4 +18,4 @@ class AsideBackNavigation extends Component {
   }
 }
 
-export default AsideBackNavigation;
+export default Link;

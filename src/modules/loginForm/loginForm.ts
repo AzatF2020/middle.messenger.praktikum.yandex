@@ -1,5 +1,4 @@
-import { Component } from '@core/index';
-import FormValidator from '@utils/helpers/FormValidator';
+import { Component, Router, FormValidator } from '@core/index';
 import {
   minLength,
   maxLength,
@@ -12,9 +11,9 @@ import template from './template.hbs?raw';
 import './style.scss';
 
 interface ILoginForm {
-    handleInputChange: (event: Event) => void;
-    validateInput: (event: InputEvent) => void;
-    onSubmit: (event: Event) => void;
+  handleInputChange: (event: Event) => void;
+  validateInput: (event: InputEvent) => void;
+  onSubmit: (event: Event) => void;
 }
 
 const validation = new FormValidator({
@@ -39,6 +38,8 @@ class LoginForm extends Component implements ILoginForm {
   constructor() {
     super();
 
+    const router = new Router();
+
     this.state = {
       login: '',
       password: '',
@@ -50,6 +51,7 @@ class LoginForm extends Component implements ILoginForm {
       handleInputBlur: this.validateInput.bind(this),
       handleInputChange: this.handleInputChange.bind(this),
       onSubmit: this.onSubmit.bind(this),
+      goToRegister: () => router.go('/register'),
     };
   }
 
@@ -60,7 +62,6 @@ class LoginForm extends Component implements ILoginForm {
 
   public onSubmit(event: Event) {
     event.preventDefault();
-    console.log(this.state);
 
     const isValid = validation.validate();
 

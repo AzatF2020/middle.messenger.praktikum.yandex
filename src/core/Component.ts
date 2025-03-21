@@ -18,8 +18,6 @@ class Component<P = any> {
 
   private _weakSet: WeakSet<any>;
 
-  _id: string;
-
   protected readonly props: P;
 
   protected listeners: {};
@@ -27,6 +25,8 @@ class Component<P = any> {
   protected state: any = {};
 
   protected children: Record<string, Component>;
+
+  _id: string;
 
   constructor(props?: P) {
     const eventBus = new EventBus();
@@ -141,7 +141,7 @@ class Component<P = any> {
         element.innerHTML = stubInnerHTML;
       }
 
-            stub!.replaceWith(element);
+      stub!.replaceWith(element);
     });
 
     return fragment.content;
@@ -201,6 +201,14 @@ class Component<P = any> {
     this._element = newElement as HTMLElement;
 
     this._addEvents();
+  }
+
+  public show() {
+    this._element!.style.display = 'block';
+  }
+
+  public hide() {
+    this._element!.style.display = 'none';
   }
 
   public render() {}

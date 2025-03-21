@@ -1,21 +1,24 @@
-import Component from '@core/Component';
+import { Router, Component } from '@core/index';
 import chats from '@utils/pages-data/chats';
 import template from './template.hbs?raw';
 import './style.scss';
 
 interface IChatUsers {
-    searchUsers: (value: string) => void;
-    handleInputChange: (event: Event) => void;
+  searchUsers: (value: string) => void;
+  handleInputChange: (event: Event) => void;
 }
 
 class ChatUsers extends Component implements IChatUsers {
   constructor() {
     super();
 
+    const router = new Router();
+
     // eslint-disable-next-line react/no-unused-state
     this.state = { data: chats, message: '' };
     this.listeners = {
       handleInputChange: this.handleInputChange.bind(this),
+      goToProfile: () => { router.go('/profile'); },
     };
   }
 

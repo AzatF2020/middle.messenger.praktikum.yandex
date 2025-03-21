@@ -1,5 +1,4 @@
-import Component from '@core/Component';
-import FormValidator from '@utils/helpers/FormValidator';
+import { Router, FormValidator, Component } from '@core/index';
 import {
   isEmail,
   maxLength,
@@ -16,9 +15,9 @@ import template from './template.hbs?raw';
 import './style.scss';
 
 interface IRegisterForm {
-    handleInputChange(event: Event): void;
-    validateInput(event: InputEvent): void;
-    onSubmit(event: Event): void;
+  handleInputChange(event: Event): void;
+  validateInput(event: InputEvent): void;
+  onSubmit(event: Event): void;
 }
 
 const validation = new FormValidator({
@@ -59,6 +58,8 @@ class RegisterForm extends Component implements IRegisterForm {
   constructor() {
     super();
 
+    const router = new Router();
+
     this.state = {
       email: '',
       login: '',
@@ -74,6 +75,7 @@ class RegisterForm extends Component implements IRegisterForm {
       handleInputBlur: this.validateInput.bind(this),
       handleInputChange: this.handleInputChange.bind(this),
       onSubmit: this.onSubmit.bind(this),
+      goToLogin: () => { router.go('/login'); },
     };
   }
 

@@ -1,12 +1,12 @@
 interface IFormValidator {
-    resetValidationRules: () => void;
-    hasFormErrors: () => boolean;
-    handleValidateInput: (event: InputEvent) => void;
+  resetValidationRules: () => void;
+  hasFormErrors: () => boolean;
+  handleValidateInput: (event: InputEvent) => void;
 }
 
 type FormValidatorConfig = {
-    formSelector?: string;
-    rules: Record<string, Record<string, Function>>;
+  formSelector?: string;
+  rules: Record<string, Record<string, Function>>;
 };
 
 class FormValidator implements IFormValidator {

@@ -1,5 +1,5 @@
 import Component from '@core/Component';
-import FormValidator from '@utils/helpers/FormValidator';
+import FormValidator from '@core/FormValidator';
 import {
   isEmail,
   maxLength,

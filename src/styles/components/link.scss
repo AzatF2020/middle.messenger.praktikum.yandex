@@ -9,6 +9,9 @@
     color: var(--link-color);
     line-height: 1.2;
     text-decoration: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 
     @media (hover: hover) {
         &:hover {
