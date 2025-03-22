@@ -75,7 +75,7 @@ class RegisterForm extends Component implements IRegisterForm {
       handleInputBlur: this.validateInput.bind(this),
       handleInputChange: this.handleInputChange.bind(this),
       onSubmit: this.onSubmit.bind(this),
-      goToLogin: () => { router.go('/login'); },
+      goToLogin: () => { router.go('/'); },
     };
   }
 
@@ -90,7 +90,6 @@ class RegisterForm extends Component implements IRegisterForm {
 
   public onSubmit(event: Event) {
     event.preventDefault();
-    console.log(this.state);
 
     const isValid = validation.validate();
 

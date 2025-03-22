@@ -25,10 +25,10 @@ Object.entries(Object.assign(components, modules)).forEach(
 const router = new Router();
 
 router
-  .use('/login', LoginPage)
-  .use('/register', RegisterPage)
+  .use('/', LoginPage)
+  .use('/sign-up', RegisterPage)
   .use('/pages', Index)
-  .use('/chats', Chats)
+  .use('/messenger', Chats)
   .use('/profile', Profile)
   .use('/profile-new-password', ProfileNewPassword)
   .use('/profile-change-data', ProfileEdit)

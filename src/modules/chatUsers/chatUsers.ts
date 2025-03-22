@@ -9,16 +9,19 @@ interface IChatUsers {
 }
 
 class ChatUsers extends Component implements IChatUsers {
+  router: Router;
+
   constructor() {
     super();
 
-    const router = new Router();
+    this.router = new Router();
 
     // eslint-disable-next-line react/no-unused-state
     this.state = { data: chats, message: '' };
     this.listeners = {
       handleInputChange: this.handleInputChange.bind(this),
-      goToProfile: () => { router.go('/profile'); },
+      goToProfile: () => { this.router.go('/profile'); },
+      openUserMessengerById: this.openUserMessengerById.bind(this),
     };
   }
 
@@ -30,6 +33,12 @@ class ChatUsers extends Component implements IChatUsers {
       data: this.searchUsers(value),
       [name]: value.trim(),
     });
+  }
+
+  public openUserMessengerById(value: string) {
+    return () => {
+      this.router.go('/messenger', value);
+    };
   }
 
   public searchUsers(value: string) {

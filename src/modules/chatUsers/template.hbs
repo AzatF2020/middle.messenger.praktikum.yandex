@@ -16,34 +16,14 @@
     </header>
     <ul class="aside__chats">
         {{#each data}}
-        <li class="aside__chat-user {{#if is_active }}aside__chat-user--active{{/if}}">
-            <div class="aside__chat-user-image-plug"></div>
-            <div class="aside__chat-user-info">
-                <div class="aside__chat-user-header">
-                    <strong>
-                        <a href="/#" class="aside__chat-user-name">
-                            {{ name }}
-                        </a>
-                    </strong>
-                    <time class="aside__chat-user-time">
-                        {{ time }}
-                    </time>
-                </div>
-                {{#if message}}
-                    <p class="text-5 aside__chat-user-message">
-                        {{#if myself_sender}}
-                            <span class="aside__chat-user-message-sender">Вы:</span>
-                        {{/if}}
-                        {{ message }}
-                    </p>
-                {{/if}}
-            </div>
-            {{#if unread_messages }}
-                <span class="aside__chat-user-unread-messages">
-                    {{ unread_messages }}
-                </span>
-            {{/if}}
-        </li>
+          {{{ ListItemUser
+            onClick=../openUserMessengerById
+            name=name
+            time=time
+            myself=myself_sender
+            message=message
+            unreadMessages=unread_messages
+          }}}
         {{/each}}
     </ul>
 </div>

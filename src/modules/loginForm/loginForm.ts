@@ -51,7 +51,7 @@ class LoginForm extends Component implements ILoginForm {
       handleInputBlur: this.validateInput.bind(this),
       handleInputChange: this.handleInputChange.bind(this),
       onSubmit: this.onSubmit.bind(this),
-      goToRegister: () => router.go('/register'),
+      goToRegister: () => router.go('/sign-up'),
     };
   }
 

@@ -121,9 +121,9 @@ class Component<P = any> {
     const fragment = document.createElement('template');
 
     const template = Handlebars.compile(this.render())({
+      ...this.listeners,
       ...this.props,
       ...this.state,
-      ...this.listeners,
       children: this.children,
     });
 
