@@ -13,7 +13,7 @@ import ProfileEdit from '@pages/profileEdit/profileEdit';
 import ProfileNewPassword from '@pages/profileNewPassword/profileNewPassword';
 import ServerError from '@pages/serverError/serverError';
 import Index from '@pages/index/index';
-import Store, { STORE_EVENTS } from '@core/Store';
+import Store from '@core/Store';
 
 conditionalsHelper();
 
@@ -30,8 +30,6 @@ window.store = new Store({
   loginError: null,
   loading: false,
 });
-
-console.log(window.store._listeners);
 
 router
   .use('/', LoginPage)

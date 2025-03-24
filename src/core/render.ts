@@ -13,9 +13,9 @@ const render = (block: Component): HTMLElement | null => {
 
   root.appendChild(block.getElement!);
 
-  block.eventBus().emit(Component.EVENTS.FLOW_CWU);
-
   block.eventBus().emit(Component.EVENTS.FLOW_CDM);
+
+  block.eventBus().emit(Component.EVENTS.FLOW_CWU);
 
   return root;
 };

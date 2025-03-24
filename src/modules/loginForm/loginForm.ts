@@ -40,7 +40,6 @@ class LoginForm extends Component implements ILoginForm {
   constructor() {
     super();
 
-    console.log(window.store.getState());
     const router = new Router();
 
     this.state = {
@@ -58,11 +57,7 @@ class LoginForm extends Component implements ILoginForm {
     };
   }
 
-  public componentDidMount(): void {
-    setTimeout(() => {
-      window.store.setState({ loading: true });
-    }, 3000);
-  }
+  public componentDidMount(): void {}
 
   public handleInputChange(event: Event) {
     const { name, value } = event.target as HTMLInputElement;
@@ -97,4 +92,4 @@ class LoginForm extends Component implements ILoginForm {
   }
 }
 
-export default connectStore(LoginForm);
+export default connectStore(LoginForm, (state) => ({ loading: state.loading }));

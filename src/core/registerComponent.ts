@@ -90,7 +90,10 @@ const registerComponent = (
       options.data.root.children[component._id] = component;
 
       component.eventBus().emit(Component.EVENTS.INIT);
+
       component.eventBus().emit(Component.EVENTS.FLOW_CDM);
+
+      component.eventBus().emit(Component.EVENTS.FLOW_CWU);
 
       return `
         <div data-id="${component._id}"></div>

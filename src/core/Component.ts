@@ -168,7 +168,10 @@ class Component<P = any> {
   public componentDidMount() {}
 
   private _componentWillUnmount() {
-    tick(() => this.componentWillUnmount());
+    this.componentWillUnmount();
+    window.onpopstate = () => {
+      this.componentWillUnmount();
+    };
   }
 
   public componentWillUnmount() {}

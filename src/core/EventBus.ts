@@ -1,5 +1,5 @@
 class EventBus {
-  public _listeners: Record<string, Function[]> = {};
+  private _listeners: Record<string, Function[]> = {};
 
   private _isEventExist(event: string) {
     if (!this._listeners[event]) {
@@ -27,6 +27,10 @@ class EventBus {
     this._listeners[event].forEach((listener) => {
       listener(...args);
     });
+  }
+
+  public getListeners() {
+    return this._listeners;
   }
 }
 
