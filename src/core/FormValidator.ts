@@ -1,6 +1,8 @@
 interface IFormValidator {
   resetValidationRules: () => void;
+
   hasFormErrors: () => boolean;
+
   handleValidateInput: (event: InputEvent) => void;
 }
 

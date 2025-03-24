@@ -24,6 +24,7 @@
         "no-useless-escape": "off",
         "import/no-extraneous-dependencies": "warn",
         "no-use-before-define": "off",
-        "no-constructor-return": "off"
+        "no-constructor-return": "off",
+        "import/no-named-default": "off"
     }
 }

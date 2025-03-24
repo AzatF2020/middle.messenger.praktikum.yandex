@@ -3,8 +3,11 @@ import Route from './Route';
 
 interface IRouter {
   use(pathname: string, block: typeof Component): void
+
   start(): void
+
   go(pathname: string, hash: string): void
+
   back(): void
 }
 

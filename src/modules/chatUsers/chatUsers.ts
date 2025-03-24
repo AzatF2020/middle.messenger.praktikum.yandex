@@ -9,7 +9,7 @@ interface IChatUsers {
 }
 
 class ChatUsers extends Component implements IChatUsers {
-  router: Router;
+  public router: Router;
 
   constructor() {
     super();

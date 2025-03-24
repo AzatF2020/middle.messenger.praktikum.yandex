@@ -3,8 +3,11 @@ import Component from './Component';
 
 interface IRoute {
   navigate(pathname: string): void
+
   leave(): void
+
   match(pathname: string): boolean
+
   render(): void
 }
 

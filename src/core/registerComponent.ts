@@ -2,7 +2,7 @@ import Handlebars, { HelperOptions } from 'handlebars';
 import Component from './Component';
 
 export interface ComponentConstructable<Props extends Record<string, unknown>> {
-    new (props: Props): Component;
+  new (props: Props): Component;
 }
 
 /* # Рекурсивный проход по DOM-дереву относительно найденного родительского контейнера, где произошел триггер */

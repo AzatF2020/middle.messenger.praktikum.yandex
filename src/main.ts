@@ -13,6 +13,7 @@ import ProfileEdit from '@pages/profileEdit/profileEdit';
 import ProfileNewPassword from '@pages/profileNewPassword/profileNewPassword';
 import ServerError from '@pages/serverError/serverError';
 import Index from '@pages/index/index';
+import Store from '@core/Store';
 
 conditionalsHelper();
 
@@ -23,6 +24,13 @@ Object.entries(Object.assign(components, modules)).forEach(
 );
 
 const router = new Router();
+const store = new Store({
+  user: null,
+  loginError: null,
+  loading: false,
+});
+
+window.store = store;
 
 router
   .use('/', LoginPage)

@@ -1,14 +1,31 @@
-// # Базовая реализовая класса
 import { METHOD } from '@utils/constants/httpMethod';
 
-type Options<T> = {
+type Options<T = unknown> = {
   data?: T,
   headers?: Record<string, string>,
   withCredentials?: boolean,
   method: METHOD,
 }
 
-class HTTPClient {
+interface IHTTPClient {
+  get<T>(url: string, options?: Omit<Options<unknown>, 'data'>): Promise<unknown | T>
+
+  post<T, S>(url: string, options?: Options<S>): Promise<unknown | T>
+
+  put<T, S>(url: string, options?: Options<S>): Promise<unknown | T>
+
+  patch<T, S>(url: string, options?: Options<S>): Promise<unknown | T>
+
+  delete<T, S>(url: string, options?: Options<S>): Promise<unknown | T>
+}
+
+class HTTPClient implements IHTTPClient {
+  private baseURL: string;
+
+  constructor(url: string = '') {
+    this.baseURL = url;
+  }
+
   private request<T>(url: string, options: Options<T> = {
     method: METHOD.GET,
     headers: { 'Content-Type': 'application/json' },
@@ -20,12 +37,20 @@ class HTTPClient {
       method,
     } = options;
 
+    const currentURL = `${this.baseURL}${url}`;
+
     const isGet = method === METHOD.GET;
+
+    const xhrURL = isGet && !data ? currentURL : currentURL;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
 
-      xhr.open(method, url);
+      xhr.open(
+        method,
+        xhrURL,
+      );
+
       xhr.withCredentials = withCredentials;
 
       Object.entries(headers!).forEach(([key, value]) => {
@@ -42,8 +67,10 @@ class HTTPClient {
       xhr.onabort = reject;
       xhr.ontimeout = reject;
 
-      if (isGet || !options.data) {
+      if (isGet || !data) {
         xhr.send();
+      } else if (data instanceof FormData) {
+        xhr.send(data);
       } else {
         xhr.send(JSON.stringify(data));
       }
