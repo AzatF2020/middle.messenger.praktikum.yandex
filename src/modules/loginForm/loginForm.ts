@@ -1,4 +1,6 @@
-import { Component, Router, FormValidator, connectStore } from '@core/index';
+import {
+  Component, Router, FormValidator, connectStore,
+} from '@core/index';
 import {
   minLength,
   maxLength,
@@ -38,7 +40,7 @@ class LoginForm extends Component implements ILoginForm {
   constructor() {
     super();
 
-    console.log(window.store.getState())
+    console.log(window.store.getState());
     const router = new Router();
 
     this.state = {
@@ -54,6 +56,12 @@ class LoginForm extends Component implements ILoginForm {
       onSubmit: this.onSubmit.bind(this),
       goToRegister: () => router.go('/sign-up'),
     };
+  }
+
+  public componentDidMount(): void {
+    setTimeout(() => {
+      window.store.setState({ loading: true });
+    }, 3000);
   }
 
   public handleInputChange(event: Event) {
@@ -73,12 +81,6 @@ class LoginForm extends Component implements ILoginForm {
     });
 
     if (!isValid) return;
-  }
-
-  public componentDidMount(): void {
-    setTimeout(() => {
-      window.store.setState({ loading: true })
-    }, 3000)
   }
 
   public validateInput(event: InputEvent) {

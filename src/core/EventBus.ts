@@ -1,5 +1,5 @@
 class EventBus {
-  private _listeners: Record<string, Function[]> = {};
+  public _listeners: Record<string, Function[]> = {};
 
   private _isEventExist(event: string) {
     if (!this._listeners[event]) {

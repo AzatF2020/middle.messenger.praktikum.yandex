@@ -7,7 +7,6 @@ function connectStore<T>(Component: typeof Block) {
       super(props);
 
       window.store.on(STORE_EVENTS.UPDATED, () => {
-        console.log('work');
         this.setState({ ...this.state, ...window.store.getState() });
       });
     }

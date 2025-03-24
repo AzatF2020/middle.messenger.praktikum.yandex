@@ -1,3 +1,4 @@
+import tick from '@utils/helpers/tick';
 import EventBus from './EventBus';
 
 enum STORE_EVENTS {
@@ -14,10 +15,11 @@ class Store extends EventBus {
     super();
 
     this.state = defaultState;
-
-    this.on(STORE_EVENTS.UPDATED, () => { void(0) })
-
-    this.setState(defaultState);
+    /*
+      Вызов обновления состояния при инициализации Store в main.ts
+      и последующих вызовов событий STORE_EVENTS.UPDATED в connectStore'ах.
+    */
+    tick(() => this.setState(defaultState));
 
     Store.__instance__ = this;
   }
