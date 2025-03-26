@@ -18,6 +18,11 @@ interface ILoginForm {
   onSubmit: (event: Event) => void;
 }
 
+type LoginFormProps = {
+  loading?: boolean;
+  [key: string]: unknown;
+}
+
 const validation = new FormValidator({
   formSelector: '.login-form',
   rules: {
@@ -37,8 +42,8 @@ const validation = new FormValidator({
 });
 
 class LoginForm extends Component implements ILoginForm {
-  constructor() {
-    super();
+  constructor(props: LoginFormProps = {}) {
+    super(props);
 
     const router = new Router();
 
@@ -57,10 +62,15 @@ class LoginForm extends Component implements ILoginForm {
     };
   }
 
-  public componentDidMount(): void {}
+  public componentDidMount() {
+    setTimeout(() => {
+      window.store.setState({ loading: true });
+    }, 1000);
+  }
 
   public handleInputChange(event: Event) {
     const { name, value } = event.target as HTMLInputElement;
+
     this.setState({ ...this.state, [name]: value });
   }
 
@@ -80,6 +90,7 @@ class LoginForm extends Component implements ILoginForm {
 
   public validateInput(event: InputEvent) {
     validation.handleValidateInput(event);
+
     this.setState({
       ...this.state,
       isButtonDisabled: validation.hasFormErrors(),

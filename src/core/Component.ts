@@ -168,10 +168,9 @@ class Component<P = any> {
   public componentDidMount() {}
 
   private _componentWillUnmount() {
-    this.componentWillUnmount();
-    window.onpopstate = () => {
+    tick(() => {
       this.componentWillUnmount();
-    };
+    });
   }
 
   public componentWillUnmount() {}
@@ -204,14 +203,6 @@ class Component<P = any> {
     this._element = newElement as HTMLElement;
 
     this._addEvents();
-  }
-
-  public show() {
-    this._element!.style.display = 'block';
-  }
-
-  public hide() {
-    this._element!.style.display = 'none';
   }
 
   public render() {}

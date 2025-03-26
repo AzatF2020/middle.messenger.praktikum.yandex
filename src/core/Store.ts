@@ -18,6 +18,7 @@ class Store extends EventBus {
     /*
       Вызов обновления состояния при инициализации Store в main.ts
       и последующих вызовов событий STORE_EVENTS.UPDATED в connectStore'ах.
+      connectStore (on/subscribe) -> Store (emit) -> render (CWU/component_will_unmount)
     */
 
     tick(() => {

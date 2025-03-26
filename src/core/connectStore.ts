@@ -1,25 +1,35 @@
 import { default as Block } from './Component';
-import Store, { STORE_EVENTS } from './Store';
+import { STORE_EVENTS } from './Store';
 
-function connectStore<T>(Component: typeof Block, mapStateProps: (storState: any) => any) {
-  return class extends Component<T> {
-    protected store: Store;
+function connectStore<T extends Record<string, unknown>>(
+  Component: new (props: T) => Block<T>,
+  mapStateProps: (storeState: any) => T,
+) {
+  return class extends Component {
+    private onChangeStore: () => void;
 
     constructor(props: T) {
-      super(props);
+      const store = window?.store;
+      let storeState = mapStateProps(store.getState());
 
-      this.store = window?.store;
+      super({ ...props, ...storeState });
 
-      this.store.on(STORE_EVENTS.UPDATED, this.onChangeStore.bind(this));
+      this.onChangeStore = () => {
+        const newStoreState = mapStateProps(store.getState());
+
+        if (JSON.stringify(newStoreState) !== JSON.stringify(storeState)) {
+          this.setState({ ...this.state, ...newStoreState });
+        }
+
+        storeState = newStoreState;
+      };
+
+      store.on(STORE_EVENTS.UPDATED, this.onChangeStore);
     }
 
     public componentWillUnmount(): void {
-      console.log('work');
-      this.store.off(STORE_EVENTS.UPDATED, this.onChangeStore.bind(this));
-    }
-
-    private onChangeStore(): void {
-      this.setState({ ...this.state, ...mapStateProps(this.store.getState()) });
+      // Удалять при переключении страницы
+      // window.store.off(STORE_EVENTS.UPDATED, this.onChangeStore);
     }
   };
 }
