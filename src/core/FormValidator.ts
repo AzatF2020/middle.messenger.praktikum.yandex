@@ -80,7 +80,7 @@ class FormValidator implements IFormValidator {
       }
     });
 
-    return this.hasFormErrors();
+    return !this.hasFormErrors();
   }
 }
 

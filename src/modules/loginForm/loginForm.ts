@@ -9,6 +9,7 @@ import {
   requiredMinimumUpperCaseAndNumbers,
   isLatin,
 } from '@utils/constants/validationRules';
+import LoginController from '@controllers/LoginController.ts';
 import template from './template.hbs?raw';
 import './style.scss';
 
@@ -42,10 +43,14 @@ const validation = new FormValidator({
 });
 
 class LoginForm extends Component implements ILoginForm {
+  public loginController: LoginController;
+
   constructor(props: LoginFormProps = {}) {
     super(props);
 
     const router = new Router();
+
+    this.loginController = new LoginController();
 
     this.state = {
       login: '',
@@ -62,12 +67,6 @@ class LoginForm extends Component implements ILoginForm {
     };
   }
 
-  public componentDidMount() {
-    setTimeout(() => {
-      window.store.setState({ loading: true });
-    }, 1000);
-  }
-
   public handleInputChange(event: Event) {
     const { name, value } = event.target as HTMLInputElement;
 
@@ -81,11 +80,13 @@ class LoginForm extends Component implements ILoginForm {
 
     this.setState({
       ...this.state,
-      isButtonDisabled: isValid,
+      isButtonDisabled: !isValid,
       errors: validation.errors,
     });
 
     if (!isValid) return;
+
+    this.loginController.login();
   }
 
   public validateInput(event: InputEvent) {

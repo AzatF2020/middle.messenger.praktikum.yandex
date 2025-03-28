@@ -22,8 +22,8 @@ interface IHTTPClient {
 class HTTPClient implements IHTTPClient {
   private baseURL: string;
 
-  constructor(url: string = '') {
-    this.baseURL = url;
+  constructor(url: string) {
+    this.baseURL = `${import.meta.env.VITE_BACKEND_URL}${url}`;
   }
 
   private request<T>(url: string, options: Options<T> = {
@@ -32,7 +32,7 @@ class HTTPClient implements IHTTPClient {
   }) {
     const {
       headers = { 'Content-Type': 'application/json' },
-      withCredentials = false,
+      withCredentials = true,
       data,
       method,
     } = options;

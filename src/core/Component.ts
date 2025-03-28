@@ -162,7 +162,9 @@ class Component<P = any> {
   public componentDidUpdate(_oldProps: P, _newProps: P) {}
 
   private _componentDidMount() {
-    tick(() => this.componentDidMount());
+    tick(() => {
+      this.componentDidMount();
+    });
   }
 
   public componentDidMount() {}
