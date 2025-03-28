@@ -6,6 +6,10 @@ class AuthAPI {
   public login() {
     return http.post('/login');
   }
+
+  public signup() {
+    return http.post('/signup');
+  }
 }
 
 export default AuthAPI;
