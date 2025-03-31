@@ -4,19 +4,19 @@ type Options<T = unknown> = {
   data?: T,
   headers?: Record<string, string>,
   withCredentials?: boolean,
-  method: METHOD,
+  method?: METHOD,
 }
 
 interface IHTTPClient {
-  get<T>(url: string, options?: Omit<Options<unknown>, 'data'>): Promise<unknown | T>
+  get<T>(url: string, options?: Omit<Options<unknown>, 'data'>): Promise<T>
 
-  post<T, S>(url: string, options?: Options<S>): Promise<unknown | T>
+  post<T, S>(url: string, options?: Options<S>): Promise<T>
 
-  put<T, S>(url: string, options?: Options<S>): Promise<unknown | T>
+  put<T, S>(url: string, options?: Options<S>): Promise<T>
 
-  patch<T, S>(url: string, options?: Options<S>): Promise<unknown | T>
+  patch<T, S>(url: string, options?: Options<S>): Promise<T>
 
-  delete<T, S>(url: string, options?: Options<S>): Promise<unknown | T>
+  delete<T, S>(url: string, options?: Options<S>): Promise<T>
 }
 
 class HTTPClient implements IHTTPClient {
@@ -26,10 +26,10 @@ class HTTPClient implements IHTTPClient {
     this.baseURL = `${import.meta.env.VITE_BACKEND_URL}${url}`;
   }
 
-  private request<T>(url: string, options: Options<T> = {
+  private request<T>(url: string, options: Options<any> = {
     method: METHOD.GET,
     headers: { 'Content-Type': 'application/json' },
-  }) {
+  }): Promise<T> {
     const {
       headers = { 'Content-Type': 'application/json' },
       withCredentials = true,
@@ -47,7 +47,7 @@ class HTTPClient implements IHTTPClient {
       const xhr = new XMLHttpRequest();
 
       xhr.open(
-        method,
+        method || METHOD.GET,
         xhrURL,
       );
 
@@ -58,7 +58,8 @@ class HTTPClient implements IHTTPClient {
       });
 
       const onload = () => {
-        resolve(xhr);
+        const { status } = xhr;
+        (status >= 200 && status < 400) ? resolve(xhr as T) : reject(xhr);
       };
 
       xhr.onload = onload;
@@ -77,23 +78,23 @@ class HTTPClient implements IHTTPClient {
     });
   }
 
-  public get<T>(url: string, options?: Omit<Options<unknown>, 'data'>): Promise<unknown | T> {
+  public get<T>(url: string, options?: Omit<Options<unknown>, 'data'>): Promise<T> {
     return this.request(url, { ...options, method: METHOD.GET });
   }
 
-  public post<T, S>(url: string, options?: Options<S>): Promise<unknown | T> {
-    return this.request(url, { ...options, method: METHOD.POST });
+  public post<T, S>(url: string, options?: Options<S>): Promise<T> {
+    return this.request<T>(url, { ...options, method: METHOD.POST });
   }
 
-  public put<T, S>(url: string, options?: Options<S>): Promise<unknown | T> {
+  public put<T, S>(url: string, options?: Options<S>): Promise<T> {
     return this.request(url, { ...options, method: METHOD.PUT });
   }
 
-  public patch<T, S>(url: string, options?: Options<S>): Promise<unknown | T> {
+  public patch<T, S>(url: string, options?: Options<S>): Promise<T> {
     return this.request(url, { ...options, method: METHOD.PATCH });
   }
 
-  public delete<T, S>(url: string, options?: Options<S>): Promise<unknown | T> {
+  public delete<T, S>(url: string, options?: Options<S>): Promise<T> {
     return this.request(url, { ...options, method: METHOD.DELETE });
   }
 }

@@ -11,6 +11,7 @@ import {
   excludeNumbers,
   onlyNumbers,
 } from '@utils/constants/validationRules';
+import SignupController from '@controllers/SignupController';
 import template from './template.hbs?raw';
 import './style.scss';
 
@@ -55,10 +56,14 @@ const validation = new FormValidator({
 });
 
 class RegisterForm extends Component implements IRegisterForm {
+  public signupController: SignupController;
+
   constructor() {
     super();
 
     const router = new Router();
+
+    this.signupController = new SignupController();
 
     this.state = {
       email: '',
@@ -95,11 +100,13 @@ class RegisterForm extends Component implements IRegisterForm {
 
     this.setState({
       ...this.state,
-      isButtonDisabled: isValid,
+      isButtonDisabled: !isValid,
       errors: validation.errors,
     });
 
     if (!isValid) return;
+
+    this.signupController.signup(this.state);
   }
 
   public validateInput(event: InputEvent) {

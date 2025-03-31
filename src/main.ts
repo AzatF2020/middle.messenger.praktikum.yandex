@@ -1,5 +1,6 @@
 import './styles/style.scss';
 import { Router, registerComponent } from '@core/index';
+import { PATHNAMES } from '@utils/constants/pagesPathnames';
 import conditionalsHelper from '@utils/helpers/handlebarsHelpers';
 import components from '@components/index';
 import modules from '@modules/index';
@@ -28,17 +29,20 @@ const router = new Router();
 window.store = new Store({
   user: null,
   loginError: null,
+  registerError: null,
   loading: false,
 });
 
-router
-  .use('/', LoginPage)
-  .use('/sign-up', RegisterPage)
-  .use('/pages', Index)
-  .use('/messenger', Chats)
-  .use('/profile', Profile)
-  .use('/profile-new-password', ProfileNewPassword)
-  .use('/profile-change-data', ProfileEdit)
-  .use('/not-found', NotFound)
-  .use('/server-error', ServerError)
-  .start();
+document.addEventListener('DOMContentLoaded', () => {
+  router
+    .use(PATHNAMES.LOGIN, LoginPage)
+    .use(PATHNAMES.SIGN_UP, RegisterPage)
+    .use('/pages', Index)
+    .use(PATHNAMES.MESSENGER, Chats)
+    .use(PATHNAMES.PROFILE, Profile)
+    .use('/profile-new-password', ProfileNewPassword)
+    .use('/profile-change-data', ProfileEdit)
+    .use(PATHNAMES.NOT_FOUND, NotFound)
+    .use(PATHNAMES.SERVER_ERROR, ServerError)
+    .start();
+});

@@ -7,6 +7,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@api': path.resolve(__dirname, 'src/api'),
+      '@types': path.resolve(__dirname, 'src/types'),
       '@controllers': path.resolve(__dirname, 'src/controllers'),
       '@modules': path.resolve(__dirname, 'src/modules'),
       '@components': path.resolve(__dirname, 'src/components'),

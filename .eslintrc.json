@@ -26,6 +26,7 @@
         "no-use-before-define": "off",
         "no-constructor-return": "off",
         "import/no-named-default": "off",
-        "no-void": "off"
+        "no-void": "off",
+        "no-return-await": "off"
     }
 }
