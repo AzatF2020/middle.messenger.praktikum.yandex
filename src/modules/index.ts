@@ -9,9 +9,11 @@ import { ModalDeleteUser } from './modalDeleteUser';
 import { Profile } from './profile';
 import { ProfileEdit } from './profileEdit';
 import { ProfileNewPassword } from './profileNewPassword';
+import { LoaderOverlay } from './loaderOverlay';
+import { UsersList } from './usersList';
 
 const modules: Record<string, typeof Component> = {
-  LoginForm,
+  LoginForm: LoginForm as typeof Component,
   RegisterForm,
   ChatMessages,
   ModalAddUser: ModalAddUser as typeof Component,
@@ -21,6 +23,8 @@ const modules: Record<string, typeof Component> = {
   Error: Error as typeof Component,
   Profile,
   ProfileNewPassword,
+  LoaderOverlay: LoaderOverlay as typeof Component,
+  UsersList,
 };
 
 export default modules;

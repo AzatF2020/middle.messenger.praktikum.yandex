@@ -4,11 +4,13 @@ import Route from './Route';
 interface IRouter {
   use(pathname: string, block: typeof Component): void
 
-  start(): void
-
   go(pathname: string, hash: string): void
 
   back(): void
+
+  currentLocation(): string
+
+  start(): void
 }
 
 class Router implements IRouter {
@@ -73,6 +75,10 @@ class Router implements IRouter {
 
   public back() {
     this.history!.back();
+  }
+
+  public currentLocation(): string {
+    return window.location.pathname;
   }
 
   public start() {

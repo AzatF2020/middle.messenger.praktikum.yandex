@@ -5,7 +5,8 @@ import { PopupOptions } from './popupOptions';
 import { AsideBackNavigation } from './asideBackNavigation';
 import { Avatar } from './avatar';
 import { Link } from './link';
-import { ListItemUser } from './listItemUser';
+import { Loader } from './loader';
+import { UserListItem } from './userListItem';
 
 const components = {
   Button,
@@ -13,9 +14,10 @@ const components = {
   PopupAttachments,
   PopupOptions,
   AsideBackNavigation,
-  ListItemUser,
   Avatar,
   Link,
+  Loader,
+  UserListItem,
 };
 
 export default components;

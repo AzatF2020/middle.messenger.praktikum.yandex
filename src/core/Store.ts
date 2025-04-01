@@ -15,6 +15,7 @@ class Store extends EventBus {
     super();
 
     this.state = defaultState;
+
     /*
       Вызов обновления состояния при инициализации Store в main.ts
       и последующих вызовов событий STORE_EVENTS.UPDATED в connectStore'ах.
@@ -53,7 +54,7 @@ class Store extends EventBus {
   public setState<S = unknown>(value: S) {
     const prevState = structuredClone(this.state);
 
-    this.state = structuredClone(Object.assign(this.state, value));
+    this.state = JSON.parse(JSON.stringify(Object.assign(this.state, value)));
 
     this.emit(STORE_EVENTS.UPDATED, prevState, this.makeStateProxy(this.state));
   }

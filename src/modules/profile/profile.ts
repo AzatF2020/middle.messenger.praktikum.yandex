@@ -1,4 +1,5 @@
-import { Router, Component } from '@core/index';
+import { Component } from '@core/index';
+import ProfileController from '@controllers/ProfileController';
 import template from './template.hbs?raw';
 import './style.scss';
 
@@ -6,8 +7,12 @@ class Profile extends Component {
   constructor() {
     super();
 
-    const router = new Router();
-    this.listeners = { goBack: () => { router.back(); } };
+    const profileController = new ProfileController();
+
+    this.listeners = {
+      goBack: () => { window.router.back(); },
+      logout: () => { profileController.logout(); },
+    };
   }
 
   public render() {

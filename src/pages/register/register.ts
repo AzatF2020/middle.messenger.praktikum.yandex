@@ -1,8 +1,11 @@
-import { Component, HTTPClient } from '@core/index';
+import { Component } from '@core/index';
+import AuthController from '@controllers/AuthController';
 import template from './template.hbs?raw';
 
 class RegisterPage extends Component {
-  public httpClient = new HTTPClient();
+  public componentDidMount() {
+    new AuthController().redirectUser();
+  }
 
   public render() {
     return template;

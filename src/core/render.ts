@@ -11,6 +11,8 @@ const render = (block: Component): HTMLElement | null => {
 
   if (!block.getElement!) return null;
 
+  block.eventBus().emit(Component.EVENTS.FLOW_CBM);
+
   root.appendChild(block.getElement!);
 
   block.eventBus().emit(Component.EVENTS.FLOW_CDM);

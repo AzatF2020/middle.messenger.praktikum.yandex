@@ -91,6 +91,8 @@ const registerComponent = (
 
       component.eventBus().emit(Component.EVENTS.INIT);
 
+      component.eventBus().emit(Component.EVENTS.FLOW_CBM);
+
       component.eventBus().emit(Component.EVENTS.FLOW_CDM);
 
       component.eventBus().emit(Component.EVENTS.FLOW_CWU);

@@ -26,7 +26,7 @@ class HTTPClient implements IHTTPClient {
     this.baseURL = `${import.meta.env.VITE_BACKEND_URL}${url}`;
   }
 
-  private request<T>(url: string, options: Options<any> = {
+  private request<T>(url: string = '', options: Options<any> = {
     method: METHOD.GET,
     headers: { 'Content-Type': 'application/json' },
   }): Promise<T> {
@@ -78,7 +78,7 @@ class HTTPClient implements IHTTPClient {
     });
   }
 
-  public get<T>(url: string, options?: Omit<Options<unknown>, 'data'>): Promise<T> {
+  public get<T>(url?: string, options?: Omit<Options<unknown>, 'data'>): Promise<T> {
     return this.request(url, { ...options, method: METHOD.GET });
   }
 

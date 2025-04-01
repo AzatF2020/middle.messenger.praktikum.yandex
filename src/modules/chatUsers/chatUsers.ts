@@ -1,51 +1,43 @@
-import { Router, Component } from '@core/index';
-import chats from '@utils/pages-data/chats';
+import { Component } from '@core/index';
+import ChatsController from '@controllers/ChatsController';
+import UsersController from '@controllers/UsersController';
 import template from './template.hbs?raw';
 import './style.scss';
 
 interface IChatUsers {
-  searchUsers: (value: string) => void;
   handleInputChange: (event: Event) => void;
 }
 
 class ChatUsers extends Component implements IChatUsers {
-  public router: Router;
+  public chatsController: ChatsController;
+
+  public usersController: UsersController;
 
   constructor() {
     super();
 
-    this.router = new Router();
+    this.chatsController = new ChatsController();
+    this.usersController = new UsersController();
 
-    // eslint-disable-next-line react/no-unused-state
-    this.state = { data: chats, message: '' };
+    this.state = { data: [], message: '' };
     this.listeners = {
       handleInputChange: this.handleInputChange.bind(this),
-      goToProfile: () => { this.router.go('/profile'); },
-      openUserMessengerById: this.openUserMessengerById.bind(this),
+      goToProfile: () => { window.router.go('/profile'); },
     };
   }
 
-  public handleInputChange(event: Event) {
+  public async componentDidMount() {
+    const users = await this.chatsController.getChats();
+
+    this.setState({ ...this.state, data: users });
+  }
+
+  public async handleInputChange(event: Event) {
     const { name, value } = event.target as HTMLInputElement;
 
-    this.setState({
-      // eslint-disable-next-line react/no-unused-state
-      data: this.searchUsers(value),
-      [name]: value.trim(),
-    });
-  }
+    const data = await this.usersController.searchUser({ login: value });
 
-  public openUserMessengerById(value: string) {
-    return () => {
-      this.router.go('/messenger', value);
-    };
-  }
-
-  public searchUsers(value: string) {
-    const usersBySearch = chats.filter(
-      ({ name }: { name: string }) => name.trim() === value.trim(),
-    );
-    return !value.length ? chats : usersBySearch;
+    this.setState({ [name]: value, data });
   }
 
   public render() {

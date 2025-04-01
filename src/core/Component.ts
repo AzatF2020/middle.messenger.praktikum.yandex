@@ -6,6 +6,7 @@ import EventBus from './EventBus';
 class Component<P = any> {
   static EVENTS = {
     INIT: 'INIT',
+    FLOW_CBM: 'flow:component_before_mount',
     FLOW_CDM: 'flow:component_did_mount',
     FLOW_CDU: 'flow:component_did_update',
     FLOW_CWU: 'flow:component_will_unmount',
@@ -38,6 +39,7 @@ class Component<P = any> {
     this.listeners = {};
 
     this.props = this._makePropsProxy({ ...props, __id: this._id }) as P;
+
     this.state = this._makePropsProxy(this.state);
 
     this.eventBus = () => eventBus;
@@ -47,6 +49,10 @@ class Component<P = any> {
 
   private _registerEvents(eventBus: EventBus) {
     eventBus.on(Component.EVENTS.INIT, this._init.bind(this));
+    eventBus.on(
+      Component.EVENTS.FLOW_CBM,
+      this._componentBeforeMount.bind(this),
+    );
     eventBus.on(
       Component.EVENTS.FLOW_CDM,
       this._componentDidMount.bind(this),
@@ -160,6 +166,12 @@ class Component<P = any> {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   public componentDidUpdate(_oldProps: P, _newProps: P) {}
+
+  private _componentBeforeMount() {
+    this.componentBeforeMount();
+  }
+
+  public componentBeforeMount() {}
 
   private _componentDidMount() {
     tick(() => {

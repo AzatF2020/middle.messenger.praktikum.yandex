@@ -24,25 +24,29 @@ Object.entries(Object.assign(components, modules)).forEach(
   },
 );
 
-const router = new Router();
+window.router = new Router();
 
 window.store = new Store({
   user: null,
-  loginError: null,
-  registerError: null,
   loading: false,
+  selectedChat: {
+    login: null,
+    first_name: null,
+    second_name: null,
+    display_name: null,
+    avatar: null,
+    is_selected: false,
+  },
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-  router
-    .use(PATHNAMES.LOGIN, LoginPage)
-    .use(PATHNAMES.SIGN_UP, RegisterPage)
-    .use('/pages', Index)
-    .use(PATHNAMES.MESSENGER, Chats)
-    .use(PATHNAMES.PROFILE, Profile)
-    .use('/profile-new-password', ProfileNewPassword)
-    .use('/profile-change-data', ProfileEdit)
-    .use(PATHNAMES.NOT_FOUND, NotFound)
-    .use(PATHNAMES.SERVER_ERROR, ServerError)
-    .start();
-});
+window.router
+  .use(PATHNAMES.LOGIN, LoginPage)
+  .use(PATHNAMES.SIGN_UP, RegisterPage)
+  .use('/pages', Index)
+  .use(PATHNAMES.MESSENGER, Chats)
+  .use(PATHNAMES.PROFILE, Profile)
+  .use('/profile-new-password', ProfileNewPassword)
+  .use('/profile-change-data', ProfileEdit)
+  .use(PATHNAMES.NOT_FOUND, NotFound)
+  .use(PATHNAMES.SERVER_ERROR, ServerError)
+  .start();

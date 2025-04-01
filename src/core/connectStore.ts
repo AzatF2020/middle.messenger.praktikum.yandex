@@ -3,7 +3,7 @@ import { STORE_EVENTS } from './Store';
 
 function connectStore<T extends Record<string, unknown>>(
   Component: typeof Block,
-  mapStateProps: (storeState: any) => T,
+  mapStateProps: (storeState: any) => any = () => {},
 ) {
   return class extends Component {
     private onChangeStore: () => void;

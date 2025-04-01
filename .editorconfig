@@ -7,7 +7,7 @@
 
 root = true
 
-[*.{ts,js}]
+[*]
 # Indentation style
 
 # Possible values - tab, space

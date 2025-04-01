@@ -1,142 +1,142 @@
 @use "@styles/utilities";
 
 .chat {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    padding: 1.4rem 2rem 2rem;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 1.4rem 2rem 2rem;
+  position: relative;
 
-    &--centered {
-        align-self: center;
-    }
+  &--centered {
+    align-self: center;
+  }
 
-    &__empty {
-        color: utilities.$gray-400;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  &__empty {
+    color: utilities.$gray-400;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
     // # Header
-    &__user-header {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding-bottom: 1rem;
-        border-bottom: utilities.$gray-100 1px solid;
-    }
+  &__user-header {
+    width: 100%;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    border-bottom: utilities.$gray-100 1px solid;
+  }
 
-    &__user-header-left-column {
-        display: flex;
-        align-items: center;
-        column-gap: 1rem;
-    }
+  &__user-header-left-column {
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+  }
 
-    &__user-header-plug {
-        display: block;
-        width: 3.7rem;
-        height: 3.7rem;
-        background-color: utilities.$gray-100;
-        border-radius: utilities.$rounded-6;
-    }
+  &__user-header-plug {
+      display: block;
+      width: 3.7rem;
+      height: 3.7rem;
+      background-color: utilities.$gray-100;
+      border-radius: utilities.$rounded-6;
+  }
 
-    &__user-header-name {
-        font-weight: 500;
-        text-decoration: none;
-    }
+  &__user-header-name {
+      font-weight: 500;
+      text-decoration: none;
+  }
 
     // # Main
-    &__main {
-        padding-block: 3rem;
-        height: calc(100svh - 12rem);
-        height: calc(100vh - 12rem);
-        overflow-y: auto;
-    }
+  &__main {
+      padding-block: 3rem;
+      height: calc(100svh - 12rem);
+      height: calc(100vh - 12rem);
+      overflow-y: auto;
+  }
 
-    &__main-group {
-        margin-block: 2.4rem;
+  &__main-group {
+      margin-block: 2.4rem;
 
-        &:first-child {
-            margin-top: 0;
-        }
+      &:first-child {
+        margin-top: 0;
+      }
 
-        &:last-child {
-            margin-bottom: 0;
-        }
-    }
+      &:last-child {
+        margin-bottom: 0;
+      }
+  }
 
-    &__main-time {
-        display: inline-block;
-        text-align: center;
-        width: 100%;
-        color: utilities.$gray-400;
-        margin-bottom: 3rem;
-        font-weight: 500;
-    }
+  &__main-time {
+      display: inline-block;
+      text-align: center;
+      width: 100%;
+      color: utilities.$gray-400;
+      margin-bottom: 3rem;
+      font-weight: 500;
+  }
 
-    &__main-message {
-        padding: 1.1rem;
-        min-width: 11.5rem;
-        max-width: 38rem;
-        width: fit-content;
-        margin-block: 1rem;
-        word-break: break-all;
-        font-size: utilities.$text-5;
-        font-weight: 500;
-        color: utilities.$black-900;
-        line-height: 1.2;
-        position: relative;
-        border-radius: utilities.$rounded-3;
-        background-color: utilities.$gray-50;
+  &__main-message {
+      padding: 1.1rem;
+      min-width: 11.5rem;
+      max-width: 38rem;
+      width: fit-content;
+      margin-block: 1rem;
+      word-break: break-all;
+      font-size: utilities.$text-5;
+      font-weight: 500;
+      color: utilities.$black-900;
+      line-height: 1.2;
+      position: relative;
+      border-radius: utilities.$rounded-3;
+      background-color: utilities.$gray-50;
 
-        img {
-            width: 100%;
-            max-width: 31.6rem;
-            height: auto;
-            object-fit: contain;
-        }
-    }
+      img {
+          width: 100%;
+          max-width: 31.6rem;
+          height: auto;
+          object-fit: contain;
+      }
+  }
 
-    &__main-message:has(img) {
-        padding: 0;
-        height: max-content;
-        background-color: transparent;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        row-gap: .6rem;
+  &__main-message:has(img) {
+      padding: 0;
+      height: max-content;
+      background-color: transparent;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      row-gap: .6rem;
 
-        .chat__main-message-time {
-            display: block;
-            position: absolute;
-            top: auto;
-            bottom: 1rem;
-            right: 1rem;
-            width: fit-content;
-            height: fit-content;
-            float: none;
-            padding: .2rem .7rem;
-            background-color: #52525250;
-            color: utilities.$white;
-            border-radius: utilities.$rounded-5;
-        }
-    }
+      .chat__main-message-time {
+          display: block;
+          position: absolute;
+          top: auto;
+          bottom: 1rem;
+          right: 1rem;
+          width: fit-content;
+          height: fit-content;
+          float: none;
+          padding: .2rem .7rem;
+          background-color: #52525250;
+          color: utilities.$white;
+          border-radius: utilities.$rounded-5;
+      }
+  }
 
-    &__main-message--myself  {
-        margin-left: auto;
-        background-color: utilities.$blue-50;
-    }
+  &__main-message--myself  {
+      margin-left: auto;
+      background-color: utilities.$blue-50;
+  }
 
     // # Main:Margins
-    &__main-message--sender + &__main-message--myself {
-        margin-top: 3rem;
-    }
+  &__main-message--sender + &__main-message--myself {
+      margin-top: 3rem;
+  }
 
-    &__main-message--myself + &__main-message--sender {
-        margin-top: 3rem;
-    }
+  &__main-message--myself + &__main-message--sender {
+      margin-top: 3rem;
+  }
 
     &__main-message-time {
         font-weight: 400;
@@ -155,7 +155,7 @@
 
     // # Footer
     &__footer {
-        display: flex;
+        display: none;
         align-items: center;
         column-gap: 1rem;
         padding-top: 1rem;
@@ -186,4 +186,8 @@
             }
         }
     }
+
+  .--is-shown {
+    display: flex
+  }
 }

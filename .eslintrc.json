@@ -27,6 +27,7 @@
         "no-constructor-return": "off",
         "import/no-named-default": "off",
         "no-void": "off",
-        "no-return-await": "off"
+        "no-return-await": "off",
+        "react/no-unused-state": "off"
     }
 }

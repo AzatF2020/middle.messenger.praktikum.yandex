@@ -1,4 +1,4 @@
-import { Router, FormValidator, Component } from '@core/index';
+import { FormValidator, Component } from '@core/index';
 import {
   isEmail,
   maxLength,
@@ -11,7 +11,7 @@ import {
   excludeNumbers,
   onlyNumbers,
 } from '@utils/constants/validationRules';
-import SignupController from '@controllers/SignupController';
+import AuthController from '@controllers/AuthController';
 import template from './template.hbs?raw';
 import './style.scss';
 
@@ -56,14 +56,12 @@ const validation = new FormValidator({
 });
 
 class RegisterForm extends Component implements IRegisterForm {
-  public signupController: SignupController;
+  public authController: AuthController;
 
   constructor() {
     super();
 
-    const router = new Router();
-
-    this.signupController = new SignupController();
+    this.authController = new AuthController();
 
     this.state = {
       email: '',
@@ -80,7 +78,7 @@ class RegisterForm extends Component implements IRegisterForm {
       handleInputBlur: this.validateInput.bind(this),
       handleInputChange: this.handleInputChange.bind(this),
       onSubmit: this.onSubmit.bind(this),
-      goToLogin: () => { router.go('/'); },
+      goToLogin: () => { window.router.go('/'); },
     };
   }
 
@@ -106,7 +104,7 @@ class RegisterForm extends Component implements IRegisterForm {
 
     if (!isValid) return;
 
-    this.signupController.signup(this.state);
+    this.authController.signup(this.state);
   }
 
   public validateInput(event: InputEvent) {

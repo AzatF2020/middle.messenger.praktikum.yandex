@@ -5,16 +5,20 @@ import type SignupModel from 'src/types/SignupModel';
 const http = new HTTPClient('/auth');
 
 class AuthAPI {
-  public login(data: LoginModel) {
-    return http.post('/login', { data });
+  public async login(data: LoginModel) {
+    return await http.post('/login', { data });
   }
 
-  public signup(data: SignupModel) {
-    return http.post('/signup', { data });
+  public async signup(data: SignupModel) {
+    return await http.post('/signup', { data });
   }
 
-  public getUser() {
-    return http.get('/user');
+  public async getUser() {
+    return await http.get('/user');
+  }
+
+  public async logout() {
+    return await http.post('/logout');
   }
 }
 

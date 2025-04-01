@@ -1,21 +1,36 @@
 <div class="chat">
-    <div class="chat__user-header">
-        <div class="chat__user-header-left-column">
-            <div class="chat__user-header-plug"></div>
-            <a
-                href="/#"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="link text-4 chat__user-header-name"
-            >Андрей</a>
-        </div>
-        {{{PopupOptions
-            openAddUserModal=openAddUserModal
-            openDeleteUserModal=openDeleteUserModal
-        }}}
+  <div class="chat__user-header {{#if selectedChat.is_selected}}--is-shown{{/if}}">
+    <div class="chat__user-header-left-column">
+      <div class="chat__user-header-plug"></div>
+      <a
+        href="/#"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="link text-4 chat__user-header-name"
+      >
+        {{#if display_name }}
+          {{ selectedChat.display_name }}
+        {{ else if selectedChat.login}}
+          {{ selectedChat.login }}
+        {{/if }}
+      </a>
     </div>
+    {{{ PopupOptions
+      openAddUserModal=openAddUserModal
+      openDeleteUserModal=openDeleteUserModal
+    }}}
+  </div>
     <div class="chat__main">
-        <div class="chat__main-group">
+      {{#if selectedChat.is_selected}}
+      <div class="text-5 chat__empty">
+        Напишите сообщение, чтобы создать чат
+      </div>
+      {{else}}
+      <div class="text-5 chat__empty">
+        Выберите чат чтобы отправить сообщение
+      </div>
+      {{/if}}
+        {{!-- <div class="chat__main-group">
             <time datetime="19 июня" class="text-5 chat__main-time">19 июня</time>
             <div class="chat__main-message chat__main-message--sender">
                 Привет! Смотри, тут всплыл интересный кусок лунной космической
@@ -70,26 +85,26 @@
                     class="text-7 chat__main-message-time"
                 >11:58</time>
             </div>
-        </div>
+        </div> --}}
     </div>
 
-    <form class="chat__footer" novalidate>
-        {{{PopupAttachments}}}
-        {{{Input
-            onChange=handleInputChange
-            value=message
-            name="message"
-            placeholder="Сообщение"
-            class="input-outlined chat__footer-search"
-        }}}
-        {{{Button
-            title="Отправить сообщение"
-            disabled=disabledSendButton
-            onClick=onSubmit
-            type="submit"
-            class="button chat__footer-button-submit"
-            imgSource="/icons/arrow-right-white.svg"
-        }}}
+    <form class="chat__footer {{#if selectedChat.is_selected}}--is-shown{{/if}}" novalidate>
+      {{{PopupAttachments}}}
+      {{{Input
+        onChange=handleInputChange
+        value=message
+        name="message"
+        placeholder="Сообщение"
+        class="input-outlined chat__footer-search"
+      }}}
+      {{{Button
+        title="Отправить сообщение"
+        disabled=disabledSendButton
+        onClick=onSubmit
+        type="submit"
+        class="button chat__footer-button-submit"
+        imgSource="/icons/arrow-right-white.svg"
+      }}}
     </form>
 
     {{{ModalAddUser

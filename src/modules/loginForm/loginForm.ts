@@ -1,5 +1,5 @@
 import {
-  Component, Router, FormValidator, connectStore,
+  Component, FormValidator,
 } from '@core/index';
 import {
   minLength,
@@ -9,7 +9,7 @@ import {
   requiredMinimumUpperCaseAndNumbers,
   isLatin,
 } from '@utils/constants/validationRules';
-import LoginController from '@controllers/LoginController.ts';
+import AuthController from '@controllers/AuthController';
 import template from './template.hbs?raw';
 import './style.scss';
 
@@ -43,14 +43,12 @@ const validation = new FormValidator({
 });
 
 class LoginForm extends Component implements ILoginForm {
-  public loginController: LoginController;
+  public authController: AuthController;
 
   constructor(props: LoginFormProps = {}) {
     super(props);
 
-    const router = new Router();
-
-    this.loginController = new LoginController();
+    this.authController = new AuthController();
 
     this.state = {
       login: '',
@@ -63,7 +61,7 @@ class LoginForm extends Component implements ILoginForm {
       handleInputBlur: this.validateInput.bind(this),
       handleInputChange: this.handleInputChange.bind(this),
       onSubmit: this.onSubmit.bind(this),
-      goToRegister: () => router.go('/sign-up'),
+      goToRegister: () => window.router.go('/sign-up'),
     };
   }
 
@@ -86,7 +84,7 @@ class LoginForm extends Component implements ILoginForm {
 
     if (!isValid) return;
 
-    this.loginController.login(this.state);
+    this.authController.login(this.state);
   }
 
   public validateInput(event: InputEvent) {
@@ -104,4 +102,4 @@ class LoginForm extends Component implements ILoginForm {
   }
 }
 
-export default connectStore(LoginForm, (state) => ({ loading: state.loading }));
+export default LoginForm;

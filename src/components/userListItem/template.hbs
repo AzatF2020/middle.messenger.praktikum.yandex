@@ -1,0 +1,32 @@
+<li class="list-item-user__chat-user {{#if is_active }}list-item-user__chat-user--active{{/if}}">
+  {{#if avatar}}
+    <img src="{{ @root.storage }}{{ avatar }}" alt="avatar" class="list-item-user__chat-user-image-plug"></img>
+  {{else}}
+    <div class="list-item-user__chat-user-image-plug"></div>
+  {{/if}}
+  <div class="list-item-user__chat-user-info">
+    <div class="list-item-user__chat-user-header">
+      <strong>
+        <a href="/messenger#{{login}}" class="list-item-user__chat-user-name">
+          {{ login }}
+        </a>
+      </strong>
+      {{!-- <time class="list-item-user__chat-user-time">
+        {{ time }}
+      </time> --}}
+    </div>
+    {{!-- {{#if message}}
+        <p class="text-5 list-item-user__chat-user-message">
+          {{#if myself_sender}}
+            <span class="list-item-user__chat-user-message-sender">Вы:</span>
+          {{/if}}
+          {{ message }}
+        </p>
+    {{/if}} --}}
+  </div>
+  {{!-- {{#if unread_messages }}
+    <span class="list-item-user__chat-user-unread-messages">
+      {{ unread_messages }}
+    </span>
+  {{/if}} --}}
+</li>

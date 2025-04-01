@@ -1,19 +1,24 @@
-import Component from '@core/Component';
+import { Component, connectStore } from '@core/index';
 import template from './template.hbs?raw';
 import './style.scss';
 
 interface IChatMessages {
-    openAddUserModal(): void;
-    closeAddUserModal(): void;
-    openDeleteUserModal(): void;
-    closeDeleteUserModal(): void;
-    handleInputChange(event: Event): void;
-    onSubmit(event: Event): void;
+  openAddUserModal(): void;
+
+  closeAddUserModal(): void;
+
+  openDeleteUserModal(): void;
+
+  closeDeleteUserModal(): void;
+
+  handleInputChange(event: Event): void;
+
+  onSubmit(event: Event): void;
 }
 
 class ChatMessages extends Component implements IChatMessages {
-  constructor() {
-    super();
+  constructor(props: any) {
+    super(props);
 
     this.state = {
       message: '',
@@ -67,4 +72,4 @@ class ChatMessages extends Component implements IChatMessages {
   }
 }
 
-export default ChatMessages;
+export default connectStore(ChatMessages, (state) => ({ selectedChat: state.selectedChat }));

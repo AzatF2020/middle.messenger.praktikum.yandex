@@ -1,0 +1,12 @@
+<ul class="aside__chats">
+  {{#each data }}
+    {{{ UserListItem
+      onClick=@root.handleOpenByLogin
+      avatar=avatar
+      login=login
+      first_name=first_name
+      last_name=last_name
+      display_name=display_name
+    }}}
+  {{/each}}
+</ul>
