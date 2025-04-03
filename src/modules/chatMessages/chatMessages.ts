@@ -1,4 +1,5 @@
 import { Component, connectStore } from '@core/index';
+import ChatsController from '@controllers/ChatsController';
 import template from './template.hbs?raw';
 import './style.scss';
 
@@ -17,6 +18,8 @@ interface IChatMessages {
 }
 
 class ChatMessages extends Component implements IChatMessages {
+  public chatsController: ChatsController;
+
   constructor(props: any) {
     super(props);
 
@@ -26,6 +29,8 @@ class ChatMessages extends Component implements IChatMessages {
       modalAddUserOpened: false,
       modalDeleteUserOpened: false,
     };
+
+    this.chatsController = new ChatsController();
 
     this.listeners = {
       openAddUserModal: this.openAddUserModal.bind(this),
@@ -47,8 +52,12 @@ class ChatMessages extends Component implements IChatMessages {
     });
   }
 
-  public onSubmit(event: Event) {
+  public async onSubmit(event: Event) {
     event.preventDefault();
+
+    await this.chatsController.createChat({
+      title: window.store.getState().selectedUser.login,
+    }, [window.store.getState().selectedUser.id]);
   }
 
   public openAddUserModal() {
@@ -72,4 +81,4 @@ class ChatMessages extends Component implements IChatMessages {
   }
 }
 
-export default connectStore(ChatMessages, (state) => ({ selectedChat: state.selectedChat }));
+export default connectStore(ChatMessages, (state) => ({ selectedUser: state.selectedUser }));

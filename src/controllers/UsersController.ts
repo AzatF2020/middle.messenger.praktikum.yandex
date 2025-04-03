@@ -5,14 +5,12 @@ const usersAPI = new UsersAPI();
 
 class UsersController {
   public async searchUser(data: SearchUserModel) {
-    let result = [];
     try {
       const { response } = await usersAPI.searchUser(data);
-      result = JSON.parse(response);
+      window.store.setState({ searchedUserChats: JSON.parse(response) });
     } catch (error) {
       console.error(error);
     }
-    return result;
   }
 }
 

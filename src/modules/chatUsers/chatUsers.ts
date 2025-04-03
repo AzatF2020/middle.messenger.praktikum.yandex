@@ -1,4 +1,4 @@
-import { Component } from '@core/index';
+import { Component, connectStore } from '@core/index';
 import ChatsController from '@controllers/ChatsController';
 import UsersController from '@controllers/UsersController';
 import template from './template.hbs?raw';
@@ -13,13 +13,12 @@ class ChatUsers extends Component implements IChatUsers {
 
   public usersController: UsersController;
 
-  constructor() {
-    super();
+  constructor(props: any) {
+    super(props);
 
     this.chatsController = new ChatsController();
     this.usersController = new UsersController();
 
-    this.state = { data: [], message: '' };
     this.listeners = {
       handleInputChange: this.handleInputChange.bind(this),
       goToProfile: () => { window.router.go('/profile'); },
@@ -27,17 +26,15 @@ class ChatUsers extends Component implements IChatUsers {
   }
 
   public async componentDidMount() {
-    const users = await this.chatsController.getChats();
-
-    this.setState({ ...this.state, data: users });
+    await this.chatsController.getChats();
   }
 
   public async handleInputChange(event: Event) {
     const { name, value } = event.target as HTMLInputElement;
 
-    const data = await this.usersController.searchUser({ login: value });
+    await this.usersController.searchUser({ login: value });
 
-    this.setState({ [name]: value, data });
+    window.store.setState({ [name]: value });
   }
 
   public render() {
@@ -45,4 +42,8 @@ class ChatUsers extends Component implements IChatUsers {
   }
 }
 
-export default ChatUsers;
+export default connectStore(ChatUsers, (state) => ({
+  userChats: state.userChats,
+  searchedUserChats: state.searchedUserChats,
+  search: state.search,
+}));

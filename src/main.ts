@@ -1,6 +1,7 @@
 import './styles/style.scss';
 import { Router, registerComponent } from '@core/index';
 import { PATHNAMES } from '@utils/constants/pagesPathnames';
+import initialState from '@utils/constants/initialState';
 import conditionalsHelper from '@utils/helpers/handlebarsHelpers';
 import components from '@components/index';
 import modules from '@modules/index';
@@ -26,18 +27,7 @@ Object.entries(Object.assign(components, modules)).forEach(
 
 window.router = new Router();
 
-window.store = new Store({
-  user: null,
-  loading: false,
-  selectedChat: {
-    login: null,
-    first_name: null,
-    second_name: null,
-    display_name: null,
-    avatar: null,
-    is_selected: false,
-  },
-});
+window.store = new Store(initialState());
 
 window.router
   .use(PATHNAMES.LOGIN, LoginPage)

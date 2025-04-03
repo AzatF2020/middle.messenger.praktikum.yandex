@@ -1,4 +1,5 @@
 import Component from '@core/Component';
+import ChatsController from '@controllers/ChatsController';
 import template from './template.hbs?raw';
 import './style.scss';
 
@@ -13,15 +14,25 @@ type ModalDeleteUserProps = {
 };
 
 class ModalDeleteUser extends Component implements IModalDeleteUser {
+  public chartsController: ChatsController;
+
   constructor(props: ModalDeleteUserProps) {
     super(props);
+
+    this.chartsController = new ChatsController();
 
     this.state = { login: '' };
 
     this.listeners = {
       click: this.closeByOverlay.bind(this),
+      handleDeleteChat: this.handleDeleteChat.bind(this),
       handleInputChange: this.handleInputChange.bind(this),
     };
+  }
+
+  public async handleDeleteChat() {
+    await this.chartsController.deleteChat();
+    this.props.handleCloseModal();
   }
 
   public handleInputChange(event: Event) {

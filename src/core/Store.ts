@@ -1,4 +1,5 @@
 import tick from '@utils/helpers/tick';
+import deepMergeObjects from '@utils/helpers/mergeObjects';
 import EventBus from './EventBus';
 
 enum STORE_EVENTS {
@@ -19,7 +20,7 @@ class Store extends EventBus {
     /*
       Вызов обновления состояния при инициализации Store в main.ts
       и последующих вызовов событий STORE_EVENTS.UPDATED в connectStore'ах.
-      connectStore (on/subscribe) -> Store (emit) -> render (CWU/component_will_unmount)
+      connectStore (on/subscribe) -> Store (emit) -> render (CBM/componentBeforeMount)
     */
 
     tick(() => {
@@ -54,7 +55,7 @@ class Store extends EventBus {
   public setState<S = unknown>(value: S) {
     const prevState = structuredClone(this.state);
 
-    this.state = JSON.parse(JSON.stringify(Object.assign(this.state, value)));
+    this.state = deepMergeObjects(this.state, value);
 
     this.emit(STORE_EVENTS.UPDATED, prevState, this.makeStateProxy(this.state));
   }

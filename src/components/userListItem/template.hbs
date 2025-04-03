@@ -7,9 +7,15 @@
   <div class="list-item-user__chat-user-info">
     <div class="list-item-user__chat-user-header">
       <strong>
-        <a href="/messenger#{{login}}" class="list-item-user__chat-user-name">
+        {{#if login}}
+        <span href="/messenger#{{login}}" class="list-item-user__chat-user-name">
           {{ login }}
-        </a>
+        </span>
+        {{else if title}}
+          <span href="/messenger#{{title}}" class="list-item-user__chat-user-name">
+            {{ title }}
+          </span>
+        {{/if }}
       </strong>
       {{!-- <time class="list-item-user__chat-user-time">
         {{ time }}

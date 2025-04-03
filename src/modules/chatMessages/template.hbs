@@ -1,5 +1,5 @@
 <div class="chat">
-  <div class="chat__user-header {{#if selectedChat.is_selected}}--is-shown{{/if}}">
+  <div class="chat__user-header {{#if selectedUser.is_selected}}--is-shown{{/if}}">
     <div class="chat__user-header-left-column">
       <div class="chat__user-header-plug"></div>
       <a
@@ -9,9 +9,9 @@
         class="link text-4 chat__user-header-name"
       >
         {{#if display_name }}
-          {{ selectedChat.display_name }}
-        {{ else if selectedChat.login}}
-          {{ selectedChat.login }}
+          {{ selectedUser.display_name }}
+        {{ else if selectedUser.login}}
+          {{ selectedUser.login }}
         {{/if }}
       </a>
     </div>
@@ -21,7 +21,7 @@
     }}}
   </div>
     <div class="chat__main">
-      {{#if selectedChat.is_selected}}
+      {{#if selectedUser.is_selected}}
       <div class="text-5 chat__empty">
         Напишите сообщение, чтобы создать чат
       </div>
@@ -88,7 +88,7 @@
         </div> --}}
     </div>
 
-    <form class="chat__footer {{#if selectedChat.is_selected}}--is-shown{{/if}}" novalidate>
+    <form class="chat__footer {{#if selectedUser.is_selected}}--is-shown{{/if}}" novalidate>
       {{{PopupAttachments}}}
       {{{Input
         onChange=handleInputChange

@@ -4,11 +4,12 @@ import './style.scss';
 
 type UserListItemProps = {
   onClick(value: string): void
+  title?: string;
   login: string;
-  avatar: string;
-  first_name: string;
-  second_name: string;
-  display_name: string;
+  avatar: string | null;
+  first_name?: string;
+  second_name?: string;
+  display_name?: string;
 }
 
 class UserListItem extends Component {
