@@ -1,10 +1,13 @@
 const initialState = () => ({
   user: null,
   loading: false,
+  isChatLoading: false,
   userChats: [],
   search: '',
   searchedUserChats: [],
   chatId: null,
+  messages: [],
+  token: null,
   selectedUser: {
     id: null,
     login: null,

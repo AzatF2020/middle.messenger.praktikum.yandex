@@ -1,4 +1,4 @@
-<li class="list-item-user__chat-user {{#if is_active }}list-item-user__chat-user--active{{/if}}">
+<li class="list-item-user__chat-user {{#ifCond current_chat_id '==' id }}list-item-user__chat-user--active{{/ifCond}}">
   {{#if avatar}}
     <img src="{{ @root.storage }}{{ avatar }}" alt="avatar" class="list-item-user__chat-user-image-plug"></img>
   {{else}}
@@ -17,22 +17,37 @@
           </span>
         {{/if }}
       </strong>
-      {{!-- <time class="list-item-user__chat-user-time">
-        {{ time }}
-      </time> --}}
+      {{#if last_message}}
+      <time class="list-item-user__chat-user-time">
+        {{ last_message.time }}
+      </time>
+      {{/if}}
     </div>
-    {{!-- {{#if message}}
+    {{#if last_message}}
         <p class="text-5 list-item-user__chat-user-message">
-          {{#if myself_sender}}
+          {{#ifCond last_message.user.login '==' my_login}}
             <span class="list-item-user__chat-user-message-sender">Вы:</span>
-          {{/if}}
-          {{ message }}
+          {{/ifCond}}
+          {{ last_message.content }}
         </p>
-    {{/if}} --}}
+    {{/if}}
   </div>
-  {{!-- {{#if unread_messages }}
+  {{#if unread_count }}
     <span class="list-item-user__chat-user-unread-messages">
-      {{ unread_messages }}
+      {{ unread_count }}
     </span>
-  {{/if}} --}}
+  {{/if}}
 </li>
+
+{{!-- {
+    "user": {
+        "first_name": "",
+        "second_name": "",
+        "display_name": null,
+        "login": "asa12345",
+        "avatar": null
+    },
+    "time": "2025-04-07T09:07:29+00:00",
+    "content": "hehe",
+    "id": 27553
+} --}}

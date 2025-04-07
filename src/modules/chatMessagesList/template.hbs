@@ -1,0 +1,14 @@
+<div class="chat-messages-list">
+<div class="chat-messages-list__group">
+  {{#each messages}}
+    {{{ ChatItem
+      content=content
+      time=time
+      myId=@root.myId
+      user_id=user_id
+      is_read=is_read
+      file=file
+    }}}
+  {{/each}}
+</div>
+</div>

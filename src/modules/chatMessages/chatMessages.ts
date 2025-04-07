@@ -1,4 +1,4 @@
-import { Component, connectStore } from '@core/index';
+import { Component, connectStore, WSTransport } from '@core/index';
 import ChatsController from '@controllers/ChatsController';
 import template from './template.hbs?raw';
 import './style.scss';
@@ -20,6 +20,8 @@ interface IChatMessages {
 class ChatMessages extends Component implements IChatMessages {
   public chatsController: ChatsController;
 
+  public wssInstance: WSTransport;
+
   constructor(props: any) {
     super(props);
 
@@ -31,6 +33,8 @@ class ChatMessages extends Component implements IChatMessages {
     };
 
     this.chatsController = new ChatsController();
+
+    this.wssInstance = new WSTransport(import.meta.env.VITE_BACKEND_WS);
 
     this.listeners = {
       openAddUserModal: this.openAddUserModal.bind(this),
@@ -55,9 +59,14 @@ class ChatMessages extends Component implements IChatMessages {
   public async onSubmit(event: Event) {
     event.preventDefault();
 
-    await this.chatsController.createChat({
-      title: window.store.getState().selectedUser.login,
-    }, [window.store.getState().selectedUser.id]);
+    if (!window.store.getState().chatId) {
+      await this.chatsController.createChat({
+        title: window.store.getState().selectedUser.login,
+      }, [window.store.getState().selectedUser.id]);
+    }
+
+    this.wssInstance.send(this.state.message);
+    window.store.setState({ message: '' });
   }
 
   public openAddUserModal() {
@@ -81,4 +90,8 @@ class ChatMessages extends Component implements IChatMessages {
   }
 }
 
-export default connectStore(ChatMessages, (state) => ({ selectedUser: state.selectedUser }));
+export default connectStore(ChatMessages, (state) => ({
+  selectedUser: state.selectedUser,
+  messages: state.messages,
+  loading: state.isChatLoading,
+}));

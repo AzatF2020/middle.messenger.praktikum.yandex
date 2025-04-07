@@ -11,11 +11,12 @@ import { ProfileEdit } from './profileEdit';
 import { ProfileNewPassword } from './profileNewPassword';
 import { LoaderOverlay } from './loaderOverlay';
 import { UsersList } from './usersList';
+import { ChatMessagesList } from './chatMessagesList';
+import { GlobalLoader } from './globalLoader';
 
 const modules: Record<string, typeof Component> = {
   LoginForm: LoginForm as typeof Component,
   RegisterForm,
-  ChatMessages,
   ModalAddUser: ModalAddUser as typeof Component,
   ModalDeleteUser: ModalDeleteUser as typeof Component,
   ProfileEdit,
@@ -25,6 +26,9 @@ const modules: Record<string, typeof Component> = {
   ProfileNewPassword,
   LoaderOverlay: LoaderOverlay as typeof Component,
   UsersList,
+  ChatMessages,
+  ChatMessagesList,
+  GlobalLoader,
 };
 
 export default modules;

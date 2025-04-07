@@ -2,15 +2,17 @@ import Component from './Component';
 import Route from './Route';
 
 interface IRouter {
-  use(pathname: string, block: typeof Component): void
+  use(pathname: string, block: typeof Component): void;
 
-  go(pathname: string, hash: string): void
+  go(pathname: string, hash: string): void;
 
-  back(): void
+  back(): void;
 
-  currentLocation(): string
+  currentLocation(): string;
 
-  start(): void
+  getHash(): string;
+
+  start(): void;
 }
 
 class Router implements IRouter {
@@ -79,6 +81,10 @@ class Router implements IRouter {
 
   public currentLocation(): string {
     return window.location.pathname;
+  }
+
+  public getHash() {
+    return window.location.hash.slice(1);
   }
 
   public start() {

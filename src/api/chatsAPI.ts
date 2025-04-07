@@ -12,8 +12,16 @@ class ChatsAPI {
     return await http.get(`/${id}/users`);
   }
 
+  public async getUserChatMessages(chatId: number) {
+    return await http.get(`/${chatId}/common`);
+  }
+
   public async createChat(data: CreateChatModel) {
     return await http.post('', { data });
+  }
+
+  public async createChatToken(chatId: number) {
+    return await http.post(`/token/${chatId}`);
   }
 
   public async deleteChat(chatId: number) {

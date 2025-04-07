@@ -7,6 +7,7 @@ import { Avatar } from './avatar';
 import { Link } from './link';
 import { Loader } from './loader';
 import { UserListItem } from './userListItem';
+import { ChatItem } from './chatItem';
 
 const components = {
   Button,
@@ -18,6 +19,7 @@ const components = {
   Link,
   Loader,
   UserListItem,
+  ChatItem,
 };
 
 export default components;

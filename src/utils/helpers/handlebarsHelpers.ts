@@ -32,7 +32,7 @@ const conditionalsHelper = () => {
             ? options.fn(this)
             : options.inverse(this);
         default:
-          return options.inverse(this);
+          return options?.inverse(this);
       }
     },
   );

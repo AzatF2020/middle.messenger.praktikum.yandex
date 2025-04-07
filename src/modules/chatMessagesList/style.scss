@@ -1,0 +1,18 @@
+.chat-messages-list {
+  padding-block: 3rem;
+  height: calc(100svh - 12rem);
+  height: calc(100vh - 12rem);
+  overflow-y: auto;
+
+  &__group {
+    margin-block: 2.4rem;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

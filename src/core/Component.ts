@@ -159,19 +159,21 @@ class Component<P = any> {
     this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+  public componentDidUpdate(_oldProps: P, _newProps: P) {}
+
   private _componentDidUpdate(oldProps: P, newProps: P) {
     this.componentDidUpdate(oldProps, newProps);
     this._render();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-  public componentDidUpdate(_oldProps: P, _newProps: P) {}
+  public componentBeforeMount() {}
 
   private _componentBeforeMount() {
     this.componentBeforeMount();
   }
 
-  public componentBeforeMount() {}
+  public componentDidMount() {}
 
   private _componentDidMount() {
     tick(() => {
@@ -179,15 +181,13 @@ class Component<P = any> {
     });
   }
 
-  public componentDidMount() {}
+  public componentWillUnmount() {}
 
   private _componentWillUnmount() {
     tick(() => {
       this.componentWillUnmount();
     });
   }
-
-  public componentWillUnmount() {}
 
   public setState = (nextState: P) => {
     if (!nextState) return;

@@ -1,4 +1,4 @@
-import Component from '@core/Component';
+import { Component } from '@core/index';
 import AuthController from '@controllers/AuthController';
 import template from './template.hbs?raw';
 

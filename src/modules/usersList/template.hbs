@@ -1,7 +1,9 @@
 <ul class="aside__chats">
   {{#each data }}
     {{{ UserListItem
-      onClick=@root.handleOpenByLogin
+      onClick=@root.handleOpenUserChat
+      my_login=@root.myLogin
+      current_chat_id=@root.chatId
       id=id
       title=title
       avatar=avatar
@@ -9,6 +11,8 @@
       first_name=first_name
       last_name=last_name
       display_name=display_name
+      last_message=last_message
+      unread_count=unread_count
     }}}
   {{/each}}
 </ul>

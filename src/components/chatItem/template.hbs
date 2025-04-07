@@ -1,0 +1,35 @@
+<div class="chat-item__main-message {{#ifCond user_id '==' myId}}chat-item__main-message--myself{{else}}chat-item__main-message--sender{{/ifCond}}">
+  {{#if content}}
+  <span>
+    {{content}}
+  </span>
+  {{/if}}
+
+  {{#if time}}
+  <time
+    datetime="{{formattedTime}}"
+    class="text-7 chat-item__main-message-time"
+  >
+    {{formattedTime}}
+  </time>
+  {{/if}}
+</div>
+
+{{!-- <div class="chat-item__main-message chat__main-message--myself">
+  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+  tempore impedit officiis, ut dolorum recusandae nisi blanditiis
+  dolor atque dolorem repudiandae doloribus magni sunt dolore quam
+  iure eveniet. Nesciunt, debitis.
+  <time
+      datetime=""
+      class="text-7 chat__main-message-time"
+  >11:58</time>
+</div> --}}
+
+{{!-- <div class="chat__main-message chat__main-message--sender">
+  <img src="/img/image.png" alt="Изображение" />
+  <time
+      datetime=""
+      class="text-7 chat__main-message-time"
+  >11:56</time>
+</div> --}}

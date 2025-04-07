@@ -1,4 +1,4 @@
-import { Component } from '@core/index';
+import { Component, connectStore } from '@core/index';
 import ChatsController from '@controllers/ChatsController';
 import template from './template.hbs?raw';
 import './style.scss';
@@ -14,19 +14,26 @@ class UsersList extends Component {
     super(props);
 
     this.chatsController = new ChatsController();
-    this.listeners = { handleOpenByLogin: this.handleOpenByLogin.bind(this) };
+    this.listeners = { handleOpenUserChat: this.handleOpenUserChat.bind(this) };
   }
 
-  public handleOpenByLogin(value: Record<string, any>) {
+  public handleOpenUserChat(value: Record<string, any>) {
     return async () => {
+      /* Если пользователь был выбран из списка поиска, то открываем его чат. */
       if (value.login) {
-      /* Получаем пользователя, при поиске */
-        window.router.go('/messenger', value.login);
+        const chatId = window.store.getState()
+          .userChats.find(({ title }: { title: string }) => title === value.login)?.id;
 
-        window.store.setState({ selectedUser: { ...value, is_selected: true } });
+        /* Если пользователь был найден в чате и есть начатый диалог, то открываем существующий. */
+        if (chatId) {
+          await this.chatsController.openHandleChat(chatId);
+        } else {
+          window.router.go('/messenger', value.login);
+          window.store.setState({ chatId: null, selectedUser: { ...value, is_selected: true } });
+        }
       } else {
-      /* Получаем пользователя, если чат был с ним ранее создан. *ID чата */
-        await this.chatsController.getChatUsers(value.id);
+        /* Получаем пользователя, если чат был с ним ранее создан. *ID чата */
+        await this.chatsController.openHandleChat(value.id);
       }
     };
   }
@@ -36,4 +43,7 @@ class UsersList extends Component {
   }
 }
 
-export default UsersList;
+export default connectStore(UsersList, (state) => ({
+  chatId: state.chatId,
+  myLogin: state.user?.login,
+}));
