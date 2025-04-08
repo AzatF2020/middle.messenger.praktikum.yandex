@@ -15,6 +15,8 @@ class WSTransport {
 
   private _wss!: WebSocket;
 
+  private _connectingTimeout!: null | NodeJS.Timeout;
+
   public url!: string;
 
   constructor(url: string = '') {
@@ -51,6 +53,7 @@ class WSTransport {
   private _leave() {
     window.store.setState({ messages: [] });
     clearInterval(this._ping);
+    clearTimeout(this._connectingTimeout!);
     this._removeEventListeners();
   }
 
@@ -72,13 +75,13 @@ class WSTransport {
     }, 5000);
   }
 
-  private _handleClose(event) {
+  private _handleClose(event: CloseEvent) {
     console.info(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
 
     this._leave();
   }
 
-  private _handleMessages(event: Event) {
+  private _handleMessages(event: MessageEvent) {
     const messages = JSON.parse(event.data);
 
     if (messages?.type === 'pong') return;
@@ -86,7 +89,6 @@ class WSTransport {
     if (Array.isArray(messages)) {
       window.store.setState({ messages: structuredClone(messages).reverse() });
     } else if (messages?.type === 'message') {
-      console.log(window.store.getState().messages, messages);
       window.store.setState({
         messages: [...window.store.getState().messages, messages],
       });
@@ -103,6 +105,16 @@ class WSTransport {
     token,
   }: SocketURLArgs) {
     return `${this.url}/${userId}/${chatId}/${token}`;
+  }
+
+  private _waitForSocketConnection(callback: () => void, interval = 1000) {
+    if (this._wss?.readyState === 1) {
+      callback();
+    } else {
+      this._connectingTimeout = setTimeout(() => {
+        this._waitForSocketConnection(callback, interval);
+      }, interval);
+    }
   }
 
   public connectToSocket({ userId, chatId, token }: SocketURLArgs) {
@@ -122,10 +134,14 @@ class WSTransport {
   }
 
   public send<T>(content: T) {
-    this._wss.send(JSON.stringify({
-      type: 'message',
-      content,
-    }));
+    if (!this._wss) return;
+
+    this._waitForSocketConnection(() => {
+      this._wss.send(JSON.stringify({
+        type: 'message',
+        content,
+      }));
+    });
   }
 }
 

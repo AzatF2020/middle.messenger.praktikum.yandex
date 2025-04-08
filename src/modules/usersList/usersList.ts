@@ -29,7 +29,11 @@ class UsersList extends Component {
           await this.chatsController.openHandleChat(chatId);
         } else {
           window.router.go('/messenger', value.login);
-          window.store.setState({ chatId: null, selectedUser: { ...value, is_selected: true } });
+          window.store.setState({
+            chatId: null,
+            messages: [],
+            selectedUser: { ...value, is_selected: true },
+          });
         }
       } else {
         /* Получаем пользователя, если чат был с ним ранее создан. *ID чата */

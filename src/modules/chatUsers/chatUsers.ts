@@ -23,6 +23,10 @@ class ChatUsers extends Component implements IChatUsers {
       handleInputChange: this.handleInputChange.bind(this),
       goToProfile: () => { window.router.go('/profile'); },
     };
+
+    this.state = {
+      searchLoading: false,
+    };
   }
 
   public async componentDidMount() {
@@ -32,7 +36,12 @@ class ChatUsers extends Component implements IChatUsers {
   public async handleInputChange(event: Event) {
     const { name, value } = event.target as HTMLInputElement;
 
-    await this.usersController.searchUser({ login: value });
+    try {
+      this.setState({ searchLoading: true });
+      await this.usersController.searchUser({ login: value });
+    } finally {
+      this.setState({ searchLoading: false });
+    }
 
     window.store.setState({ [name]: value });
   }

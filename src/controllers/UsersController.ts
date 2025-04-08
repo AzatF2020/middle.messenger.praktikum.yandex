@@ -7,9 +7,12 @@ class UsersController {
   public async searchUser(data: SearchUserModel) {
     try {
       const { response } = await usersAPI.searchUser(data);
-      window.store.setState({ searchedUserChats: JSON.parse(response) });
+      window.store.setState({ searchedUserChats: JSON.parse(response), searchLoading: true });
     } catch (error) {
       console.error(error);
+      window.store.setState({ searchLoading: true });
+    } finally {
+      window.store.setState({ searchLoading: false });
     }
   }
 }

@@ -1,9 +1,9 @@
-<ul class="aside__chats">
+<ul class="chats">
   {{#each data }}
     {{{ UserListItem
       onClick=@root.handleOpenUserChat
       my_login=@root.myLogin
-      current_chat_id=@root.chatId
+      chatId=@root.chatId
       id=id
       title=title
       avatar=avatar

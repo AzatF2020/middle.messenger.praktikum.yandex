@@ -8,6 +8,7 @@ import { Link } from './link';
 import { Loader } from './loader';
 import { UserListItem } from './userListItem';
 import { ChatItem } from './chatItem';
+import { SearchInput } from './searchInput';
 
 const components = {
   Button,
@@ -20,6 +21,7 @@ const components = {
   Loader,
   UserListItem,
   ChatItem,
+  SearchInput,
 };
 
 export default components;

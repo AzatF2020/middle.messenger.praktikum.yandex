@@ -5,7 +5,7 @@ const initialState = () => ({
   userChats: [],
   search: '',
   searchedUserChats: [],
-  chatId: null,
+  chatId: -1,
   messages: [],
   token: null,
   selectedUser: {

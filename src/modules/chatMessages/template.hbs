@@ -1,5 +1,6 @@
 <div class="chat">
   {{{LoaderOverlay loading=loading}}}
+
   <div class="chat__user-header {{#if selectedUser.is_selected}}--is-shown{{/if}}">
     <div class="chat__user-header-left-column">
       <div class="chat__user-header-plug"></div>
@@ -27,7 +28,7 @@
   }}}
 
   {{#if selectedUser.is_selected}}
-    {{#ifCond messages.length '==' 0}}
+    {{#ifCond selectedUser.chatId '!=' chatId}}
       <div class="text-5 chat__empty">
         Напишите сообщение, чтобы создать чат
       </div>

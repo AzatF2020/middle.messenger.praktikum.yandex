@@ -12,7 +12,7 @@ type UserListItemProps = {
   first_name?: string;
   second_name?: string;
   display_name?: string;
-  current_chat_id?: number;
+  chatId?: number;
   unread_count?: number;
   my_login?: string;
   last_message: object | null;

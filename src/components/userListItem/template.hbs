@@ -1,4 +1,4 @@
-<li class="list-item-user__chat-user {{#ifCond current_chat_id '==' id }}list-item-user__chat-user--active{{/ifCond}}">
+<li class="list-item-user__chat-user {{#ifCond chatId '==' id }}list-item-user__chat-user--active{{/ifCond}}">
   {{#if avatar}}
     <img src="{{ @root.storage }}{{ avatar }}" alt="avatar" class="list-item-user__chat-user-image-plug"></img>
   {{else}}

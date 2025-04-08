@@ -29,5 +29,24 @@
     overflow-y: auto;
     height: calc(100svh - 10.8rem);
     height: calc(100vh - 10.8rem);
+    position: relative;
+  }
+
+  &__empty {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 4rem 1rem 1rem;
+    color: utilities.$gray-400;
+    display: none;
+    justify-content: center;
+    background-color: utilities.$white;
+    z-index: 2;
+  }
+
+  &__empty.--is-shown {
+    display: flex;
   }
 }

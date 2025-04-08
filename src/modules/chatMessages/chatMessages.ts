@@ -67,6 +67,18 @@ class ChatMessages extends Component implements IChatMessages {
 
     this.wssInstance.send(this.state.message);
     window.store.setState({ message: '' });
+
+    this.resetFields(event);
+  }
+
+  public resetFields(event: Event) {
+    const form = (event.target as HTMLButtonElement).closest('form');
+    const inputs = form?.getElementsByTagName('input');
+
+    if (!inputs) return;
+    [...inputs].forEach(({ name }) => {
+      this.setState({ ...this.state, [name]: '' });
+    });
   }
 
   public openAddUserModal() {
@@ -94,4 +106,5 @@ export default connectStore(ChatMessages, (state) => ({
   selectedUser: state.selectedUser,
   messages: state.messages,
   loading: state.isChatLoading,
+  chatId: state.chatId,
 }));

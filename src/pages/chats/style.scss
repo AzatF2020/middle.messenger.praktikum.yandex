@@ -1,17 +1,17 @@
 @use "@styles/utilities";
 
-.chats {
-    height: 100svh;
-    height: 100vh;
-    width: 100%;
-    max-width: 192rem;
-    margin: 0 auto;
+.chats-page {
+  height: 100svh;
+  height: 100vh;
+  width: 100%;
+  max-width: 192rem;
+  margin: 0 auto;
 
-    &__container {
-        width: 100%;
-        height: inherit;
-        display: grid;
-        grid-template-columns: auto 1fr;
-        grid-template-rows: 100%;
-    }
+  &__container {
+    width: 100%;
+    height: inherit;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 100%;
+  }
 }

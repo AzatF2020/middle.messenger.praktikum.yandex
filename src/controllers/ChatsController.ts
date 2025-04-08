@@ -88,7 +88,7 @@ class ChatsController implements IChatsController {
       window.store.setState({ isChatLoading: true });
 
       const { response } = await chatsAPI.getUsersChat(chatId);
-      const { response: responseMessages } = await chatsAPI.getUserChatMessages(chatId);
+      // const { response: responseMessages } = await chatsAPI.getUserChatMessages(chatId);
       const { response: responseToken } = await chatsAPI.createChatToken(chatId);
 
       const myId = window.store.getState().user.id;
@@ -109,8 +109,8 @@ class ChatsController implements IChatsController {
 
       window.store.setState({
         chatId,
-        selectedUser: { ...candidate, is_selected: true },
-        messages: JSON.parse(responseMessages),
+        selectedUser: { ...candidate, is_selected: true, chatId },
+        messages: [],
         token,
         message: '',
       });
