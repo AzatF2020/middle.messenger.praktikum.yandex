@@ -39,10 +39,12 @@
     {{/if}}
   {{/unless}}
 
-  <form class="chat__footer {{#if selectedChat.is_selected}}--is-shown{{/if}}" novalidate>
+  <form onsubmit="event.preventDefault();" class="chat__footer {{#if selectedChat.is_selected}}--is-shown{{/if}}" novalidate>
     {{{PopupAttachments}}}
     {{{Input
       onChange=handleInputChange
+      onBlur=scrollToBottomOnBlur
+      onKeydown=onSubmitByEnter
       value=message
       name="message"
       placeholder="Сообщение"
@@ -52,18 +54,18 @@
       title="Отправить сообщение"
       disabled=disabledSendButton
       onClick=onSubmit
-      type="submit"
+      type="button"
       class="button chat__footer-button-submit"
       imgSource="/icons/arrow-right-white.svg"
     }}}
   </form>
 
   {{{ModalAddUser
-      isActive=modalAddUserOpened
-      handleCloseModal=closeAddUserModal
+    isActive=modalAddUserOpened
+    handleCloseModal=closeAddUserModal
   }}}
   {{{ModalDeleteUser
-      isActive=modalDeleteUserOpened
-      handleCloseModal=closeDeleteUserModal
+    isActive=modalDeleteUserOpened
+    handleCloseModal=closeDeleteUserModal
   }}}
 </div>

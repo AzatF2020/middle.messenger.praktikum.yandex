@@ -1,5 +1,7 @@
-import { Component, connectStore, WSTransport } from '@core/index';
+import { Component, connectStore } from '@core/index';
 import ChatsController from '@controllers/ChatsController';
+import scrollToBottom from '@utils/constants/scrollToBottom';
+import debounce from '@utils/helpers/debounce';
 import template from './template.hbs?raw';
 import './style.scss';
 
@@ -20,8 +22,6 @@ interface IChatMessages {
 class ChatMessages extends Component implements IChatMessages {
   public chatsController: ChatsController;
 
-  public wssInstance: WSTransport;
-
   constructor(props: any) {
     super(props);
 
@@ -34,45 +34,59 @@ class ChatMessages extends Component implements IChatMessages {
 
     this.chatsController = new ChatsController();
 
-    this.wssInstance = new WSTransport(import.meta.env.VITE_BACKEND_WS);
-
     this.listeners = {
       openAddUserModal: this.openAddUserModal.bind(this),
       closeAddUserModal: this.closeAddUserModal.bind(this),
       openDeleteUserModal: this.openDeleteUserModal.bind(this),
       closeDeleteUserModal: this.closeDeleteUserModal.bind(this),
       handleInputChange: this.handleInputChange.bind(this),
+      scrollToBottomOnBlur: this.scrollToBottomOnBlur.bind(this),
+      onSubmitByEnter: debounce(this.onSubmitByEnter.bind(this), 250),
       onSubmit: this.onSubmit.bind(this),
     };
   }
 
-  public handleInputChange(event: Event) {
-    const { name, value } = event.target as HTMLInputElement;
+  public async handleInputChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const { name, value } = target;
 
     this.setState({
       ...this.state,
       disabledSendButton: !value.trim().length,
       [name]: value,
     });
+
+    // target.focus();
   }
 
   public async onSubmit(event: Event) {
     event.preventDefault();
 
-    this.wssInstance.send(this.state.message);
-    window.store.setState({ message: '' });
+    await this.chatsController.sendChatMessage(this.state.message);
 
-    this.resetFields(event);
+    this.resetFields();
   }
 
-  public resetFields(event: Event) {
-    const form = (event.target as HTMLButtonElement).closest('form');
-    const inputs = form?.getElementsByTagName('input');
+  public async onSubmitByEnter(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
 
-    if (!inputs) return;
-    [...inputs].forEach(({ name }) => {
-      this.setState({ ...this.state, [name]: '' });
-    });
+      await this.chatsController.sendChatMessage(this.state.message);
+
+      (event.target as HTMLInputElement).focus();
+
+      this.resetFields();
+
+      scrollToBottom('.chat-messages-list');
+    }
+  }
+
+  public async scrollToBottomOnBlur() {
+
+  }
+
+  public resetFields() {
+    this.setState({ ...this.state, message: '' });
   }
 
   public openAddUserModal() {

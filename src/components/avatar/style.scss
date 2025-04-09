@@ -10,6 +10,7 @@
     justify-content: center;
     transition: background-color .1s ease;
     overflow: hidden;
+    margin: 0 auto;
 
     @media (hover: hover) {
         &:hover {

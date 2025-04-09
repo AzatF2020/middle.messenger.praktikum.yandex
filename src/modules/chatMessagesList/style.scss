@@ -7,16 +7,16 @@
   height: calc(100vh - 12rem);
   overflow-y: auto;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column-reverse;
 
-  &__group {
-    margin-block: 2.4rem;
-
-    &:first-child {
-      margin-top: 0;
-    }
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
+  //&__group {
+  //  &:first-child {
+  //    margin-top: 0;
+  //  }
+  //
+  //  &:last-child {
+  //    margin-bottom: 0;
+  //  }
+  //}
 }

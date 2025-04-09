@@ -5,6 +5,7 @@ interface InputProps {
   onChange?: () => void;
   onBlur?: () => void;
   onInput?: () => void;
+  onKeydown?: () => void;
   value: string;
   placeholder?: string;
   disabled?: boolean;
@@ -23,6 +24,7 @@ class Input extends Component {
       change: this.props.onChange,
       input: this.props.onInput,
       blur: this.props.onBlur,
+      keydown: this.props.onKeydown,
     };
   }
 

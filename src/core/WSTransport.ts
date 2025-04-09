@@ -116,9 +116,9 @@ class WSTransport {
     if (messages?.type === 'pong') return;
 
     if (Array.isArray(messages)) {
-      window.store.setState({ messages: this._setUserInEveryMessage(messages).reverse() });
+      window.store.setState({ messages: this._setUserInEveryMessage(messages) });
     } else if (messages?.type === 'message') {
-      const messagesWithUsers = this._setUserInEveryMessage([...window.store.getState().messages, messages]);
+      const messagesWithUsers = this._setUserInEveryMessage([messages, ...window.store.getState().messages]);
 
       window.store.setState({
         messages: messagesWithUsers,
@@ -127,43 +127,6 @@ class WSTransport {
     }
   }
 
-  // console.log(selectedChat, lastMessage);
-  //   {
-  //     "id": 57246,
-  //     "title": "asa123",
-  //     "avatar": null,
-  //     "created_by": 3778,
-  //     "unread_count": 0,
-  //     "last_message": {
-  //         "user": {
-  //             "first_name": "",
-  //             "second_name": "",
-  //             "display_name": null,
-  //             "login": "asa12345",
-  //             "avatar": null
-  //         },
-  //         "time": "2025-04-09T11:29:25+00:00",
-  //         "content": "Hello world",
-  //         "id": 27619
-  //     }
-  // }
-
-  //   {
-  //     "type": "message",
-  //     "content": "re",
-  //     "time": "2025-04-09T11:31:23+00:00",
-  //     "user_id": 3778,
-  //     "id": 10,
-  //     "user": {
-  //         "id": 3778,
-  //         "first_name": "",
-  //         "second_name": "",
-  //         "display_name": null,
-  //         "login": "asa12345",
-  //         "avatar": null,
-  //         "role": "admin"
-  //     }
-  // }
   private _handleError(event: any) {
     console.info(`[error]: ${JSON.stringify(event)}`);
   }
