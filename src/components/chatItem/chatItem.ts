@@ -17,8 +17,6 @@ class ChatItem extends Component {
   constructor(props: ChatItemProps) {
     super(props);
 
-    console.log(this.props.user);
-
     this.state = {
       formattedTime: formatTime(this.props.time),
     };

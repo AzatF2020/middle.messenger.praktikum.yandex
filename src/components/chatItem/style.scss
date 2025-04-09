@@ -17,7 +17,6 @@
     width: fit-content;
     margin-block: 1rem;
     position: relative;
-    border-radius: utilities.$rounded-3;
     background-color: utilities.$gray-50;
     display: block;
   }
@@ -82,9 +81,14 @@
     border-radius: utilities.$rounded-5;
   }
 
+  &__main-message--sender {
+    border-radius: utilities.$rounded-3 utilities.$rounded-3 utilities.$rounded-3 0;
+  }
+
   &__main-message--myself  {
     margin-left: auto;
     background-color: utilities.$blue-50;
+    border-radius: utilities.$rounded-3 utilities.$rounded-3 0 utilities.$rounded-3;
   }
 
   &__main-message--sender + &__main-message--myself {
@@ -109,5 +113,26 @@
   &__main-message--myself &__main-message-time {
     margin-left: auto;
     color: utilities.$blue-500;
+  }
+
+  &__main-message-appendix path {
+    fill: utilities.$gray-50;
+  }
+
+  &__main-message--sender &__main-message-appendix {
+    position: absolute;
+    left: -.85rem;
+    bottom: -.3rem;
+    transform: scaleX(-1);
+  }
+
+  &__main-message--myself &__main-message-appendix {
+    position: absolute;
+    right: -.85rem;
+    bottom: -.3rem;
+  }
+
+  &__main-message--myself &__main-message-appendix path {
+    fill: utilities.$blue-50;
   }
 }

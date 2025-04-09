@@ -1,4 +1,5 @@
 import WS_EVENTS from '@utils/constants/wsEvents';
+import deepMergeObjects from '@utils/helpers/mergeObjects';
 
 type SocketURLArgs = {
   userId: number;
@@ -84,6 +85,31 @@ class WSTransport {
     return result;
   }
 
+  private _updateUserChatsInMenu(messages: any[]): any[] {
+    const userChats = window.store.getState()?.userChats ?? [];
+    if (!userChats.length) return;
+
+    const lastMessage = messages[messages.length - 1];
+    const selectedChat = window.store.getState().userChats.find(({ id }:
+      { id: number}) => id === window.store.getState().chatId);
+
+    const formattedLastMessage = structuredClone({
+      ...selectedChat,
+      last_message: {
+        ...selectedChat.lastMessage,
+        user: { ...lastMessage.user },
+        time: lastMessage.time,
+        content: lastMessage.content,
+      },
+    });
+
+    // eslint-disable-next-line consistent-return
+    return userChats.reduce((acc: any[], item: { id: any; }) => {
+      formattedLastMessage.id === item.id ? acc.push(formattedLastMessage) : acc.push(item);
+      return acc;
+    }, []);
+  }
+
   private _handleMessages(event: MessageEvent) {
     const messages = JSON.parse(event.data);
 
@@ -92,14 +118,54 @@ class WSTransport {
     if (Array.isArray(messages)) {
       window.store.setState({ messages: this._setUserInEveryMessage(messages).reverse() });
     } else if (messages?.type === 'message') {
+      const messagesWithUsers = this._setUserInEveryMessage([...window.store.getState().messages, messages]);
+
       window.store.setState({
-        messages: this._setUserInEveryMessage([...window.store.getState().messages, messages]),
+        messages: messagesWithUsers,
+        userChats: this._updateUserChatsInMenu(messagesWithUsers),
       });
     }
   }
 
+  // console.log(selectedChat, lastMessage);
+  //   {
+  //     "id": 57246,
+  //     "title": "asa123",
+  //     "avatar": null,
+  //     "created_by": 3778,
+  //     "unread_count": 0,
+  //     "last_message": {
+  //         "user": {
+  //             "first_name": "",
+  //             "second_name": "",
+  //             "display_name": null,
+  //             "login": "asa12345",
+  //             "avatar": null
+  //         },
+  //         "time": "2025-04-09T11:29:25+00:00",
+  //         "content": "Hello world",
+  //         "id": 27619
+  //     }
+  // }
+
+  //   {
+  //     "type": "message",
+  //     "content": "re",
+  //     "time": "2025-04-09T11:31:23+00:00",
+  //     "user_id": 3778,
+  //     "id": 10,
+  //     "user": {
+  //         "id": 3778,
+  //         "first_name": "",
+  //         "second_name": "",
+  //         "display_name": null,
+  //         "login": "asa12345",
+  //         "avatar": null,
+  //         "role": "admin"
+  //     }
+  // }
   private _handleError(event: any) {
-    console.log(`[error]: ${JSON.stringify(event)}`);
+    console.info(`[error]: ${JSON.stringify(event)}`);
   }
 
   private generateSocketURL({

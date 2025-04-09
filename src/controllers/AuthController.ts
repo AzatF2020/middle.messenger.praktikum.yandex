@@ -22,7 +22,7 @@ class AuthController implements IAuthController {
         window.router.go(PATHNAMES.MESSENGER);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -34,7 +34,7 @@ class AuthController implements IAuthController {
         window.router.go(PATHNAMES.MESSENGER);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

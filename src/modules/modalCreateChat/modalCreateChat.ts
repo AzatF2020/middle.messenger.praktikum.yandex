@@ -4,10 +4,11 @@ import {
   required,
   isLatin,
   minLength,
+  acceptedSigns,
 } from '@utils/constants/validationRules';
+import ChatsController from '@controllers/ChatsController';
 import template from './template.hbs?raw';
 import './style.scss';
-import ChatsController from '@controllers/ChatsController';
 
 interface IModalCreateChat {
   handleCloseModal(event: Event): void;
@@ -33,6 +34,7 @@ const validation = new FormValidator({
       required,
       isLatin,
       minLength: minLength(3),
+      acceptedSigns: acceptedSigns('_'),
     },
   },
 });

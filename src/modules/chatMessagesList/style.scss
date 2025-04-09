@@ -2,10 +2,11 @@
   width: 100%;
   max-width: 100rem;
   margin: 0 auto;
-  padding-block: 3rem;
+  padding: 3rem 1rem;
   height: calc(100svh - 12rem);
   height: calc(100vh - 12rem);
   overflow-y: auto;
+  overflow-x: hidden;
 
   &__group {
     margin-block: 2.4rem;
