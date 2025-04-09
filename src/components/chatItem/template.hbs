@@ -1,13 +1,21 @@
 <div class="chat-item__main-message {{#ifCond user_id '==' myId}}chat-item__main-message--myself{{else}}chat-item__main-message--sender{{/ifCond}}">
-  {{#if content}}
-  <span>
-    {{content}}
-  </span>
-  {{/if}}
+  <div class="chat-item__main-message-top">
+    {{#ifCond user.id '!=' myId}}
+      {{#if user.display_name}}
+        <span class="chat-item__user-name">{{ user.display_name }}</span>
+      {{else if user.login }}
+        <span class="chat-item__user-name">{{ user.login }}</span>
+      {{/if}}
+    {{/ifCond}}
+
+    {{#if content}}
+      <span class="chat-item__main-message-content">{{content}}</span>
+    {{/if}}
+  </div>
 
   {{#if time}}
   <time
-    datetime="{{formattedTime}}"
+    datetime="{{time}}"
     class="text-7 chat-item__main-message-time"
   >
     {{formattedTime}}

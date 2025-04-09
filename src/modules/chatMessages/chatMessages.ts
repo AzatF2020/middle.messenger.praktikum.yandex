@@ -59,12 +59,6 @@ class ChatMessages extends Component implements IChatMessages {
   public async onSubmit(event: Event) {
     event.preventDefault();
 
-    if (!window.store.getState().chatId) {
-      await this.chatsController.createChat({
-        title: window.store.getState().selectedUser.login,
-      }, [window.store.getState().selectedUser.id]);
-    }
-
     this.wssInstance.send(this.state.message);
     window.store.setState({ message: '' });
 
@@ -103,7 +97,7 @@ class ChatMessages extends Component implements IChatMessages {
 }
 
 export default connectStore(ChatMessages, (state) => ({
-  selectedUser: state.selectedUser,
+  selectedChat: state.selectedChat,
   messages: state.messages,
   loading: state.isChatLoading,
   chatId: state.chatId,

@@ -13,6 +13,7 @@ import { LoaderOverlay } from './loaderOverlay';
 import { UsersList } from './usersList';
 import { ChatMessagesList } from './chatMessagesList';
 import { GlobalLoader } from './globalLoader';
+import { ModalCreateChat } from './modalCreateChat';
 
 const modules: Record<string, typeof Component> = {
   LoginForm: LoginForm as typeof Component,
@@ -29,6 +30,7 @@ const modules: Record<string, typeof Component> = {
   ChatMessages,
   ChatMessagesList,
   GlobalLoader,
+  ModalCreateChat,
 };
 
 export default modules;

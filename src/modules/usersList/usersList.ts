@@ -1,5 +1,6 @@
 import { Component, connectStore } from '@core/index';
 import ChatsController from '@controllers/ChatsController';
+import initialState from '@utils/constants/initialState';
 import template from './template.hbs?raw';
 import './style.scss';
 
@@ -13,33 +14,48 @@ class UsersList extends Component {
   constructor(props: ListItemUserProps) {
     super(props);
 
+    this.state = {
+      modalCreateChatOpened: false,
+    };
+
     this.chatsController = new ChatsController();
-    this.listeners = { handleOpenUserChat: this.handleOpenUserChat.bind(this) };
+    this.listeners = {
+      handleOpenUserChat: this.handleOpenUserChat.bind(this),
+      openCreateChatModal: this.openCreateChatModal.bind(this),
+      closeCreateChatModal: this.closeCreateChatModal.bind(this),
+    };
   }
 
   public handleOpenUserChat(value: Record<string, any>) {
     return async () => {
       /* Если пользователь был выбран из списка поиска, то открываем его чат. */
       if (value.login) {
-        const chatId = window.store.getState()
-          .userChats.find(({ title }: { title: string }) => title === value.login)?.id;
+        window.store.setState({
+          chatId: null,
+          token: null,
+          messages: [],
+          selectedChat: initialState().selectedChat,
+          selectedUserOnSearch: { ...value },
+        });
 
-        /* Если пользователь был найден в чате и есть начатый диалог, то открываем существующий. */
-        if (chatId) {
-          await this.chatsController.openHandleChat(chatId);
-        } else {
-          window.router.go('/messenger', value.login);
-          window.store.setState({
-            chatId: null,
-            messages: [],
-            selectedUser: { ...value, is_selected: true },
-          });
-        }
+        this.openCreateChatModal();
       } else {
         /* Получаем пользователя, если чат был с ним ранее создан. *ID чата */
         await this.chatsController.openHandleChat(value.id);
       }
     };
+  }
+
+  public openCreateChatModal() {
+    this.setState({ ...this.state, modalCreateChatOpened: true });
+  }
+
+  public closeCreateChatModal() {
+    window.store.setState({
+      selectedUserOnSearch: initialState().selectedUserOnSearch,
+    });
+
+    this.setState({ ...this.state, modalCreateChatOpened: false });
   }
 
   public render() {

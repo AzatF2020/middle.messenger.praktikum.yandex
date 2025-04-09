@@ -1,0 +1,42 @@
+<div class="modal modal-create-chat {{#if isActive}} modal--active {{/if}}" id="modal-add-user">
+  <div class="modal-create-chat__inner modal__wrapper">
+    {{{ Button
+      onClick=handleCloseModal
+      imgSource="/icons/close.svg"
+      class="modal__close-button"
+      title="Закрыть"
+    }}}
+    <form class="modal-create-chat__form">
+      <h1 class="heading-6 modal-create-chat__title">Создать чат</h1>
+      <fieldset class="modal-create-chat__group">
+        <div class="input-group">
+          <div class="input-floating">
+            {{{ Input
+                id="title"
+                name="title"
+                value=title
+                onChange=handleInputChange
+                onBlur=handleInputBlur
+                placeholder="Название чата"
+            }}}
+            <label for="title" class="label">Название чата</label>
+          </div>
+          {{#if errors.title.length}}
+            <div class="error-feedback">
+              {{#each errors.title}}
+                <span>{{this}}</span>
+              {{/each}}
+            </div>
+          {{/if}}
+        </div>
+      </fieldset>
+      {{{ Button
+          class="button button-primary modal-create-chat__button"
+          type="submit"
+          onClick=onSubmit
+          disabled=isButtonDisabled
+          label="Создать"
+      }}}
+    </form>
+  </div>
+</div>

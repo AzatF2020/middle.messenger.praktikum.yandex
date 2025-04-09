@@ -11,8 +11,6 @@ class WSTransport {
 
   private _ping!: any;
 
-  private _chatId!: string | number;
-
   private _wss!: WebSocket;
 
   private _connectingTimeout!: null | NodeJS.Timeout;
@@ -50,13 +48,6 @@ class WSTransport {
     this._wss!.removeEventListener(WS_EVENTS.ERROR, this._handleError);
   }
 
-  private _leave() {
-    window.store.setState({ messages: [] });
-    clearInterval(this._ping);
-    clearTimeout(this._connectingTimeout!);
-    this._removeEventListeners();
-  }
-
   private _getOldMessages() {
     this._wss.send(JSON.stringify({
       type: 'get old',
@@ -78,7 +69,19 @@ class WSTransport {
   private _handleClose(event: CloseEvent) {
     console.info(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
 
-    this._leave();
+    this.leave();
+  }
+
+  private _setUserInEveryMessage(messages: any[]): any[] {
+    const result = messages.map((item) => ({
+      ...item,
+      user: {
+        ...window.store.getState().selectedChat.members
+          .find(({ id }: { id: number}) => id === item.user_id),
+      },
+    }));
+
+    return result;
   }
 
   private _handleMessages(event: MessageEvent) {
@@ -87,10 +90,10 @@ class WSTransport {
     if (messages?.type === 'pong') return;
 
     if (Array.isArray(messages)) {
-      window.store.setState({ messages: structuredClone(messages).reverse() });
+      window.store.setState({ messages: this._setUserInEveryMessage(messages).reverse() });
     } else if (messages?.type === 'message') {
       window.store.setState({
-        messages: [...window.store.getState().messages, messages],
+        messages: this._setUserInEveryMessage([...window.store.getState().messages, messages]),
       });
     }
   }
@@ -117,20 +120,21 @@ class WSTransport {
     }
   }
 
+  public leave() {
+    window.store.setState({ messages: [] });
+    clearInterval(this._ping);
+    clearTimeout(this._connectingTimeout!);
+    this._removeEventListeners();
+  }
+
   public connectToSocket({ userId, chatId, token }: SocketURLArgs) {
-    if (chatId !== this._chatId) {
-      this._leave();
+    this._wss = new WebSocket(this.generateSocketURL({
+      userId,
+      chatId,
+      token,
+    }));
 
-      this._chatId = chatId;
-
-      this._wss = new WebSocket(this.generateSocketURL({
-        userId,
-        chatId,
-        token,
-      }));
-
-      this._addEventListeners();
-    }
+    this._addEventListeners();
   }
 
   public send<T>(content: T) {

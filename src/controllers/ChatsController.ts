@@ -71,7 +71,7 @@ class ChatsController implements IChatsController {
 
       window.store.setState({
         userChats: JSON.parse(response),
-        selectedUser: initialState().selectedUser,
+        selectedChat: initialState().selectedChat,
         messages: [],
       });
     } catch (error) {
@@ -84,22 +84,23 @@ class ChatsController implements IChatsController {
       return;
     }
 
+    wssInstance.leave();
+
     try {
       window.store.setState({ isChatLoading: true });
 
-      const { response } = await chatsAPI.getUsersChat(chatId);
-      // const { response: responseMessages } = await chatsAPI.getUserChatMessages(chatId);
+      const { response: chatUsers } = await chatsAPI.getUsersChat(chatId);
       const { response: responseToken } = await chatsAPI.createChatToken(chatId);
 
       const myId = window.store.getState().user.id;
       const token = JSON.parse(responseToken)?.token;
 
-      /* Получаем пользователя, *добавленного в чат и кладем в хранилище. (Работает только до 2-мя пользователей) */
-      const candidate = JSON.parse(response).find(({ id: candidateId }: {id: number }) => candidateId !== myId);
+      /* Получаем чат и кладем в хранилище. */
+      const currentChatInfo = window.store.getState().userChats.find(({ id }: { id: number }) => id === chatId);
 
-      window.router.go('/messenger', candidate.login);
+      window.router.go('/messenger', currentChatInfo.title);
 
-      document.title = candidate.login;
+      document.title = currentChatInfo.title;
 
       wssInstance.connectToSocket({
         chatId,
@@ -109,7 +110,7 @@ class ChatsController implements IChatsController {
 
       window.store.setState({
         chatId,
-        selectedUser: { ...candidate, is_selected: true, chatId },
+        selectedChat: { ...currentChatInfo, members: JSON.parse(chatUsers ?? '[]'), is_selected: true },
         messages: [],
         token,
         message: '',

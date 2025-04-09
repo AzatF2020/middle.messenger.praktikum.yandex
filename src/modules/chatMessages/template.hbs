@@ -1,7 +1,7 @@
 <div class="chat">
   {{{LoaderOverlay loading=loading}}}
 
-  <div class="chat__user-header {{#if selectedUser.is_selected}}--is-shown{{/if}}">
+  <div class="chat__user-header {{#if selectedChat.is_selected}}--is-shown{{/if}}">
     <div class="chat__user-header-left-column">
       <div class="chat__user-header-plug"></div>
       <a
@@ -10,10 +10,8 @@
         rel="noopener noreferrer"
         class="link text-4 chat__user-header-name"
       >
-        {{#if display_name }}
-          {{ selectedUser.display_name }}
-        {{ else if selectedUser.login}}
-          {{ selectedUser.login }}
+        {{#if selectedChat.title }}
+          {{ selectedChat.title }}
         {{/if }}
       </a>
     </div>
@@ -27,19 +25,21 @@
     messages=messages
   }}}
 
-  {{#if selectedUser.is_selected}}
-    {{#ifCond selectedUser.chatId '!=' chatId}}
-      <div class="text-5 chat__empty">
-        Напишите сообщение, чтобы создать чат
-      </div>
-    {{/ifCond}}
-  {{else}}
+  {{#unless selectedChat.is_selected}}
     <div class="text-5 chat__empty">
       Выберите чат, чтобы отправить сообщение
     </div>
-  {{/if}}
+  {{/unless}}
 
-  <form class="chat__footer {{#if selectedUser.is_selected}}--is-shown{{/if}}" novalidate>
+  {{#unless messages.length}}
+    {{#if selectedChat.is_selected}}
+    <div class="text-5 chat__empty">
+      Сообщений пока нет
+    </div>
+    {{/if}}
+  {{/unless}}
+
+  <form class="chat__footer {{#if selectedChat.is_selected}}--is-shown{{/if}}" novalidate>
     {{{PopupAttachments}}}
     {{{Input
       onChange=handleInputChange

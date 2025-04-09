@@ -1,4 +1,7 @@
 .chat-messages-list {
+  width: 100%;
+  max-width: 100rem;
+  margin: 0 auto;
   padding-block: 3rem;
   height: calc(100svh - 12rem);
   height: calc(100vh - 12rem);

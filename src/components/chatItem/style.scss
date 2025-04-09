@@ -12,21 +12,41 @@
 
   &__main-message {
     padding: 1.1rem;
-    min-width: 11.5rem;
+    padding-right: 4rem;
     max-width: 38rem;
     width: fit-content;
     margin-block: 1rem;
+    position: relative;
+    border-radius: utilities.$rounded-3;
+    background-color: utilities.$gray-50;
+    display: block;
+  }
+
+  &__main-message-top {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__main-message-content {
     font-size: utilities.$text-5;
     font-weight: 500;
     color: utilities.$black-900;
     line-height: 1.2;
-    position: relative;
-    border-radius: utilities.$rounded-3;
-    background-color: utilities.$gray-50;
     word-break: break-word;
     line-height: 1.3125;
     text-align: initial;
-    display: block;
+    unicode-bidi: plaintext;
+  }
+
+  &__user-name {
+    font-size: utilities.$text-5;
+    font-weight: 500;
+    color: utilities.$blue-700;
+    line-height: 1.2;
+    word-break: break-word;
+    line-height: 1.3125;
+    text-align: initial;
     unicode-bidi: plaintext;
   }
 
@@ -81,7 +101,8 @@
     position: relative;
     white-space: nowrap;
     float: right;
-    top: .75rem;
+    bottom: .5rem;
+    left: 3.25rem;
     padding-left: .8rem;
   }
 

@@ -12,6 +12,7 @@ type ChatMessagesListProps = {
     content: string;
     is_read: boolean;
     file: null
+    user: Record<string, any>
   }>;
 }
 

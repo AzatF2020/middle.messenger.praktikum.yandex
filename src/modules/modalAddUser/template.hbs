@@ -1,42 +1,42 @@
 <div class="modal user-add-modal {{#if isActive}} modal--active {{/if}}" id="modal-add-user">
-    <div class="user-add-modal__inner modal__wrapper">
-        {{{ Button
-            onClick=handleCloseModal
-            imgSource="/icons/close.svg"
-            class="modal__close-button"
-            title="Закрыть"
-        }}}
-        <form class="user-add-modal__form">
-            <h1 class="heading-6 user-add-modal__title">Добавить пользователя</h1>
-            <fieldset class="user-add-modal__group">
-                <div class="input-group">
-                    <div class="input-floating">
-                        {{{ Input
-                            id="login"
-                            name="login"
-                            value=login
-                            onChange=handleInputChange
-                            onBlur=handleInputBlur
-                            placeholder="Логин"
-                        }}}
-                        <label for="login" class="label">Логин</label>
-                    </div>
-                    {{#if errors.login.length}}
-                        <div class="error-feedback">
-                            {{#each errors.login}}
-                                <span>{{this}}</span>
-                            {{/each}}
-                        </div>
-                    {{/if}}
-                </div>
-            </fieldset>
-            {{{ Button
-                class="button button-primary user-add-modal__button"
-                type="submit"
-                onClick=onSubmit
-                disabled=isButtonDisabled
-                label="Добавить"
+  <div class="user-add-modal__inner modal__wrapper">
+    {{{ Button
+      onClick=handleCloseModal
+      imgSource="/icons/close.svg"
+      class="modal__close-button"
+      title="Закрыть"
+    }}}
+    <form class="user-add-modal__form">
+      <h1 class="heading-6 user-add-modal__title">Добавить пользователя</h1>
+      <fieldset class="user-add-modal__group">
+        <div class="input-group">
+          <div class="input-floating">
+            {{{ Input
+                id="login"
+                name="login"
+                value=login
+                onChange=handleInputChange
+                onBlur=handleInputBlur
+                placeholder="Логин"
             }}}
-        </form>
-    </div>
+            <label for="login" class="label">Логин</label>
+          </div>
+          {{#if errors.login.length}}
+            <div class="error-feedback">
+              {{#each errors.login}}
+                <span>{{this}}</span>
+              {{/each}}
+            </div>
+          {{/if}}
+        </div>
+      </fieldset>
+      {{{ Button
+          class="button button-primary user-add-modal__button"
+          type="submit"
+          onClick=onSubmit
+          disabled=isButtonDisabled
+          label="Добавить"
+      }}}
+    </form>
+  </div>
 </div>
