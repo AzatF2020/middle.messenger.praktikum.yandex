@@ -6,12 +6,17 @@ interface IPopupAttachments {
   togglePopup(event: Event): void;
 }
 
+type PopupAttachmentsProps = {
+  openModalSendMediaModal(): void
+}
+
 class PopupAttachments extends Component implements IPopupAttachments {
-  constructor() {
-    super();
+  constructor(props: PopupAttachmentsProps) {
+    super(props);
 
     this.listeners = {
       togglePopup: this.togglePopup.bind(this),
+      openModalSendMediaModal: this.props.openModalSendMediaModal,
     };
   }
 

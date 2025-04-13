@@ -166,12 +166,12 @@ class WSTransport {
     this._addEventListeners();
   }
 
-  public send<T>(content: T) {
+  public send<T>({ type = 'message', content }: { type?: string, content: T }) {
     if (!this._wss) return;
 
     this._waitForSocketConnection(() => {
       this._wss.send(JSON.stringify({
-        type: 'message',
+        type,
         content,
       }));
     });

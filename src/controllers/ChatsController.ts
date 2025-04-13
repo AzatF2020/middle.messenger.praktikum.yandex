@@ -4,8 +4,6 @@ import { PATHNAMES } from '@utils/constants/pagesPathnames';
 import type { CreateChatModel } from 'src/types/chatModels';
 import initialState from '@utils/constants/initialState';
 import decodeURI from '@utils/constants/decodeURI';
-import scrollToBottom from '@utils/constants/scrollToBottom';
-import delay from '@utils/helpers/delay';
 
 const chatsAPI = new ChatsAPI();
 const wssInstance = new WSTransport(import.meta.env.VITE_BACKEND_WS);
@@ -81,14 +79,10 @@ class ChatsController implements IChatsController {
     }
   }
 
-  public async sendChatMessage(message: string) {
-    wssInstance.send(message);
+  public async sendChatMessage(content: string) {
+    wssInstance.send({ content });
 
     window.store.setState({ message: '' });
-
-    // await delay(150);
-
-    // scrollToBottom('.chat-messages-list');
   }
 
   public async openHandleChat(chatId: number) {

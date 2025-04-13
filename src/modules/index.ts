@@ -14,6 +14,7 @@ import { UsersList } from './usersList';
 import { ChatMessagesList } from './chatMessagesList';
 import { GlobalLoader } from './globalLoader';
 import { ModalCreateChat } from './modalCreateChat';
+import { ModalSendMedia } from './modalSendMedia';
 
 const modules: Record<string, typeof Component> = {
   LoginForm: LoginForm as typeof Component,
@@ -31,6 +32,7 @@ const modules: Record<string, typeof Component> = {
   ChatMessagesList,
   GlobalLoader,
   ModalCreateChat,
+  ModalSendMedia,
 };
 
 export default modules;

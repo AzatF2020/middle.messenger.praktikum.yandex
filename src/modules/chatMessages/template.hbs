@@ -40,10 +40,11 @@
   {{/unless}}
 
   <form onsubmit="event.preventDefault();" class="chat__footer {{#if selectedChat.is_selected}}--is-shown{{/if}}" novalidate>
-    {{{PopupAttachments}}}
+    {{{PopupAttachments
+      openModalSendMediaModal=openModalSendMediaModal
+    }}}
     {{{Input
       onChange=handleInputChange
-      onBlur=scrollToBottomOnBlur
       onKeydown=onSubmitByEnter
       value=message
       name="message"
@@ -67,5 +68,9 @@
   {{{ModalDeleteUser
     isActive=modalDeleteUserOpened
     handleCloseModal=closeDeleteUserModal
+  }}}
+  {{{ModalSendMedia
+    isActive=modalSendMediaOpened
+    handleCloseModal=closeModalSendMediaModal
   }}}
 </div>

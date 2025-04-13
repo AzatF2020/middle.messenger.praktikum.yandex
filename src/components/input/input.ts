@@ -14,6 +14,7 @@ interface InputProps {
   type?: string;
   readonly?: boolean;
   required?: boolean;
+  accept?: string;
 }
 
 class Input extends Component {

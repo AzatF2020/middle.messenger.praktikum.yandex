@@ -53,9 +53,11 @@ class HTTPClient implements IHTTPClient {
 
       xhr.withCredentials = withCredentials;
 
-      Object.entries(headers!).forEach(([key, value]) => {
-        xhr.setRequestHeader(key, value);
-      });
+      if (!(data instanceof FormData)) {
+        Object.entries(headers!).forEach(([key, value]) => {
+          xhr.setRequestHeader(key, value);
+        });
+      }
 
       const onload = () => {
         const { status } = xhr;

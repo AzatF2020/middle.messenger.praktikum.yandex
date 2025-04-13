@@ -1,6 +1,5 @@
 import { Component, connectStore } from '@core/index';
 import ChatsController from '@controllers/ChatsController';
-import scrollToBottom from '@utils/constants/scrollToBottom';
 import debounce from '@utils/helpers/debounce';
 import template from './template.hbs?raw';
 import './style.scss';
@@ -30,6 +29,7 @@ class ChatMessages extends Component implements IChatMessages {
       disabledSendButton: true,
       modalAddUserOpened: false,
       modalDeleteUserOpened: false,
+      modalSendMediaOpened: false,
     };
 
     this.chatsController = new ChatsController();
@@ -39,8 +39,9 @@ class ChatMessages extends Component implements IChatMessages {
       closeAddUserModal: this.closeAddUserModal.bind(this),
       openDeleteUserModal: this.openDeleteUserModal.bind(this),
       closeDeleteUserModal: this.closeDeleteUserModal.bind(this),
+      openModalSendMediaModal: this.openModalSendMediaModal.bind(this),
+      closeModalSendMediaModal: this.closeModalSendMediaModal.bind(this),
       handleInputChange: this.handleInputChange.bind(this),
-      scrollToBottomOnBlur: this.scrollToBottomOnBlur.bind(this),
       onSubmitByEnter: debounce(this.onSubmitByEnter.bind(this), 250),
       onSubmit: this.onSubmit.bind(this),
     };
@@ -55,8 +56,6 @@ class ChatMessages extends Component implements IChatMessages {
       disabledSendButton: !value.trim().length,
       [name]: value,
     });
-
-    // target.focus();
   }
 
   public async onSubmit(event: Event) {
@@ -76,19 +75,14 @@ class ChatMessages extends Component implements IChatMessages {
       (event.target as HTMLInputElement).focus();
 
       this.resetFields();
-
-      scrollToBottom('.chat-messages-list');
     }
-  }
-
-  public async scrollToBottomOnBlur() {
-
   }
 
   public resetFields() {
     this.setState({ ...this.state, message: '' });
   }
 
+  // # Добавление пользователя в чат
   public openAddUserModal() {
     this.setState({ ...this.state, modalAddUserOpened: true });
   }
@@ -97,12 +91,21 @@ class ChatMessages extends Component implements IChatMessages {
     this.setState({ ...this.state, modalAddUserOpened: false });
   }
 
+  // # Удаление чата
   public openDeleteUserModal() {
     this.setState({ ...this.state, modalDeleteUserOpened: true });
   }
 
   public closeDeleteUserModal() {
     this.setState({ ...this.state, modalDeleteUserOpened: false });
+  }
+
+  public openModalSendMediaModal() {
+    this.setState({ ...this.state, modalSendMediaOpened: true });
+  }
+
+  public closeModalSendMediaModal() {
+    this.setState({ ...this.state, modalSendMediaOpened: false });
   }
 
   public render() {

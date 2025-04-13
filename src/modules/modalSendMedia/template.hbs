@@ -1,0 +1,53 @@
+<div class="modal modal-send-media {{#if isActive}} modal--active {{/if}}" id="modal-add-user">
+  <div class="modal-send-media__inner modal__wrapper">
+    {{{ Button
+      onClick=handleCloseModal
+      imgSource="/icons/close.svg"
+      class="modal__close-button"
+      title="Закрыть"
+    }}}
+    <form class="modal-send-media__form">
+      <h2 class="heading-6 modal-send-media__title">Отправить файл или видео</h2>
+      <fieldset class="modal-send-media__media-wrapper">
+        {{#unless isFileSelected}}
+          <label for="name" class="modal-send-media__media-wrapper-label">
+            {{{Input
+              class="modal-send-media__media-wrapper-input"
+              type="file"
+              onChange=handleInputChange
+              accept="image/*,video/*"
+              name=resource
+            }}}
+            <span class="text-4 modal-send-media__media-wrapper-text">Выберите файл</span>
+          </label>
+        {{else}}
+          <div class="modal-send-media__media-settings">
+            {{{Button
+              onClick=resetFileSource
+              type="button"
+              class="modal-send-media__media-settings-delete-button"
+              imgSource="/icons/trash.svg"
+            }}}
+          </div>
+          <img src="{{resource}}" alt="image" class="modal-send-media__media-resource">
+        {{/unless}}
+      </fieldset>
+      <div class="modal-send-media__footer">
+        {{{ Button
+            class="button button-primary modal-send-media__button-reset"
+            type="submit"
+            onClick=onSubmit
+            disabled=isButtonDisabled
+            label="Отменить"
+        }}}
+        {{{ Button
+            class="button button-primary modal-send-media__button"
+            type="submit"
+            onClick=onSubmit
+            disabled=isButtonDisabled
+            label="Отправить"
+        }}}
+      </div>
+    </form>
+  </div>
+</div>
