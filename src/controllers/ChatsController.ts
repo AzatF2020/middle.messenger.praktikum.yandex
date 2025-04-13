@@ -85,6 +85,10 @@ class ChatsController implements IChatsController {
     window.store.setState({ message: '' });
   }
 
+  public async sendChatFile(content: string) {
+    wssInstance.send({ type: 'file', content });
+  }
+
   public async openHandleChat(chatId: number) {
     if (window.store.getState().chatId === chatId) {
       return;
@@ -126,10 +130,6 @@ class ChatsController implements IChatsController {
       console.error(error);
     } finally {
       window.store.setState({ isChatLoading: false });
-
-      // await delay(450);
-      // console.log('Вызов с openHandleChat');
-      // scrollToBottom('.chat-messages-list');
     }
   }
 }

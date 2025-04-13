@@ -9,9 +9,15 @@
     {{/ifCond}}
 
     {{#if content}}
-      <span class="chat-item__main-message-content">{{content}}</span>
+      {{#unless file}}
+        <span class="chat-item__main-message-content">{{content}}</span>
+      {{/unless}}
     {{/if}}
   </div>
+
+  {{#if file}}
+  <img src="{{storage}}/{{file.path}}" alt="">
+  {{/if}}
 
   {{#if time}}
   <time

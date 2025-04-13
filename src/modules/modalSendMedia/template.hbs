@@ -9,28 +9,25 @@
     <form class="modal-send-media__form">
       <h2 class="heading-6 modal-send-media__title">Отправить файл или видео</h2>
       <fieldset class="modal-send-media__media-wrapper">
-        {{#unless isFileSelected}}
-          <label for="name" class="modal-send-media__media-wrapper-label">
-            {{{Input
-              class="modal-send-media__media-wrapper-input"
-              type="file"
-              onChange=handleInputChange
-              accept="image/*,video/*"
-              name=resource
-            }}}
-            <span class="text-4 modal-send-media__media-wrapper-text">Выберите файл</span>
-          </label>
-        {{else}}
-          <div class="modal-send-media__media-settings">
-            {{{Button
-              onClick=resetFileSource
-              type="button"
-              class="modal-send-media__media-settings-delete-button"
-              imgSource="/icons/trash.svg"
-            }}}
-          </div>
-          <img src="{{resource}}" alt="image" class="modal-send-media__media-resource">
-        {{/unless}}
+        <label for="resource" class="modal-send-media__media-wrapper-label {{#if isFileSelected}} --is-hidden {{/if}}">
+          {{{Input
+            class="modal-send-media__media-wrapper-input"
+            type="file"
+            onChange=handleInputChange
+            accept="image/*,video/*"
+            name="resource"
+          }}}
+          <span class="text-4 modal-send-media__media-wrapper-text">Выберите файл</span>
+        </label>
+        <div class="modal-send-media__media-settings {{#unless isFileSelected}} --is-hidden {{/unless}}">
+          {{{Button
+            onClick=resetFileSource
+            type="button"
+            class="modal-send-media__media-settings-delete-button"
+            imgSource="/icons/trash.svg"
+          }}}
+        </div>
+        <img src="{{resource}}" alt="image" class="modal-send-media__media-resource {{#unless isFileSelected}} --is-hidden {{/unless}}">
       </fieldset>
       <div class="modal-send-media__footer">
         {{{ Button

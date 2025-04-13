@@ -1,10 +1,9 @@
 import { HTTPClient } from '@core/index.ts';
-import type UploadResourcesModel from 'src/types/uploadResourcesModel';
 
 const http = new HTTPClient('/resources');
 
 class ResourcesAPI {
-  public async uploadFile(data: UploadResourcesModel) {
+  public async uploadFile(data: FormData) {
     return await http.post('', { data });
   }
 }

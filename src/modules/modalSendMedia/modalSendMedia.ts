@@ -1,4 +1,5 @@
 import Component from '@core/Component';
+import ResourcesController from '@controllers/ResourcesController';
 import ChatsController from '@controllers/ChatsController';
 import template from './template.hbs?raw';
 import './style.scss';
@@ -19,12 +20,20 @@ type ModalSendMediaProps = {
 };
 
 class ModalSendMedia extends Component implements IModalSendMedia {
+  public resourcesController: ResourcesController;
+
   public chatsController: ChatsController;
+
+  public formData: FormData;
 
   constructor(props: ModalSendMediaProps) {
     super(props);
 
+    this.resourcesController = new ResourcesController();
+
     this.chatsController = new ChatsController();
+
+    this.formData = new FormData();
 
     this.state = {
       title: '',
@@ -48,6 +57,8 @@ class ModalSendMedia extends Component implements IModalSendMedia {
     const { files } = event.target as HTMLInputElement;
     const file = files![0];
 
+    this.formData.append('resource', files![0]);
+
     const readFileAsDataURL = new Promise((resolve) => {
       const reader = new FileReader();
       reader.onload = (event) => resolve(event.target!.result);
@@ -59,14 +70,24 @@ class ModalSendMedia extends Component implements IModalSendMedia {
     this.setState({ ...this.state, isFileSelected: true, resource });
   }
 
-  public resetFileSource() {
-    this.setState({ ...this.state, isFileSelected: false, resource: null });
-  }
-
   public async onSubmit(event: Event) {
     event.preventDefault();
 
+    if (!this.formData.get('resource')) return;
+
+    const resourcePath = await this.resourcesController.uploadFile(this.formData);
+
+    await this.chatsController.sendChatFile(resourcePath);
+
     this.props.handleCloseModal(event);
+  }
+
+  public resetFileSource() {
+    this.formData = new FormData();
+
+    this.setState({
+      ...this.state, isFileSelected: false, resource: null,
+    });
   }
 
   public closeByOverlay(event: Event) {

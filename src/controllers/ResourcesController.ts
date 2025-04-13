@@ -1,15 +1,13 @@
 import ResourcesAPI from '@api/resourcesAPI';
-import UploadResourcesModel from 'src/types/uploadResourcesModel';
 
 const resourcesAPI = new ResourcesAPI();
 
 class ResourcesController {
-  public async uploadFile(data: UploadResourcesModel) {
+  public async uploadFile(data: FormData) {
     let path = null;
     try {
       const { response } = await resourcesAPI.uploadFile(data);
-      console.log(response);
-      path = JSON.parse(response)?.path;
+      path = JSON.parse(response)?.id;
     } catch (error) {
       console.error(error);
     }

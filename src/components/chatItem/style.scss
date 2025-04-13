@@ -54,6 +54,7 @@
     max-width: 31.6rem;
     height: auto;
     object-fit: contain;
+    border-radius: 1rem;
   }
 
   &__main-message:has(img) {
@@ -113,6 +114,10 @@
   &__main-message--myself &__main-message-time {
     margin-left: auto;
     color: utilities.$blue-500;
+  }
+
+  &__main-message:has(img) &__main-message-appendix {
+    display: none;
   }
 
   &__main-message-appendix path {
