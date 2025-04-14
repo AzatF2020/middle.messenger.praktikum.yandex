@@ -4,14 +4,14 @@ const resourcesAPI = new ResourcesAPI();
 
 class ResourcesController {
   public async uploadFile(data: FormData) {
-    let path = null;
+    let id = null;
     try {
       const { response } = await resourcesAPI.uploadFile(data);
-      path = JSON.parse(response)?.id;
+      id = JSON.parse(response)?.id;
     } catch (error) {
       console.error(error);
     }
-    return path;
+    return id;
   }
 }
 

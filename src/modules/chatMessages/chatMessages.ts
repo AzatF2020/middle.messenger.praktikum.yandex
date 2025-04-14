@@ -30,6 +30,7 @@ class ChatMessages extends Component implements IChatMessages {
       modalAddUserOpened: false,
       modalDeleteUserOpened: false,
       modalSendMediaOpened: false,
+      modalChatInfoOpened: false,
     };
 
     this.chatsController = new ChatsController();
@@ -41,6 +42,8 @@ class ChatMessages extends Component implements IChatMessages {
       closeDeleteUserModal: this.closeDeleteUserModal.bind(this),
       openModalSendMediaModal: this.openModalSendMediaModal.bind(this),
       closeModalSendMediaModal: this.closeModalSendMediaModal.bind(this),
+      openChatModalInfo: this.openChatModalInfo.bind(this),
+      closeChatModalInfo: this.closeChatModalInfo.bind(this),
       handleInputChange: this.handleInputChange.bind(this),
       onSubmitByEnter: debounce(this.onSubmitByEnter.bind(this), 250),
       onSubmit: this.onSubmit.bind(this),
@@ -82,7 +85,7 @@ class ChatMessages extends Component implements IChatMessages {
     this.setState({ ...this.state, message: '' });
   }
 
-  // # Добавление пользователя в чат
+  // # Добавление пользователя в чат
   public openAddUserModal() {
     this.setState({ ...this.state, modalAddUserOpened: true });
   }
@@ -100,12 +103,22 @@ class ChatMessages extends Component implements IChatMessages {
     this.setState({ ...this.state, modalDeleteUserOpened: false });
   }
 
+  // # Отправка изображений
   public openModalSendMediaModal() {
     this.setState({ ...this.state, modalSendMediaOpened: true });
   }
 
   public closeModalSendMediaModal() {
     this.setState({ ...this.state, modalSendMediaOpened: false });
+  }
+
+  // # Инфо о группе
+  public openChatModalInfo() {
+    this.setState({ ...this.state, modalChatInfoOpened: true });
+  }
+
+  public closeChatModalInfo() {
+    this.setState({ ...this.state, modalChatInfoOpened: false });
   }
 
   public render() {

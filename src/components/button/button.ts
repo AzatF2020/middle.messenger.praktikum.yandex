@@ -10,6 +10,7 @@ interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   title?: string;
   imgSource?: string;
+  loading?: string;
 }
 
 class Button extends Component {

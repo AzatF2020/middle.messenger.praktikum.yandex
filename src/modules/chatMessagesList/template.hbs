@@ -1,13 +1,20 @@
 <div class="chat-messages-list">
   {{#each messages}}
     {{{ ChatItem
+      openModalImage=@root.openModalImage
       content=content
       time=time
       myId=@root.myId
       user_id=user_id
-      user=user
       is_read=is_read
+      display_name=user.display_name
+      login=user.login
       file=file
     }}}
   {{/each}}
+  {{{ ModalImage
+    isActive=modalImageOpened
+    handleCloseModal=closeModalImage
+    imgSource=imgSource
+  }}}
 </div>

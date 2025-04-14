@@ -19,6 +19,25 @@ type ChatMessagesListProps = {
 class ChatMessagesList extends Component {
   constructor(props: ChatMessagesListProps) {
     super(props);
+
+    this.listeners = {
+      openModalImage: this.openModalImage.bind(this),
+      closeModalImage: this.closeModalImage.bind(this),
+    };
+
+    this.state = {
+      modalImageOpened: false,
+      imgSource: null,
+    };
+  }
+
+  public openModalImage(event: Event) {
+    const imgSource = (event.currentTarget as HTMLButtonElement).querySelector('img')!.src;
+    this.setState({ ...this.state, modalImageOpened: true, imgSource });
+  }
+
+  public closeModalImage() {
+    this.setState({ ...this.state, modalImageOpened: false, imgSource: null });
   }
 
   public render() {

@@ -103,11 +103,11 @@
   &__main-message-time {
     font-weight: 400;
     color: utilities.$gray-400;
-    position: relative;
+    position: absolute;
     white-space: nowrap;
     float: right;
     bottom: .5rem;
-    left: 3.25rem;
+    right: 1rem;
     padding-left: .8rem;
   }
 
@@ -139,5 +139,12 @@
 
   &__main-message--myself &__main-message-appendix path {
     fill: utilities.$blue-50;
+  }
+
+  &__button-image {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
   }
 }

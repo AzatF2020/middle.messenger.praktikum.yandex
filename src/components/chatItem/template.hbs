@@ -1,10 +1,10 @@
 <div class="chat-item__main-message {{#ifCond user_id '==' myId}}chat-item__main-message--myself{{else}}chat-item__main-message--sender{{/ifCond}}">
   <div class="chat-item__main-message-top">
-    {{#ifCond user.id '!=' myId}}
-      {{#if user.display_name}}
-        <span class="chat-item__user-name">{{ user.display_name }}</span>
-      {{else if user.login }}
-        <span class="chat-item__user-name">{{ user.login }}</span>
+    {{#ifCond user_id '!=' myId}}
+      {{#if display_name}}
+        <span class="chat-item__user-name">{{ display_name }}</span>
+      {{else if login }}
+        <span class="chat-item__user-name">{{ login }}</span>
       {{/if}}
     {{/ifCond}}
 
@@ -16,16 +16,21 @@
   </div>
 
   {{#if file}}
-  <img src="{{storage}}/{{file.path}}" alt="">
+    {{{Button
+      class="chat-item__button-image"
+      imgSource=imgSource
+      onClick=openModalImage
+      loading="lazy"
+    }}}
   {{/if}}
 
   {{#if time}}
-  <time
-    datetime="{{time}}"
-    class="text-7 chat-item__main-message-time"
-  >
-    {{formattedTime}}
-  </time>
+    <time
+      datetime="{{time}}"
+      class="text-7 chat-item__main-message-time"
+    >
+      {{formattedTime}}
+    </time>
   {{/if}}
 
   <svg class="chat-item__main-message-appendix" width="9" height="20" class="svg-appendix">
@@ -35,22 +40,3 @@
     </g>
   </svg>
 </div>
-
-{{!-- <div class="chat-item__main-message chat__main-message--myself">
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
-  tempore impedit officiis, ut dolorum recusandae nisi blanditiis
-  dolor atque dolorem repudiandae doloribus magni sunt dolore quam
-  iure eveniet. Nesciunt, debitis.
-  <time
-      datetime=""
-      class="text-7 chat__main-message-time"
-  >11:58</time>
-</div> --}}
-
-{{!-- <div class="chat__main-message chat__main-message--sender">
-  <img src="/img/image.png" alt="Изображение" />
-  <time
-      datetime=""
-      class="text-7 chat__main-message-time"
-  >11:56</time>
-</div> --}}

@@ -37,7 +37,7 @@ class ModalSendMedia extends Component implements IModalSendMedia {
 
     this.state = {
       title: '',
-      isButtonDisabled: false,
+      isButtonDisabled: true,
       errors: {},
       resource: null,
       isFileSelected: false,
@@ -67,7 +67,12 @@ class ModalSendMedia extends Component implements IModalSendMedia {
 
     const resource = await readFileAsDataURL;
 
-    this.setState({ ...this.state, isFileSelected: true, resource });
+    this.setState({
+      ...this.state,
+      isFileSelected: true,
+      isButtonDisabled: false,
+      resource,
+    });
   }
 
   public async onSubmit(event: Event) {
@@ -75,9 +80,9 @@ class ModalSendMedia extends Component implements IModalSendMedia {
 
     if (!this.formData.get('resource')) return;
 
-    const resourcePath = await this.resourcesController.uploadFile(this.formData);
+    const resourceId = await this.resourcesController.uploadFile(this.formData);
 
-    await this.chatsController.sendChatFile(resourcePath);
+    await this.chatsController.sendChatFile(resourceId);
 
     this.props.handleCloseModal(event);
   }
@@ -97,7 +102,9 @@ class ModalSendMedia extends Component implements IModalSendMedia {
 
     if (!modalInner.contains(event.target as HTMLElement)) {
       this.props.handleCloseModal(event);
-      this.setState({ ...this.state, isFileSelected: false, resource: null });
+      this.setState({
+        ...this.state, isFileSelected: false, resource: null, isButtonDisabled: true,
+      });
     }
   }
 

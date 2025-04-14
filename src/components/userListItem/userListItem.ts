@@ -19,7 +19,7 @@ type UserListItemProps = {
 }
 
 class UserListItem extends Component {
-  constructor(props: UserListItemProps) {
+  constructor({ ...props }: UserListItemProps) {
     super(props);
 
     this.state = {
@@ -30,7 +30,7 @@ class UserListItem extends Component {
       } : null,
     };
 
-    this.listeners = { click: this.props.onClick(this.props) };
+    this.listeners = { click: this.props?.onClick ? this.props?.onClick(this.props) : () => {} };
   }
 
   public render() {

@@ -1,0 +1,14 @@
+.modal-image {
+  &__inner {
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
+  }
+
+  &__image {
+    border-radius: 1rem;
+    width: 50rem;
+    height: auto;
+    object-fit: contain;
+  }
+}

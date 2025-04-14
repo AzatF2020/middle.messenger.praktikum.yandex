@@ -67,7 +67,6 @@ class ModalAddUser extends Component implements IModalAddUser {
 
   public onSubmit(event: Event) {
     event.preventDefault();
-    console.log(this.state);
 
     const isValid = validation.validate();
 

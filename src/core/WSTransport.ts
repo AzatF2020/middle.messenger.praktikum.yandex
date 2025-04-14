@@ -117,7 +117,7 @@ class WSTransport {
 
     if (Array.isArray(messages)) {
       window.store.setState({ messages: this._setUserInEveryMessage(messages) });
-    } else if (messages?.type === 'message') {
+    } else if (messages?.type === 'message' || messages?.type === 'file') {
       const messagesWithUsers = this._setUserInEveryMessage([messages, ...window.store.getState().messages]);
 
       window.store.setState({

@@ -12,7 +12,7 @@ class ProfileController {
         window.router.go(PATHNAMES.LOGIN);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 }
