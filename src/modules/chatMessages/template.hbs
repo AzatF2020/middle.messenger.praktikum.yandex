@@ -4,12 +4,17 @@
   <div class="chat__user-header {{#if selectedChat.is_selected}}--is-shown{{/if}}">
     <div class="chat__user-header-left-column">
       <div class="chat__user-header-plug"></div>
-      {{{Button
-        onClick=openChatModalInfo
-        label=selectedChat.title
-        title="информация о группе"
-        class="link text-4 chat__user-header-name"
-      }}}
+      <div class="chat__user-header-info">
+        {{{Button
+          onClick=openChatModalInfo
+          label=selectedChat.title
+          title="информация о группе"
+          class="link text-4 chat__user-header-name"
+        }}}
+        <span class="text-5">
+          {{ selectedChat.members.length}} members
+        </span>
+      </div>
     </div>
     {{{ PopupOptions
       openAddUserModal=openAddUserModal

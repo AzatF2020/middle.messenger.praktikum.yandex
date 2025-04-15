@@ -9,6 +9,7 @@ const initialState = () => ({
   chatId: 0,
   messages: [],
   token: null,
+  messagesListScrollTopPosition: 0,
   selectedChat: {
     id: null,
     title: null,

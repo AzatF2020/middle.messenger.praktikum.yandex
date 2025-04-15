@@ -43,8 +43,16 @@
   }
 
   &__user-header-name {
+    width: fit-content;
+    padding: 0;
     font-weight: 500;
     text-decoration: none;
+  }
+
+  &__user-header-info {
+    display: flex;
+    flex-direction: column;
+    row-gap: .25rem;
   }
 
     // # Footer

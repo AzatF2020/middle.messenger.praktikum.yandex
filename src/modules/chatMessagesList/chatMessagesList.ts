@@ -1,4 +1,5 @@
 import { Component, connectStore } from '@core/index';
+import tick from '@utils/helpers/tick';
 import template from './template.hbs?raw';
 import './style.scss';
 
@@ -17,6 +18,8 @@ type ChatMessagesListProps = {
 }
 
 class ChatMessagesList extends Component {
+  public timeout: NodeJS.Timeout | null;
+
   constructor(props: ChatMessagesListProps) {
     super(props);
 
@@ -25,10 +28,29 @@ class ChatMessagesList extends Component {
       closeModalImage: this.closeModalImage.bind(this),
     };
 
+    this.timeout = null;
+
     this.state = {
       modalImageOpened: false,
       imgSource: null,
     };
+  }
+
+  public componentDidUpdate(): void {
+    // # Костыль, сохранять позицию скролла
+    setTimeout(() => {
+      document.querySelector('.chat-messages-list')?.scrollTo(0, window.store.getState().messagesListScrollTopPosition);
+    }, 1);
+
+    const scrollTop = document.querySelector('.chat-messages-list')?.scrollTop;
+
+    if (!scrollTop) return;
+
+    window.store.setState({ messagesListScrollTopPosition: scrollTop });
+  }
+
+  public componentWillUnmount(): void {
+    clearTimeout(this.timeout!);
   }
 
   public openModalImage(event: Event) {
