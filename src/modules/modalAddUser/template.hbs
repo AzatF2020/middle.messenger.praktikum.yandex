@@ -1,7 +1,7 @@
 <div class="modal user-add-modal {{#if isActive}} modal--active {{/if}}" id="modal-add-user">
   <div class="user-add-modal__inner modal__wrapper">
     {{{ Button
-      onClick=handleCloseModal
+      onClick=handleCloseAddModal
       imgSource="/icons/close.svg"
       class="modal__close-button"
       title="Закрыть"
@@ -13,11 +13,21 @@
         {{{ SearchInput
           value=search
           onChange=handleInputSearch
+          placeholder="Поиск"
         }}}
       </fieldset>
-      {{{UsersAddList
-        usersSearchList=searchedUserForAdd
-      }}}
+      <div class="user-add-modal__list">
+         <div class="text-5 user-add-modal__empty
+          {{#ifCond search.length '==' 0}}
+            {{#ifCond searchedUserForAdd.length '==' 0}} --is-shown {{/ifCond}}
+          {{/ifCond}}">
+          Введите в поиск логин пользователя, чтобы добавить в группу
+        </div>
+
+        {{{UsersAddList
+          usersSearchList=searchedUserForAdd
+        }}}
+      </div>
       {{{ Button
           class="button button-primary user-add-modal__button"
           type="submit"

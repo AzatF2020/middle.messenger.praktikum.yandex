@@ -1,3 +1,5 @@
+@use "@styles/utilities";
+
 .user-add-modal {
   &__form {
     width: 34rem;
@@ -10,10 +12,37 @@
 
   &__group {
     padding: 0;
-    margin-bottom: 3.3rem;
+  }
+
+  &__list {
+    position: relative;
+    min-height: 8rem;
+    padding-block: 2rem;
   }
 
   &__button {
     width: 100%;
+  }
+
+  &__empty {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    color: utilities.$gray-400;
+    display: none;
+    background-color: utilities.$white;
+    z-index: 2;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 30rem;
+    margin: 0 auto;
+  }
+
+  &__empty.--is-shown {
+    display: flex;
   }
 }

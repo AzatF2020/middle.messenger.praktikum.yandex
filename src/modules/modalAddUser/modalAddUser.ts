@@ -1,10 +1,11 @@
 import { connectStore, Component } from '@core/index';
 import UsersController from '@controllers/UsersController';
+import ChatsController from '@controllers/ChatsController';
 import template from './template.hbs?raw';
 import './style.scss';
 
 interface IModalAddUser {
-  handleCloseModal(event: Event): void;
+  handleCloseAddModal(event: Event): void;
 
   closeByOverlay(event: Event): void;
 
@@ -22,6 +23,8 @@ type ModalAddUserProps = {
 class ModalAddUser extends Component implements IModalAddUser {
   public usersController: UsersController;
 
+  public chatsController: ChatsController;
+
   constructor(props: ModalAddUserProps) {
     super(props);
 
@@ -32,24 +35,34 @@ class ModalAddUser extends Component implements IModalAddUser {
 
     this.usersController = new UsersController();
 
+    this.chatsController = new ChatsController();
+
     this.listeners = {
       click: this.closeByOverlay.bind(this),
       handleInputSearch: this.handleInputSearch.bind(this),
+      handleCloseAddModal: this.handleCloseAddModal.bind(this),
       onSubmit: this.onSubmit.bind(this),
     };
   }
 
-  public handleCloseModal!: (event: Event) => void;
+  public handleCloseAddModal(event: Event) {
+    window.store.setState({ searchedUserForAdd: [] });
+    this.props.handleCloseModal(event);
+  }
 
   public async handleInputSearch(event: Event) {
     const { name, value } = event.target as HTMLInputElement;
 
-    await this.usersController.searchUserForAdd({ login: value });
-
-    this.setState({ ...this.state, [name]: value });
+    if (value.length) {
+      await this.usersController.searchUserForAdd({ login: value });
+      this.setState({ ...this.state, [name]: value });
+    } else {
+      this.setState({ ...this.state, [name]: '' });
+      window.store.setState({ searchedUserForAdd: [] });
+    }
   }
 
-  public onSubmit(event: Event) {
+  public async onSubmit(event: Event) {
     event.preventDefault();
     const form = (event.currentTarget as HTMLButtonElement).closest('form')!;
 
@@ -62,6 +75,12 @@ class ModalAddUser extends Component implements IModalAddUser {
     }, []);
 
     this.setState({ ...this.state, selectedUsers });
+
+    if (!this.state.selectedUsers.length) return;
+
+    await this.chatsController.addUserToChat(window.store.getState().chatId, this.state.selectedUsers);
+
+    this.handleCloseAddModal(event);
   }
 
   public closeByOverlay(event: Event) {
@@ -70,7 +89,7 @@ class ModalAddUser extends Component implements IModalAddUser {
     ) as HTMLElement;
 
     if (!modalInner.contains(event.target as HTMLElement)) {
-      this.props.handleCloseModal(event);
+      this.handleCloseAddModal(event);
     }
   }
 
