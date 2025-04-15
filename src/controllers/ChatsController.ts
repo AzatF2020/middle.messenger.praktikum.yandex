@@ -41,6 +41,10 @@ class ChatsController implements IChatsController {
     }
   }
 
+  public async addUserToChat(users: number[], chatId: number) {
+    await chatsAPI.addUsersToChat({ chatId, users });
+  }
+
   public async createChat(createChatModel: CreateChatModel, users: number[]) {
     try {
       const { response } = await chatsAPI.createChat(createChatModel);

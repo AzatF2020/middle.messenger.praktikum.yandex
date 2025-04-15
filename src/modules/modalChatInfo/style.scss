@@ -40,6 +40,9 @@
   &__content-list {
     padding: 0;
     margin: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   &__content-title {

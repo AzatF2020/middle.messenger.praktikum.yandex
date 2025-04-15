@@ -9,6 +9,7 @@ import { Loader } from './loader';
 import { UserListItem } from './userListItem';
 import { ChatItem } from './chatItem';
 import { SearchInput } from './searchInput';
+import { UserListItemCheckbox } from './userListItemCheckbox';
 
 const components = {
   Button,
@@ -22,6 +23,7 @@ const components = {
   UserListItem,
   ChatItem,
   SearchInput,
+  UserListItemCheckbox,
 };
 
 export default components;

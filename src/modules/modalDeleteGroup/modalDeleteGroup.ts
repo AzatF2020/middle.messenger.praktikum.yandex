@@ -3,20 +3,21 @@ import ChatsController from '@controllers/ChatsController';
 import template from './template.hbs?raw';
 import './style.scss';
 
-interface IModalDeleteUser {
+interface IModalDeleteGroup {
   closeByOverlay(event: Event): void;
+
   handleInputChange(event: Event): void;
 }
 
-type ModalDeleteUserProps = {
+type ModalDeleteGroupProps = {
   handleCloseModal: (event: Event) => void;
   isActive: boolean;
 };
 
-class ModalDeleteUser extends Component implements IModalDeleteUser {
+class ModalDeleteGroup extends Component implements IModalDeleteGroup {
   public chartsController: ChatsController;
 
-  constructor(props: ModalDeleteUserProps) {
+  constructor(props: ModalDeleteGroupProps) {
     super(props);
 
     this.chartsController = new ChatsController();
@@ -59,4 +60,4 @@ class ModalDeleteUser extends Component implements IModalDeleteUser {
   }
 }
 
-export default ModalDeleteUser;
+export default ModalDeleteGroup;

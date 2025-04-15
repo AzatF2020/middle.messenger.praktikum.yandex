@@ -8,7 +8,7 @@ type UserListItemProps = {
   id: number
   title?: string;
   login: string;
-  avatar: string | null;
+  avatar?: string | null;
   first_name?: string;
   second_name?: string;
   display_name?: string;

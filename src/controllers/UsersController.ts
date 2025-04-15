@@ -15,6 +15,14 @@ class UsersController {
       window.store.setState({ searchLoading: false });
     }
   }
-}
 
+  public async searchUserForAdd(data: SearchUserModel) {
+    try {
+      const { response } = await usersAPI.searchUser(data);
+      window.store.setState({ searchedUserForAdd: JSON.parse(response) });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
 export default UsersController;

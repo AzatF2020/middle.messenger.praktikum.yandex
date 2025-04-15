@@ -1,12 +1,5 @@
-import Component from '@core/Component';
-import FormValidator from '@core/FormValidator';
-import {
-  minLength,
-  maxLength,
-  acceptedSigns,
-  hasAlphanumericContent,
-  isLatin,
-} from '@utils/constants/validationRules';
+import { connectStore, Component } from '@core/index';
+import UsersController from '@controllers/UsersController';
 import template from './template.hbs?raw';
 import './style.scss';
 
@@ -15,77 +8,60 @@ interface IModalAddUser {
 
   closeByOverlay(event: Event): void;
 
-  handleInputChange(event: Event): void;
-
-  validateInput(event: InputEvent): void;
+  handleInputSearch(event: Event): void;
 
   onSubmit(event: Event): void;
 }
 
 type ModalAddUserProps = {
   handleCloseModal?: (event: Event) => void;
+
   isActive?: boolean;
 };
 
-const validation = new FormValidator({
-  formSelector: '.user-add-modal__form',
-  rules: {
-    login: {
-      isLatin,
-      hasAlphanumericContent,
-      minLength: minLength(3),
-      maxLength: maxLength(20),
-      acceptedSigns: acceptedSigns('_', '-'),
-    },
-  },
-});
-
 class ModalAddUser extends Component implements IModalAddUser {
+  public usersController: UsersController;
+
   constructor(props: ModalAddUserProps) {
     super(props);
 
     this.state = {
-      login: '',
-      isButtonDisabled: false,
-      errors: {},
+      search: '',
+      selectedUsers: [],
     };
 
+    this.usersController = new UsersController();
+
     this.listeners = {
-      handleInputBlur: this.validateInput.bind(this),
       click: this.closeByOverlay.bind(this),
-      handleInputChange: this.handleInputChange.bind(this),
+      handleInputSearch: this.handleInputSearch.bind(this),
       onSubmit: this.onSubmit.bind(this),
     };
   }
 
   public handleCloseModal!: (event: Event) => void;
 
-  public handleInputChange(event: Event) {
+  public async handleInputSearch(event: Event) {
     const { name, value } = event.target as HTMLInputElement;
+
+    await this.usersController.searchUserForAdd({ login: value });
+
     this.setState({ ...this.state, [name]: value });
   }
 
   public onSubmit(event: Event) {
     event.preventDefault();
+    const form = (event.currentTarget as HTMLButtonElement).closest('form')!;
 
-    const isValid = validation.validate();
+    const formData = new FormData(form);
 
-    this.setState({
-      ...this.state,
-      isButtonDisabled: isValid,
-      errors: validation.errors,
-    });
+    const selectedUsers = [...formData.entries()].reduce((acc: number[], [name, value]:
+      [string, FormDataEntryValue]) => {
+      if (name !== 'search' && typeof value === 'string') { acc.push(Number(value)); }
+      return acc;
+    }, []);
 
-    if (!isValid) return;
-  }
-
-  public validateInput(event: InputEvent) {
-    validation.handleValidateInput(event);
-    this.setState({
-      ...this.state,
-      isButtonDisabled: validation.hasFormErrors(),
-      errors: validation.errors,
-    });
+    this.setState({ ...this.state, selectedUsers });
   }
 
   public closeByOverlay(event: Event) {
@@ -103,4 +79,6 @@ class ModalAddUser extends Component implements IModalAddUser {
   }
 }
 
-export default ModalAddUser;
+export default connectStore(ModalAddUser, (state) => ({
+  searchedUserForAdd: state.searchedUserForAdd,
+}));

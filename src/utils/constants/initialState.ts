@@ -4,6 +4,7 @@ const initialState = () => ({
   isChatLoading: false,
   userChats: [],
   searchedUserChats: [],
+  searchedUserForAdd: [],
   search: '',
   chatId: 0,
   messages: [],

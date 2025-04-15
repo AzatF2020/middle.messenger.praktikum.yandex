@@ -1,0 +1,16 @@
+.users-add-list {
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 40rem;
+  padding-block: 1rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: .5rem;
+
+  &__item {
+    padding: 0;
+    list-style-type: none;
+  }
+}

@@ -5,7 +5,7 @@ import { Error } from './error';
 import { ChatUsers } from './chatUsers';
 import { ChatMessages } from './chatMessages';
 import { ModalAddUser } from './modalAddUser';
-import { ModalDeleteUser } from './modalDeleteUser';
+import { ModalDeleteGroup } from './modalDeleteGroup';
 import { Profile } from './profile';
 import { ProfileEdit } from './profileEdit';
 import { ProfileNewPassword } from './profileNewPassword';
@@ -17,13 +17,14 @@ import { ModalCreateChat } from './modalCreateChat';
 import { ModalSendMedia } from './modalSendMedia';
 import { ModalImage } from './modalImage';
 import { ModalChatInfo } from './modalChatInfo';
+import { UsersAddList } from './usersAddList';
 
 const modules: Record<string, typeof Component> = {
   ModalChatInfo,
   LoginForm: LoginForm as typeof Component,
   RegisterForm,
   ModalAddUser: ModalAddUser as typeof Component,
-  ModalDeleteUser: ModalDeleteUser as typeof Component,
+  ModalDeleteGroup: ModalDeleteGroup as typeof Component,
   ProfileEdit,
   ChatUsers,
   Error: Error as typeof Component,
@@ -37,6 +38,7 @@ const modules: Record<string, typeof Component> = {
   ModalCreateChat,
   ModalSendMedia,
   ModalImage,
+  UsersAddList,
 };
 
 export default modules;

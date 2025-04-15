@@ -1,0 +1,12 @@
+<ul class="users-add-list">
+  {{#each usersSearchList}}
+    <li class="users-add-list__item">
+      {{{ UserListItemCheckbox
+        id=id
+        display_name=display_name
+        login=login
+        avatar=avatar
+      }}}
+    </li>
+  {{/each}}
+</ul>
