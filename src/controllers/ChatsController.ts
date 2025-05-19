@@ -43,6 +43,26 @@ class ChatsController implements IChatsController {
 
   public async addUserToChat(users: number[], chatId: number) {
     await chatsAPI.addUsersToChat({ chatId, users });
+
+    const { response: chatUsers } = await chatsAPI.getUsersChat(chatId);
+
+    const currentChat = window.store.getState().selectedChat as object;
+
+    window.store.setState({
+      selectedChat: { ...currentChat, members: JSON.parse(chatUsers ?? '[]') },
+    });
+  }
+
+  public async removeUsersFromChat(users: number[], chatId: number) {
+    await chatsAPI.removeUsersFromChat({ chatId, users });
+
+    const { response: chatUsers } = await chatsAPI.getUsersChat(chatId);
+
+    const currentChat = window.store.getState().selectedChat as object;
+
+    window.store.setState({
+      selectedChat: { ...currentChat, members: JSON.parse(chatUsers ?? '[]') },
+    });
   }
 
   public async createChat(createChatModel: CreateChatModel, users: number[]) {

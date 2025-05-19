@@ -1,15 +1,12 @@
 import { connectStore, Component } from '@core/index';
-import UsersController from '@controllers/UsersController';
 import ChatsController from '@controllers/ChatsController';
 import template from './template.hbs?raw';
 import './style.scss';
 
-interface IModalAddUser {
+interface IModalDeleteUser {
   handleCloseModal(event: Event): void;
 
   closeByOverlay(event: Event): void;
-
-  handleInputSearch(event: Event): void;
 
   onSubmit(event: Event): void;
 }
@@ -20,37 +17,22 @@ type ModalAddUserProps = {
   isActive?: boolean;
 };
 
-class ModalAddUser extends Component implements IModalAddUser {
-  public usersController: UsersController;
+class ModalDeleteUser extends Component implements IModalDeleteUser {
+  public handleCloseModal!: (event: Event) => void;
 
   public chatsController: ChatsController;
-
-  public handleCloseModal!: (event: Event) => void;
 
   constructor(props: ModalAddUserProps) {
     super(props);
 
-    this.state = {
-      search: '',
-      selectedUsers: [],
-    };
+    this.state = { selectedUsers: [] };
 
-    this.usersController = new UsersController();
     this.chatsController = new ChatsController();
 
     this.listeners = {
       click: this.closeByOverlay.bind(this),
-      handleInputSearch: this.handleInputSearch.bind(this),
       onSubmit: this.onSubmit.bind(this),
     };
-  }
-
-  public async handleInputSearch(event: Event) {
-    const { name, value } = event.target as HTMLInputElement;
-
-    await this.usersController.searchUserForAdd({ login: value });
-
-    this.setState({ ...this.state, [name]: value });
   }
 
   public async onSubmit(event: Event) {
@@ -69,7 +51,7 @@ class ModalAddUser extends Component implements IModalAddUser {
     this.setState({ ...this.state, selectedUsers });
 
     try {
-      await this.chatsController.addUserToChat(selectedUsers, this.props.chatId);
+      await this.chatsController.removeUsersFromChat(selectedUsers, this.props.chatId);
     } catch (error) {
       console.warn(error);
     } finally {
@@ -79,7 +61,7 @@ class ModalAddUser extends Component implements IModalAddUser {
 
   public closeByOverlay(event: Event) {
     const modalInner = document.querySelector(
-      '.user-add-modal__inner',
+      '.user-delete-modal__inner',
     ) as HTMLElement;
 
     if (!modalInner.contains(event.target as HTMLElement)) {
@@ -92,7 +74,8 @@ class ModalAddUser extends Component implements IModalAddUser {
   }
 }
 
-export default connectStore(ModalAddUser, (state) => ({
-  searchedUserForAdd: state.searchedUserForAdd,
+export default connectStore(ModalDeleteUser, (state) => ({
+  selectedChat: state.selectedChat,
   chatId: state.chatId,
+  me: state.user,
 }));

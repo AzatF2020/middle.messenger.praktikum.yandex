@@ -4,10 +4,16 @@ type CreateChatModel = {
 
 type AddUsersToChatModel = {
   chatId: number;
-  users: number[]
+  users: number[];
+}
+
+type RemoveUsersFromChatModel = {
+  chatId: number;
+  users: number[];
 }
 
 export type {
   CreateChatModel,
   AddUsersToChatModel,
+  RemoveUsersFromChatModel,
 };

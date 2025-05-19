@@ -1,5 +1,5 @@
 import { HTTPClient } from '@core/index.ts';
-import type { CreateChatModel, AddUsersToChatModel } from 'src/types/chatModels';
+import type { CreateChatModel, AddUsersToChatModel, RemoveUsersFromChatModel } from 'src/types/chatModels';
 
 const http = new HTTPClient('/chats');
 
@@ -30,6 +30,10 @@ class ChatsAPI {
 
   public async addUsersToChat(data: AddUsersToChatModel) {
     return await http.put('/users', { data });
+  }
+
+  public async removeUsersFromChat(data: RemoveUsersFromChatModel) {
+    return await http.delete('/users', { data });
   }
 }
 

@@ -1,0 +1,36 @@
+.user-delete-modal {
+  &__form {
+    width: 34rem;
+  }
+
+  &__title {
+    text-align: center;
+    margin-bottom: 3.3rem;
+  }
+
+  &__group {
+    padding: 0;
+    margin-bottom: 3.3rem;
+  }
+
+  &__button {
+    width: 100%;
+  }
+
+  &__list {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: .5rem;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 40rem;
+    padding-block: 1rem;
+  }
+
+  &__item {
+    padding: 0;
+    list-style-type: none;
+  }
+}

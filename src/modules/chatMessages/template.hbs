@@ -11,8 +11,10 @@
         class="link text-4 chat__user-header-name"
       }}}
     </div>
+
     {{{ PopupOptions
       openAddUserModal=openAddUserModal
+      openDeleteGroupModal=openDeleteGroupModal
       openDeleteUserModal=openDeleteUserModal
     }}}
   </div>
@@ -61,14 +63,22 @@
     isActive=modalAddUserOpened
     handleCloseModal=closeAddUserModal
   }}}
-  {{{ModalDeleteGroup
+
+  {{{ModalDeleteUser
     isActive=modalDeleteUserOpened
     handleCloseModal=closeDeleteUserModal
   }}}
+
+  {{{ModalDeleteGroup
+    isActive=modalDeleteGroupOpened
+    handleCloseModal=closeDeleteGroupModal
+  }}}
+
   {{{ModalSendMedia
     isActive=modalSendMediaOpened
     handleCloseModal=closeModalSendMediaModal
   }}}
+
   {{{ModalChatInfo
     isActive=modalChatInfoOpened
     handleCloseModal=closeChatModalInfo
