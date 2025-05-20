@@ -18,9 +18,11 @@ import { ModalSendMedia } from './modalSendMedia';
 import { ModalImage } from './modalImage';
 import { ModalChatInfo } from './modalChatInfo';
 import { UsersAddList } from './usersAddList';
+import { ModalDeleteUser } from './modalDeleteUser';
 
 const modules: Record<string, typeof Component> = {
   ModalChatInfo,
+  ModalDeleteUser,
   LoginForm: LoginForm as typeof Component,
   RegisterForm,
   ModalAddUser: ModalAddUser as typeof Component,

@@ -10,6 +10,7 @@ interface IModalChatInfo {
 
 type ModalChatInfoProps = {
   handleCloseModal?: (event: Event) => void;
+
   isActive?: boolean;
 };
 

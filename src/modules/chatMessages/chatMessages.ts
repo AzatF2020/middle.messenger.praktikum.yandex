@@ -9,6 +9,10 @@ interface IChatMessages {
 
   closeAddUserModal(): void;
 
+  openDeleteGroupModal(): void;
+
+  closeDeleteGroupModal(): void;
+
   openDeleteUserModal(): void;
 
   closeDeleteUserModal(): void;
@@ -28,9 +32,10 @@ class ChatMessages extends Component implements IChatMessages {
       message: '',
       disabledSendButton: true,
       modalAddUserOpened: false,
-      modalDeleteUserOpened: false,
+      modalDeleteGroupOpened: false,
       modalSendMediaOpened: false,
       modalChatInfoOpened: false,
+      modalDeleteUserOpened: false,
     };
 
     this.chatsController = new ChatsController();
@@ -38,12 +43,19 @@ class ChatMessages extends Component implements IChatMessages {
     this.listeners = {
       openAddUserModal: this.openAddUserModal.bind(this),
       closeAddUserModal: this.closeAddUserModal.bind(this),
+
+      openDeleteGroupModal: this.openDeleteGroupModal.bind(this),
+      closeDeleteGroupModal: this.closeDeleteGroupModal.bind(this),
+
       openDeleteUserModal: this.openDeleteUserModal.bind(this),
       closeDeleteUserModal: this.closeDeleteUserModal.bind(this),
+
       openModalSendMediaModal: this.openModalSendMediaModal.bind(this),
       closeModalSendMediaModal: this.closeModalSendMediaModal.bind(this),
+
       openChatModalInfo: this.openChatModalInfo.bind(this),
       closeChatModalInfo: this.closeChatModalInfo.bind(this),
+
       handleInputChange: this.handleInputChange.bind(this),
       onSubmitByEnter: debounce(this.onSubmitByEnter.bind(this), 250),
       onSubmit: this.onSubmit.bind(this),
@@ -94,13 +106,22 @@ class ChatMessages extends Component implements IChatMessages {
     this.setState({ ...this.state, modalAddUserOpened: false });
   }
 
-  // # Удаление чата
+  // # Удаление пользователя из чата
   public openDeleteUserModal() {
     this.setState({ ...this.state, modalDeleteUserOpened: true });
   }
 
   public closeDeleteUserModal() {
     this.setState({ ...this.state, modalDeleteUserOpened: false });
+  }
+
+  // # Удаление чата
+  public openDeleteGroupModal() {
+    this.setState({ ...this.state, modalDeleteGroupOpened: true });
+  }
+
+  public closeDeleteGroupModal() {
+    this.setState({ ...this.state, modalDeleteGroupOpened: false });
   }
 
   // # Отправка изображений

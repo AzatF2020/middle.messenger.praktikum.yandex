@@ -5,10 +5,11 @@ import './style.scss';
 type UserListItemCheckboxProps = {
   id: number
   login: string;
-  avatar?: string | null;
+  avatar?: string;
   first_name?: string;
   second_name?: string;
   display_name?: string;
+  role?: string;
 }
 
 class UserListItemCheckbox extends Component {

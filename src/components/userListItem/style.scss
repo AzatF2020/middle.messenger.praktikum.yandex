@@ -102,4 +102,10 @@
     text-transform: capitalize;
     font-weight: 500;
   }
+
+  &__chat-user-role {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: utilities.$gray-400;
+  }
 }

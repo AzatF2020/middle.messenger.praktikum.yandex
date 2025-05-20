@@ -5,12 +5,11 @@ import './style.scss';
 
 interface IModalDeleteGroup {
   closeByOverlay(event: Event): void;
-
-  handleInputChange(event: Event): void;
 }
 
 type ModalDeleteGroupProps = {
   handleCloseModal: (event: Event) => void;
+
   isActive: boolean;
 };
 
@@ -22,12 +21,9 @@ class ModalDeleteGroup extends Component implements IModalDeleteGroup {
 
     this.chartsController = new ChatsController();
 
-    this.state = { login: '' };
-
     this.listeners = {
       click: this.closeByOverlay.bind(this),
       handleDeleteChat: this.handleDeleteChat.bind(this),
-      handleInputChange: this.handleInputChange.bind(this),
     };
   }
 
@@ -36,18 +32,9 @@ class ModalDeleteGroup extends Component implements IModalDeleteGroup {
     this.props.handleCloseModal();
   }
 
-  public handleInputChange(event: Event) {
-    const { name, value } = event.target as HTMLInputElement;
-
-    this.setState({
-      ...this.state,
-      [name]: value,
-    });
-  }
-
   public closeByOverlay(event: Event) {
     const modalInner = document.querySelector(
-      '.user-delete-modal__inner',
+      '.group-delete-modal__inner',
     ) as HTMLElement;
 
     if (!modalInner.contains(event.target as HTMLElement)) {

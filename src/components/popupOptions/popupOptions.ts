@@ -8,6 +8,9 @@ interface IPopupOptions {
 
 type PopupProps = {
   openAddUserModal(): void;
+
+  openDeleteGroupModal(): void;
+
   openDeleteUserModal(): void;
 };
 
