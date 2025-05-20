@@ -1,6 +1,6 @@
 <section class="profile-edit">
   {{{AsideBackNavigation}}}
-  <form class="container--centered profile-edit__form">
+  <form class="container--centered profile-edit__form {{#if isPasswordChangedFlag}}hidden{{/if}}">
     <fieldset class="profile-edit__form-header">
       {{{Avatar readonly=isFormReadonly setImg=setAvatarImg imgSrc=avatar}}}
       {{#if display_name}}
@@ -163,10 +163,12 @@
           }}}
         </li>
           <li class="profile-edit__form-item-option">
-            <a
-              href="/#"
+            {{{ Button
+              onClick=showChangePasswordForm
+              type="button"
               class="text-4 link profile-edit__form-password-link"
-            >Изменить пароль</a>
+              label="Изменить пароль"
+            }}}
           </li>
           <li class="profile-edit__form-item-option">
             {{{ Button
@@ -179,7 +181,13 @@
       </ul>
     </fieldset>
 
-    <div class="{{#if isFormReadonly}}hidden{{/if}}">
+    <div class="profile-edit__form-options {{#if isFormReadonly}}hidden{{/if}}">
+      {{{Button
+        onClick=cancelSubmit
+        type="button"
+        class="link"
+        label="Отменить"
+      }}}
       {{{Button
         class="button button-primary profile-edit__form-item-button"
         label="Сохранить"
@@ -188,6 +196,12 @@
         disabled=isButtonDisabled
       }}}
     </div>
-
   </form>
+
+  <div class="{{#unless isPasswordChangedFlag}}hidden{{/unless}}">
+    {{{ ProfileNewPassword
+      avatar=avatar
+      cancelSubmit=cancelPasswordChange
+    }}}
+  </div>
 </section>

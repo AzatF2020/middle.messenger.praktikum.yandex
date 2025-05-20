@@ -103,6 +103,7 @@
 
   &__form-password-link {
     color: utilities.$blue-500;
+    padding: 0;
   }
 
   &__form-logout-link {
@@ -129,12 +130,21 @@
     list-style-type: none;
   }
 
-   &__form-submit {
+  &__form-submit {
     color: utilities.$blue-500;
     background-color: transparent;
     border: none;
     padding: 0;
     cursor: pointer;
+  }
+
+  &__form-options {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    column-gap: 6rem;
+    max-width: 51rem;
   }
 
   .hidden {

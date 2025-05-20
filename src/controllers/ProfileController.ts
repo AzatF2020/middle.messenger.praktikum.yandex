@@ -2,6 +2,7 @@ import AuthAPI from '@api/authAPI';
 import UsersAPI from '@api/usersAPI';
 import ProfileModel from 'src/types/ProfileModel';
 import { PATHNAMES } from '@utils/constants/pagesPathnames';
+import PasswordModel from 'src/types/PasswordModel';
 
 const authAPI = new AuthAPI();
 const usersAPI = new UsersAPI();
@@ -27,6 +28,15 @@ class ProfileController {
       }
 
       const response = await usersAPI.updateProfile(data);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  public async updatePassword(data: PasswordModel) {
+    try {
+      const { response } = await usersAPI.updatePassword(data);
       console.log(response);
     } catch (error) {
       console.error(error);

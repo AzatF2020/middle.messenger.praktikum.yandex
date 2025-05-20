@@ -1,5 +1,4 @@
 import WS_EVENTS from '@utils/constants/wsEvents';
-import deepMergeObjects from '@utils/helpers/mergeObjects';
 
 type SocketURLArgs = {
   userId: number;

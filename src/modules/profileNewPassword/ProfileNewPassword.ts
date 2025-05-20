@@ -1,5 +1,6 @@
 import Component from '@core/Component';
 import FormValidator from '@core/FormValidator';
+import ProfileController from '@controllers/ProfileController';
 import {
   minLength,
   maxLength,
@@ -11,8 +12,15 @@ import './style.scss';
 
 interface IProfileNewPassword {
   handleChangeInput(event: Event): void;
+
   validateInput(event: InputEvent): void;
+
   onSubmit(event: Event): void;
+}
+
+type ProfileNewPasswordProps = {
+  cancelSubmit(): void
+  avatar: string;
 }
 
 const validation = new FormValidator({
@@ -31,10 +39,15 @@ const validation = new FormValidator({
 });
 
 class ProfileNewPassword extends Component implements IProfileNewPassword {
-  constructor() {
-    super();
+  public profileController: ProfileController;
+
+  constructor(props: ProfileNewPasswordProps) {
+    super(props);
+
+    this.profileController = new ProfileController();
+
     this.state = {
-      oldPassword: 'SamplePass321',
+      oldPassword: '',
       newPassword: '',
       isButtonDisabled: false,
       errors: {},
@@ -44,6 +57,7 @@ class ProfileNewPassword extends Component implements IProfileNewPassword {
       handleInputBlur: this.validateInput.bind(this),
       onSubmit: this.onSubmit.bind(this),
       handleChangeInput: this.handleChangeInput.bind(this),
+      cancelSubmit: this.props.cancelSubmit,
     };
   }
 
@@ -52,7 +66,7 @@ class ProfileNewPassword extends Component implements IProfileNewPassword {
     this.setState({ ...this.state, [name]: value });
   }
 
-  public onSubmit(event: Event) {
+  public async onSubmit(event: Event) {
     event.preventDefault();
 
     const isValid = validation.validate();
@@ -64,6 +78,13 @@ class ProfileNewPassword extends Component implements IProfileNewPassword {
     });
 
     if (!isValid) return;
+
+    try {
+      await this.profileController.updatePassword(this.state);
+      this.props.cancelSubmit();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   public validateInput(event: InputEvent) {

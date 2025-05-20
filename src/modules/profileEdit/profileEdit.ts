@@ -76,12 +76,24 @@ class ProfileEdit extends Component implements IProfileEdit {
 
   public formData: FormData;
 
+  public initialState: Record<string, string | number | null>;
+
   constructor() {
     super();
 
     this.profileController = new ProfileController();
 
     this.formData = new FormData();
+
+    this.initialState = {
+      email: '',
+      login: '',
+      first_name: '',
+      second_name: '',
+      display_name: '',
+      phone: '',
+      avatar: '/img/plug.png',
+    };
 
     this.state = {
       email: '',
@@ -93,6 +105,7 @@ class ProfileEdit extends Component implements IProfileEdit {
       avatar: '/img/plug.png',
       isButtonDisabled: false,
       isFormReadonly: true,
+      isPasswordChangedFlag: false,
       errors: {},
     };
 
@@ -102,6 +115,10 @@ class ProfileEdit extends Component implements IProfileEdit {
       setAvatarImg: this.setAvatarImg.bind(this),
       handleInputChange: this.handleInputChange.bind(this),
       changeFormDataState: this.changeFormDataState.bind(this),
+      showChangePasswordForm: this.showChangePasswordForm.bind(this),
+      cancelPasswordChange: this.showChangePasswordForm.bind(this),
+      cancelSubmit: this.cancelSubmit.bind(this),
+      logout: this.profileController.logout,
     };
   }
 
@@ -135,7 +152,7 @@ class ProfileEdit extends Component implements IProfileEdit {
 
     const readFileAsDataURL = new Promise((resolve) => {
       const reader = new FileReader();
-      reader.onload = (event) => resolve(event.target!.result);
+      reader.onload = (loadEvent) => resolve(loadEvent.target!.result);
       reader.readAsDataURL(file);
     });
 
@@ -150,11 +167,18 @@ class ProfileEdit extends Component implements IProfileEdit {
 
     Object.entries(user).forEach(([key, value]) => {
       if (key === 'avatar') {
-        this.setState({ ...this.state, [key]: `${import.meta.env.VITE_BACKEND_STORAGE}${value}` || '/img/plug.png' });
+        this.setState({ ...this.state, [key]: value ? `${import.meta.env.VITE_BACKEND_STORAGE}${value}` : '/img/plug.png' });
+        this.initialState[key] = `${import.meta.env.VITE_BACKEND_STORAGE}${value}` || '/img/plug.png';
       } else {
+        this.initialState[key] = value;
         this.setState({ ...this.state, [key]: value });
       }
     });
+  }
+
+  public cancelSubmit() {
+    this.setState({ ...this.state, ...this.initialState });
+    this.changeFormDataState();
   }
 
   public validateInput(event: InputEvent) {
@@ -170,6 +194,13 @@ class ProfileEdit extends Component implements IProfileEdit {
     this.setState({
       ...this.state,
       isFormReadonly: !this.state.isFormReadonly,
+    });
+  }
+
+  public showChangePasswordForm() {
+    this.setState({
+      ...this.state,
+      isPasswordChangedFlag: !this.state.isPasswordChangedFlag,
     });
   }
 
