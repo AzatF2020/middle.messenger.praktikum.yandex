@@ -6,7 +6,6 @@ import { ChatUsers } from './chatUsers';
 import { ChatMessages } from './chatMessages';
 import { ModalAddUser } from './modalAddUser';
 import { ModalDeleteGroup } from './modalDeleteGroup';
-import { Profile } from './profile';
 import { ProfileEdit } from './profileEdit';
 import { ProfileNewPassword } from './profileNewPassword';
 import { LoaderOverlay } from './loaderOverlay';
@@ -30,7 +29,6 @@ const modules: Record<string, typeof Component> = {
   ProfileEdit,
   ChatUsers,
   Error: Error as typeof Component,
-  Profile,
   ProfileNewPassword,
   LoaderOverlay: LoaderOverlay as typeof Component,
   UsersList,

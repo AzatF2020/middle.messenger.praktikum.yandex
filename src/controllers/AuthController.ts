@@ -53,6 +53,8 @@ class AuthController implements IAuthController {
       if (!window.store.getState().user) {
         window.store.setState({ user: JSON.parse(response) });
       }
+
+      return JSON.parse(response);
     } catch {
       window.store.setState({ loading: true });
 

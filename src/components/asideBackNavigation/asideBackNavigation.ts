@@ -2,15 +2,11 @@ import Component from '@core/Component';
 import template from './template.hbs?raw';
 import './style.scss';
 
-type AsideBackNavigationProps = {
-  onClick: () => void;
-}
-
 class AsideBackNavigation extends Component {
-  constructor(props: AsideBackNavigationProps) {
-    super(props);
+  constructor() {
+    super();
 
-    this.listeners = { click: this.props.onClick };
+    this.listeners = { click: () => { window.history.back(); } };
   }
 
   public render() {

@@ -1,16 +1,20 @@
 <li class="list-item-user__chat-user {{#ifCond chatId '==' id }}list-item-user__chat-user--active{{/ifCond}}">
   {{#if avatar}}
-    <img src="{{ @root.storage }}{{ avatar }}" alt="avatar" class="list-item-user__chat-user-image-plug"></img>
+    <img loading="lazy" src="{{ @root.storage }}{{ avatar }}" alt="avatar" class="list-item-user__chat-user-image-plug"></img>
   {{else}}
     <div class="list-item-user__chat-user-image-plug"></div>
   {{/if}}
   <div class="list-item-user__chat-user-info">
     <div class="list-item-user__chat-user-header">
       <strong>
-        {{#if login}}
-        <span class="list-item-user__chat-user-name">
-          {{ login }}
-        </span>
+        {{#if display_name}}
+          <span class="list-item-user__chat-user-name">
+            {{ display_name }}
+          </span>
+        {{else if login}}
+          <span class="list-item-user__chat-user-name">
+            {{ login }}
+          </span>
         {{else if title}}
           <span class="list-item-user__chat-user-name">
             {{ title }}

@@ -51,8 +51,6 @@ class HTTPClient implements IHTTPClient {
         xhrURL,
       );
 
-      xhr.withCredentials = withCredentials;
-
       if (!(data instanceof FormData)) {
         Object.entries(headers!).forEach(([key, value]) => {
           xhr.setRequestHeader(key, value);
@@ -64,8 +62,9 @@ class HTTPClient implements IHTTPClient {
         (status >= 200 && status < 400) ? resolve(xhr as T) : reject(xhr);
       };
 
-      xhr.onload = onload;
+      xhr.withCredentials = withCredentials;
 
+      xhr.onload = onload;
       xhr.onerror = reject;
       xhr.onabort = reject;
       xhr.ontimeout = reject;

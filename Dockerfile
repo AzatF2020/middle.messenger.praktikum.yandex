@@ -1,7 +1,7 @@
-FROM node:20-alpine 
+FROM node:20-alpine
 
 RUN apk update && apk add bash \
-    && npm install -g typescript 
+    && npm install -g typescript
 
 WORKDIR /app
 

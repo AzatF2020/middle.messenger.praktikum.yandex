@@ -25,8 +25,6 @@ class ModalAddUser extends Component implements IModalAddUser {
 
   public chatsController: ChatsController;
 
-  public handleCloseModal!: (event: Event) => void;
-
   constructor(props: ModalAddUserProps) {
     super(props);
 
@@ -41,8 +39,14 @@ class ModalAddUser extends Component implements IModalAddUser {
     this.listeners = {
       click: this.closeByOverlay.bind(this),
       handleInputSearch: this.handleInputSearch.bind(this),
+      handleCloseModal: this.handleCloseModal.bind(this),
       onSubmit: this.onSubmit.bind(this),
     };
+  }
+
+  public handleCloseModal(event: Event) {
+    this.props.handleCloseModal(event);
+    window.store.setState({ searchedUserForAdd: [] });
   }
 
   public async handleInputSearch(event: Event) {
@@ -77,7 +81,7 @@ class ModalAddUser extends Component implements IModalAddUser {
     } catch (error) {
       console.warn(error);
     } finally {
-      this.props.handleCloseModal(event);
+      this.handleCloseModal(event);
     }
   }
 

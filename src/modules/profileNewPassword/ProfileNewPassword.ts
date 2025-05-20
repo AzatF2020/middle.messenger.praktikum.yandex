@@ -10,9 +10,9 @@ import template from './template.hbs?raw';
 import './style.scss';
 
 interface IProfileNewPassword {
-    handleChangeInput(event: Event): void;
-    validateInput(event: InputEvent): void;
-    onSubmit(event: Event): void;
+  handleChangeInput(event: Event): void;
+  validateInput(event: InputEvent): void;
+  onSubmit(event: Event): void;
 }
 
 const validation = new FormValidator({

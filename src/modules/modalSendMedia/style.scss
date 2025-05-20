@@ -27,11 +27,11 @@
     position: relative;
     width: 100%;
     height: 30rem;
-    background-color: utilities.$gray-200;
     border-radius: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: .1rem dashed utilities.$blue-500;
   }
 
   &__media-settings {

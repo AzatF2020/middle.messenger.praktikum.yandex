@@ -106,7 +106,7 @@ class Component<P = any> {
       if (!callback) return;
 
       this._element!.addEventListener(event, (evt: Event) => {
-        evt.stopImmediatePropagation();
+        evt.stopPropagation();
         (callback as Function)(evt);
       });
     });
@@ -117,7 +117,7 @@ class Component<P = any> {
       if (!callback) return;
 
       this._element!.removeEventListener(event, (evt: Event) => {
-        evt.stopImmediatePropagation();
+        evt.stopPropagation();
         (callback as Function)(evt);
       });
     });

@@ -1,5 +1,8 @@
+import { connectStore } from '@core/index';
 import Component from '@core/Component';
 import FormValidator from '@core/FormValidator';
+import AuthController from '@controllers/AuthController';
+import ProfileController from '@controllers/ProfileController';
 import {
   isEmail,
   maxLength,
@@ -17,10 +20,13 @@ import template from './template.hbs?raw';
 import './style.scss';
 
 interface IProfileEdit {
-    setAvatarImg(event: Event): void;
-    handleInputChange(event: Event): void;
-    validateInput(event: InputEvent): void;
-    onSubmit(event: Event): void;
+  setAvatarImg(event: Event): void;
+
+  handleInputChange(event: Event): void;
+
+  validateInput(event: InputEvent): void;
+
+  onSubmit(event: Event): void;
 }
 
 const validation = new FormValidator({
@@ -49,7 +55,6 @@ const validation = new FormValidator({
       acceptedSigns: acceptedSigns('-'),
     },
     display_name: {
-      required,
       excludeNumbers,
     },
     phone: {
@@ -67,18 +72,27 @@ const validation = new FormValidator({
 });
 
 class ProfileEdit extends Component implements IProfileEdit {
+  public profileController: ProfileController;
+
+  public formData: FormData;
+
   constructor() {
     super();
 
+    this.profileController = new ProfileController();
+
+    this.formData = new FormData();
+
     this.state = {
-      email: 'pochta@yandex.ru',
-      login: 'ivanivanov',
-      first_name: 'Иван',
-      second_name: 'Иванов',
-      display_name: 'Иван',
+      email: '',
+      login: '',
+      first_name: '',
+      second_name: '',
+      display_name: '',
       phone: '',
       avatar: '/img/plug.png',
       isButtonDisabled: false,
+      isFormReadonly: true,
       errors: {},
     };
 
@@ -87,6 +101,7 @@ class ProfileEdit extends Component implements IProfileEdit {
       onSubmit: this.onSubmit.bind(this),
       setAvatarImg: this.setAvatarImg.bind(this),
       handleInputChange: this.handleInputChange.bind(this),
+      changeFormDataState: this.changeFormDataState.bind(this),
     };
   }
 
@@ -95,7 +110,7 @@ class ProfileEdit extends Component implements IProfileEdit {
     this.setState({ ...this.state, [name]: value });
   }
 
-  public onSubmit(event: Event) {
+  public async onSubmit(event: Event) {
     event.preventDefault();
 
     const isValid = validation.validate();
@@ -107,12 +122,39 @@ class ProfileEdit extends Component implements IProfileEdit {
     });
 
     if (!isValid) return;
+
+    await this.profileController.updateProfile(this.state, this.formData);
+    this.changeFormDataState();
   }
 
-  public setAvatarImg(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (!file) return;
-    this.setState({ ...this.state, avatar: URL.createObjectURL(file) });
+  public async setAvatarImg(event: Event) {
+    const { files } = event.target as HTMLInputElement;
+    const file = files![0];
+
+    this.formData.append('avatar', files![0]);
+
+    const readFileAsDataURL = new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (event) => resolve(event.target!.result);
+      reader.readAsDataURL(file);
+    });
+
+    const avatar = await readFileAsDataURL;
+
+    this.setState({ ...this.state, avatar });
+  }
+
+  public async componentBeforeMount() {
+    const user = await new AuthController().redirectUser();
+    if (!user) return;
+
+    Object.entries(user).forEach(([key, value]) => {
+      if (key === 'avatar') {
+        this.setState({ ...this.state, [key]: `${import.meta.env.VITE_BACKEND_STORAGE}${value}` || '/img/plug.png' });
+      } else {
+        this.setState({ ...this.state, [key]: value });
+      }
+    });
   }
 
   public validateInput(event: InputEvent) {
@@ -124,9 +166,19 @@ class ProfileEdit extends Component implements IProfileEdit {
     });
   }
 
+  public changeFormDataState() {
+    this.setState({
+      ...this.state,
+      isFormReadonly: !this.state.isFormReadonly,
+    });
+  }
+
   public render() {
     return template;
   }
 }
 
-export default ProfileEdit;
+export default connectStore(ProfileEdit, (state) => ({
+  me: state.user,
+  loading: state.loading,
+}));
