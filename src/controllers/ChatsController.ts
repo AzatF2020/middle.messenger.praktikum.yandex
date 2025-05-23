@@ -42,27 +42,51 @@ class ChatsController implements IChatsController {
   }
 
   public async addUserToChat(users: number[], chatId: number) {
-    await chatsAPI.addUsersToChat({ chatId, users });
+    try {
+      await chatsAPI.addUsersToChat({ chatId, users });
 
-    const { response: chatUsers } = await chatsAPI.getUsersChat(chatId);
+      const { response: chatUsers } = await chatsAPI.getUsersChat(chatId);
 
-    const currentChat = window.store.getState().selectedChat as object;
+      const currentChat = window.store.getState().selectedChat as object;
 
-    window.store.setState({
-      selectedChat: { ...currentChat, members: JSON.parse(chatUsers ?? '[]') },
-    });
+      window.store.setState({
+        selectedChat: { ...currentChat, members: JSON.parse(chatUsers ?? '[]') },
+      });
+
+      window.toast.addToast({
+        life: 5000,
+        summary: 'Удаление пользователя',
+        severity: 'info',
+        detail: 'Пользователь успешно удален',
+        horizontalDirection: 'center',
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   public async removeUsersFromChat(users: number[], chatId: number) {
-    await chatsAPI.removeUsersFromChat({ chatId, users });
+    try {
+      await chatsAPI.removeUsersFromChat({ chatId, users });
 
-    const { response: chatUsers } = await chatsAPI.getUsersChat(chatId);
+      const { response: chatUsers } = await chatsAPI.getUsersChat(chatId);
 
-    const currentChat = window.store.getState().selectedChat as object;
+      const currentChat = window.store.getState().selectedChat as object;
 
-    window.store.setState({
-      selectedChat: { ...currentChat, members: JSON.parse(chatUsers ?? '[]') },
-    });
+      window.store.setState({
+        selectedChat: { ...currentChat, members: JSON.parse(chatUsers ?? '[]') },
+      });
+
+      window.toast.addToast({
+        life: 5000,
+        summary: 'Удаление пользователя',
+        severity: 'info',
+        detail: 'Пользователь успешно удален',
+        horizontalDirection: 'center',
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   public async createChat(createChatModel: CreateChatModel, users: number[]) {
@@ -97,6 +121,14 @@ class ChatsController implements IChatsController {
         userChats: JSON.parse(response),
         selectedChat: initialState().selectedChat,
         messages: [],
+      });
+
+      window.toast.addToast({
+        life: 5000,
+        summary: 'Удаление чата',
+        severity: 'info',
+        detail: 'Чат успешно удален',
+        horizontalDirection: 'center',
       });
     } catch (error) {
       console.error(error);

@@ -59,7 +59,7 @@ class HTTPClient implements IHTTPClient {
 
       const onload = () => {
         const { status } = xhr;
-        (status >= 200 && status < 400) ? resolve(xhr as T) : reject(xhr);
+        (status >= 200 && status < 400) ? resolve(xhr as T) : reject(JSON.parse(xhr?.response));
       };
 
       xhr.withCredentials = withCredentials;

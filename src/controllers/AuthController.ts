@@ -34,7 +34,13 @@ class AuthController implements IAuthController {
         window.router.go(PATHNAMES.MESSENGER);
       }
     } catch (error) {
-      console.error(error);
+      window.toast.addToast({
+        life: 5000,
+        summary: 'Ошибка',
+        severity: 'error',
+        horizontalDirection: 'center',
+        detail: error?.reason ?? '',
+      });
     }
   }
 

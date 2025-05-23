@@ -104,4 +104,13 @@
     width: 100%;
     height: auto;
   }
+
+  &.error &__wrapper {
+    border: .1rem solid utilities.$red-500;
+    background-color: utilities.$red-50;
+  }
+
+  &.error &__message-summary {
+    color: utilities.$red-500;
+  }
 }
