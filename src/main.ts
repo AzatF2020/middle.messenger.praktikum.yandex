@@ -15,6 +15,7 @@ import ProfileNewPassword from '@pages/profileNewPassword/profileNewPassword';
 import ServerError from '@pages/serverError/serverError';
 import Index from '@pages/index/index';
 import Store from '@core/Store';
+import Toast from '@utils/classes/Toast';
 
 conditionalsHelper();
 
@@ -25,6 +26,8 @@ Object.entries(Object.assign(components, modules)).forEach(
 );
 
 window.router = new Router();
+
+window.toast = new Toast({});
 
 window.store = new Store(initialState());
 
