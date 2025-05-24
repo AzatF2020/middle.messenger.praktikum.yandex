@@ -1,8 +1,7 @@
 .users-add-list {
   padding: 0;
   margin: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden auto;
   max-height: 40rem;
   display: flex;
   flex-direction: column;

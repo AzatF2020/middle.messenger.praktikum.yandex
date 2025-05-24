@@ -61,7 +61,7 @@ class ModalSendMedia extends Component implements IModalSendMedia {
 
     const readFileAsDataURL = new Promise((resolve) => {
       const reader = new FileReader();
-      reader.onload = (event) => resolve(event.target!.result);
+      reader.onload = (loadEvent: Event) => resolve((loadEvent.target as FileReader).result);
       reader.readAsDataURL(file);
     });
 

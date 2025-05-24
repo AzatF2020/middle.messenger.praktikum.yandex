@@ -5,8 +5,7 @@
   padding: 3rem 1rem;
   height: calc(100svh - 12rem);
   height: calc(100vh - 12rem);
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden auto;
   display: flex;
   flex-direction: column-reverse;
 }

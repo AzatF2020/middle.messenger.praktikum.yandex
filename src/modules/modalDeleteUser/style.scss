@@ -23,8 +23,7 @@
     flex-direction: column;
     row-gap: .5rem;
     height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden auto;
     max-height: 40rem;
     padding-block: 1rem;
   }
