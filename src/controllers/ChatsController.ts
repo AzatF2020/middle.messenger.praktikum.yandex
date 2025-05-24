@@ -62,9 +62,9 @@ class ChatsController implements IChatsController {
 
       window.toast.addToast({
         life: 5000,
-        summary: 'Удаление пользователя',
+        summary: 'Добавление пользователя',
         severity: 'info',
-        detail: 'Пользователь успешно удален',
+        detail: 'Пользователь успешно добавлен',
         horizontalDirection: 'center',
       });
     } catch (error) {
