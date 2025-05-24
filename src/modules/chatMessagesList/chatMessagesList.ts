@@ -1,9 +1,9 @@
 import { Component, connectStore } from '@core/index';
-import tick from '@utils/helpers/tick';
 import template from './template.hbs?raw';
 import './style.scss';
 
 type ChatMessagesListProps = {
+  myId: number;
   messages: Array<{
     id: number;
     user_id: number;
@@ -36,19 +36,6 @@ class ChatMessagesList extends Component {
     };
   }
 
-  public componentDidUpdate(): void {
-    // # Костыль, сохранять позицию скролла
-    setTimeout(() => {
-      document.querySelector('.chat-messages-list')?.scrollTo(0, window.store.getState().messagesListScrollTopPosition);
-    }, 1);
-
-    const scrollTop = document.querySelector('.chat-messages-list')?.scrollTop;
-
-    if (!scrollTop) return;
-
-    window.store.setState({ messagesListScrollTopPosition: scrollTop });
-  }
-
   public componentWillUnmount(): void {
     clearTimeout(this.timeout!);
   }
@@ -67,6 +54,6 @@ class ChatMessagesList extends Component {
   }
 }
 
-export default connectStore(ChatMessagesList, (state) => ({
+export default connectStore<ChatMessagesListProps>(ChatMessagesList, (state) => ({
   myId: state.user?.id,
 }));

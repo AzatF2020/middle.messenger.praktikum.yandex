@@ -6,7 +6,8 @@ const usersAPI = new UsersAPI();
 class UsersController {
   public async searchUser(data: SearchUserModel) {
     try {
-      const { response } = await usersAPI.searchUser(data);
+      const result = await usersAPI.searchUser(data) as { response: string };
+      const { response } = result;
       window.store.setState({ searchedUserChats: JSON.parse(response), searchLoading: true });
     } catch (error) {
       console.error(error);
@@ -18,7 +19,7 @@ class UsersController {
 
   public async searchUserForAdd(data: SearchUserModel) {
     try {
-      const { response } = await usersAPI.searchUser(data);
+      const { response } = await usersAPI.searchUser(data) as { response: string };
       window.store.setState({ searchedUserForAdd: JSON.parse(response) });
     } catch (error) {
       console.error(error);

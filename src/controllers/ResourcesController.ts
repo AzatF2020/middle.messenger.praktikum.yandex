@@ -6,8 +6,8 @@ class ResourcesController {
   public async uploadFile(data: FormData) {
     let id = null;
     try {
-      const { response } = await resourcesAPI.uploadFile(data);
-      id = JSON.parse(response)?.id;
+      const result = await resourcesAPI.uploadFile(data) as { response: string };
+      id = JSON.parse(result.response)?.id;
     } catch (error) {
       console.error(error);
     }

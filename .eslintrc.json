@@ -28,6 +28,7 @@
         "import/no-named-default": "off",
         "no-void": "off",
         "no-return-await": "off",
-        "react/no-unused-state": "off"
+        "react/no-unused-state": "off",
+        "react/no-unused-prop-types": "off"
     }
 }

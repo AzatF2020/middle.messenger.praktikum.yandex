@@ -81,7 +81,8 @@ class ModalCreateChat extends Component implements IModalCreateChat {
 
     if (!isValid) return;
 
-    const selectedUserId = window.store.getState().selectedUserOnSearch.id;
+    const state = window.store.getState() as { selectedUserOnSearch: { id: number } };
+    const selectedUserId = state.selectedUserOnSearch.id;
 
     await this.chatsController.createChat({
       title: this.state.title,

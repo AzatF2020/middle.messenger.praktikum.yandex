@@ -13,14 +13,14 @@ interface IChatsController {
 }
 
 class ChatsController implements IChatsController {
-  private openChatWithHashOnMount(chats) {
+  private openChatWithHashOnMount(chats: Array<{ id: number; title: string }>): void {
     if (PATHNAMES.MESSENGER !== window.router.currentLocation()) return;
 
-    const hash = window.router.getHash();
+    const hash: string = window.router.getHash();
 
     if (!hash) return;
 
-    const chatId = chats.find(({ title }: { title: string }) => title === decodeURI(hash))?.id;
+    const chatId: number | undefined = chats.find(({ title }: { title: string }) => title === decodeURI(hash))?.id;
 
     if (!chatId) return;
 
@@ -29,7 +29,7 @@ class ChatsController implements IChatsController {
 
   public async getChats() {
     try {
-      const { response } = await chatsAPI.getChats();
+      const { response } = await chatsAPI.getChats() as { response: string };
 
       const parsedResponse = JSON.parse(response);
 
@@ -38,6 +38,13 @@ class ChatsController implements IChatsController {
       this.openChatWithHashOnMount(parsedResponse);
     } catch (error) {
       console.error(error);
+      window.toast.addToast({
+        life: 5000,
+        summary: 'Список',
+        severity: 'error',
+        detail: (error as { reason?: string })?.reason ?? '',
+        horizontalDirection: 'center',
+      });
     }
   }
 
@@ -45,7 +52,7 @@ class ChatsController implements IChatsController {
     try {
       await chatsAPI.addUsersToChat({ chatId, users });
 
-      const { response: chatUsers } = await chatsAPI.getUsersChat(chatId);
+      const { response: chatUsers } = await chatsAPI.getUsersChat(chatId) as { response: string };
 
       const currentChat = window.store.getState().selectedChat as object;
 
@@ -61,7 +68,13 @@ class ChatsController implements IChatsController {
         horizontalDirection: 'center',
       });
     } catch (error) {
-      console.error(error);
+      window.toast.addToast({
+        life: 5000,
+        summary: 'Чат',
+        severity: 'error',
+        detail: (error as { reason?: string })?.reason ?? '',
+        horizontalDirection: 'center',
+      });
     }
   }
 
@@ -69,7 +82,7 @@ class ChatsController implements IChatsController {
     try {
       await chatsAPI.removeUsersFromChat({ chatId, users });
 
-      const { response: chatUsers } = await chatsAPI.getUsersChat(chatId);
+      const { response: chatUsers } = await chatsAPI.getUsersChat(chatId) as { response: string };
 
       const currentChat = window.store.getState().selectedChat as object;
 
@@ -85,25 +98,37 @@ class ChatsController implements IChatsController {
         horizontalDirection: 'center',
       });
     } catch (error) {
-      console.error(error);
+      window.toast.addToast({
+        life: 5000,
+        summary: 'Чат',
+        severity: 'error',
+        detail: (error as { reason?: string })?.reason ?? '',
+        horizontalDirection: 'center',
+      });
     }
   }
 
   public async createChat(createChatModel: CreateChatModel, users: number[]) {
     try {
-      const { response } = await chatsAPI.createChat(createChatModel);
+      const { response } = await chatsAPI.createChat(createChatModel) as { response: string };
 
       const chatId = JSON.parse(response).id;
 
       await chatsAPI.addUsersToChat({ chatId, users });
 
-      const { response: responseChats } = await chatsAPI.getChats();
+      const { response: responseChats } = await chatsAPI.getChats() as { response: string };
 
       window.store.setState({ userChats: JSON.parse(responseChats), search: '' });
 
       await this.openHandleChat(chatId);
     } catch (error) {
-      console.error(error);
+      window.toast.addToast({
+        life: 5000,
+        summary: 'Чат',
+        severity: 'error',
+        detail: (error as { reason?: string })?.reason ?? '',
+        horizontalDirection: 'center',
+      });
     }
   }
 
@@ -115,7 +140,7 @@ class ChatsController implements IChatsController {
 
       window.router.go(PATHNAMES.MESSENGER);
 
-      const { response } = await chatsAPI.getChats();
+      const { response } = await chatsAPI.getChats() as { response: string };
 
       window.store.setState({
         userChats: JSON.parse(response),
@@ -131,7 +156,13 @@ class ChatsController implements IChatsController {
         horizontalDirection: 'center',
       });
     } catch (error) {
-      console.error(error);
+      window.toast.addToast({
+        life: 5000,
+        summary: 'Чат',
+        severity: 'error',
+        detail: (error as { reason?: string })?.reason ?? '',
+        horizontalDirection: 'center',
+      });
     }
   }
 
@@ -155,14 +186,20 @@ class ChatsController implements IChatsController {
     try {
       window.store.setState({ isChatLoading: true });
 
-      const { response: chatUsers } = await chatsAPI.getUsersChat(chatId);
-      const { response: responseToken } = await chatsAPI.createChatToken(chatId);
+      const { response: chatUsers } = await chatsAPI.getUsersChat(chatId) as { response: string };
+      const { response: responseToken } = await chatsAPI.createChatToken(chatId) as { response: string };
 
-      const myId = window.store.getState().user.id;
+      const state = window.store.getState() as { user: { id: number } };
+      const myId = state.user.id;
       const token = JSON.parse(responseToken)?.token;
 
       /* Получаем чат и кладем в хранилище. */
-      const currentChatInfo = window.store.getState().userChats.find(({ id }: { id: number }) => id === chatId);
+      const userChats = window.store.getState().userChats as Array<{ id: number; title: string }>;
+      const currentChatInfo = userChats.find(({ id }: { id: number }) => id === chatId);
+
+      if (!currentChatInfo) {
+        throw new Error(`Chat with id ${chatId} not found`);
+      }
 
       window.router.go('/messenger', currentChatInfo.title);
 

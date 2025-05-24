@@ -5,7 +5,7 @@ import type SignupModel from 'src/types/SignupModel';
 const http = new HTTPClient('/auth');
 
 class AuthAPI {
-  public async login(data: LoginModel) {
+  public async login(data: LoginModel): Promise<{ status: number; }> {
     return await http.post('/login', { data });
   }
 

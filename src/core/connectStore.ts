@@ -2,7 +2,7 @@ import { default as Block } from './Component';
 import { STORE_EVENTS } from './Store';
 
 function connectStore<T extends Record<string, unknown>>(
-  Component: typeof Block,
+  Component: typeof Block<T>,
   mapStateProps: (storeState: any) => any = () => {},
 ) {
   return class extends Component {

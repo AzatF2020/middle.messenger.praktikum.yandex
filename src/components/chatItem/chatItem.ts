@@ -16,7 +16,7 @@ type ChatItemProps = {
   file: Record<string, any>
 }
 
-class ChatItem extends Component {
+class ChatItem extends Component<ChatItemProps> {
   constructor(props: ChatItemProps) {
     super(props);
 

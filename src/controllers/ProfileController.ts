@@ -10,7 +10,7 @@ const usersAPI = new UsersAPI();
 class ProfileController {
   public async logout() {
     try {
-      const { status } = await authAPI.logout();
+      const { status } = await authAPI.logout() as { status: number };
 
       if (status === 200) {
         window.router.go(PATHNAMES.LOGIN);
@@ -24,6 +24,14 @@ class ProfileController {
     try {
       if (formData.get('avatar')) {
         await usersAPI.uploadProfileAvatar(formData);
+
+        window.toast.addToast({
+          life: 5000,
+          summary: 'Настройка профиля',
+          severity: 'info',
+          detail: 'Аватар успешно обновлен',
+          horizontalDirection: 'center',
+        });
       }
 
       await usersAPI.updateProfile(data);
@@ -42,8 +50,7 @@ class ProfileController {
 
   public async updatePassword(data: PasswordModel) {
     try {
-      const { response } = await usersAPI.updatePassword(data);
-      console.log(response);
+      await usersAPI.updatePassword(data) as { response: any };
 
       window.toast.addToast({
         life: 5000,
@@ -57,10 +64,10 @@ class ProfileController {
         life: 5000,
         summary: 'Настройка профиля',
         severity: 'error',
-        detail: error?.reason ?? '',
+        detail: (error as { reason?: string })?.reason ?? '',
         horizontalDirection: 'center',
       });
-      throw new Error(error?.reason);
+      throw new Error((error as { reason?: string })?.reason ?? String(error));
     }
   }
 }

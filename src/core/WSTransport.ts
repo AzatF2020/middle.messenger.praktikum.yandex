@@ -76,20 +76,22 @@ class WSTransport {
     const result = messages.map((item) => ({
       ...item,
       user: {
-        ...window.store.getState().selectedChat.members
-          .find(({ id }: { id: number}) => id === item.user_id),
+        ...((window.store.getState().selectedChat as { members: Array<{ id: number }> }).members
+          .find(({ id }: { id: number}) => id === item.user_id)),
       },
     }));
 
     return result;
   }
 
-  private _updateUserChatsInMenu(messages: any[]): any[] {
-    const userChats = window.store.getState()?.userChats ?? [];
+  private _updateUserChatsInMenu(messages: any[]): any[] | undefined {
+    const userChats = (window.store.getState()?.userChats ?? []) as any[];
+
     if (!userChats.length) return;
 
     const lastMessage = messages[messages.length - 1];
-    const selectedChat = window.store.getState().userChats.find(({ id }:
+
+    const selectedChat = userChats.find(({ id }:
       { id: number}) => id === window.store.getState().chatId);
 
     const formattedLastMessage = structuredClone({
@@ -117,7 +119,7 @@ class WSTransport {
     if (Array.isArray(messages)) {
       window.store.setState({ messages: this._setUserInEveryMessage(messages) });
     } else if (messages?.type === 'message' || messages?.type === 'file') {
-      const messagesWithUsers = this._setUserInEveryMessage([messages, ...window.store.getState().messages]);
+      const messagesWithUsers = this._setUserInEveryMessage([messages, ...(window.store.getState().messages as any[])]);
 
       window.store.setState({
         messages: messagesWithUsers,

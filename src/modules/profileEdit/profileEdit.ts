@@ -140,7 +140,11 @@ class ProfileEdit extends Component implements IProfileEdit {
 
     if (!isValid) return;
 
-    await this.profileController.updateProfile(this.state, this.formData);
+    const {
+      errors, avatar, isButtonDisabled, isFormReadonly, isPasswordChangedFlag, ...rest
+    } = this.state;
+
+    await this.profileController.updateProfile(rest, this.formData);
     this.changeFormDataState();
   }
 
@@ -170,7 +174,8 @@ class ProfileEdit extends Component implements IProfileEdit {
         this.setState({ ...this.state, [key]: value ? `${import.meta.env.VITE_BACKEND_STORAGE}${value}` : '/img/plug.png' });
         this.initialState[key] = `${import.meta.env.VITE_BACKEND_STORAGE}${value}` || '/img/plug.png';
       } else {
-        this.initialState[key] = value;
+        this.initialState[key] = (
+          typeof value === 'string' || typeof value === 'number' || value === null) ? value : String(value);
         this.setState({ ...this.state, [key]: value });
       }
     });

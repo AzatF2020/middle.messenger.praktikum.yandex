@@ -1,4 +1,3 @@
-import Component from '@core/Component';
 import { LoginForm } from './loginForm';
 import { RegisterForm } from './registerForm';
 import { Error } from './error';
@@ -19,18 +18,18 @@ import { ModalChatInfo } from './modalChatInfo';
 import { UsersAddList } from './usersAddList';
 import { ModalDeleteUser } from './modalDeleteUser';
 
-const modules: Record<string, typeof Component> = {
+const modules = {
   ModalChatInfo,
   ModalDeleteUser,
-  LoginForm: LoginForm as typeof Component,
+  LoginForm,
   RegisterForm,
-  ModalAddUser: ModalAddUser as typeof Component,
-  ModalDeleteGroup: ModalDeleteGroup as typeof Component,
+  ModalAddUser,
+  ModalDeleteGroup,
   ProfileEdit,
   ChatUsers,
-  Error: Error as typeof Component,
+  Error,
   ProfileNewPassword,
-  LoaderOverlay: LoaderOverlay as typeof Component,
+  LoaderOverlay,
   UsersList,
   ChatMessages,
   ChatMessagesList,

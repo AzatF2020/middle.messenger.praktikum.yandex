@@ -13,6 +13,10 @@ interface IAuthController {
   redirectUser(): void;
 }
 
+type TError = {
+  reason: string;
+}
+
 class AuthController implements IAuthController {
   public async login(data: LoginModel) {
     try {
@@ -28,18 +32,18 @@ class AuthController implements IAuthController {
 
   public async signup(data: SignupModel) {
     try {
-      const { status } = await authAPI.signup(data);
+      const { status } = await authAPI.signup(data) as { status: number };
 
       if (status === 200) {
         window.router.go(PATHNAMES.MESSENGER);
       }
-    } catch (error) {
+    } catch (error: unknown) {
       window.toast.addToast({
         life: 5000,
         summary: 'Ошибка',
         severity: 'error',
         horizontalDirection: 'center',
-        detail: error?.reason ?? '',
+        detail: (error as TError)?.reason ?? '',
       });
     }
   }
@@ -50,7 +54,8 @@ class AuthController implements IAuthController {
     try {
       window.store.setState({ loading: true });
 
-      const { response } = await authAPI.getUser();
+      const result = await authAPI.getUser();
+      const { response } = (result as { response: string });
 
       if (currentLocation === PATHNAMES.LOGIN || currentLocation === PATHNAMES.SIGN_UP) {
         window.router.go(PATHNAMES.MESSENGER);
@@ -70,6 +75,7 @@ class AuthController implements IAuthController {
     } finally {
       window.store.setState({ loading: false });
     }
+    return null;
   }
 }
 

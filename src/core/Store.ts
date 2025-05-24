@@ -13,6 +13,7 @@ class Store extends EventBus {
     if (Store.__instance__) {
       return Store.__instance__;
     }
+
     super();
 
     this.state = defaultState;
