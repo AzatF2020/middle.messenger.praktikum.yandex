@@ -1,3 +1,4 @@
+import { PATHNAMES } from '@utils/constants/pagesPathnames';
 import Component from './Component';
 import Route from './Route';
 
@@ -35,11 +36,18 @@ class Router implements IRouter {
     Router.__instance__ = this;
   }
 
+  private _isRouteExist(pathname: string) {
+    if (!Object.values(PATHNAMES).find((x: string) => x === pathname)) {
+      this.go(PATHNAMES.NOT_FOUND)
+    }
+  }
+
   private _onRoute(pathname: string) {
     const route = this._getRoute(pathname);
 
     if (!route) {
-      throw new Error(`Не найден роут ${pathname}`);
+      this._isRouteExist(pathname)
+      return;
     }
 
     if (this._currentRoute && this._currentRoute !== route) {
