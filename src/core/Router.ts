@@ -38,7 +38,7 @@ class Router implements IRouter {
 
   private _isRouteExist(pathname: string) {
     if (!Object.values(PATHNAMES).find((x: string) => x === pathname)) {
-      this.go(PATHNAMES.NOT_FOUND)
+      this.go(PATHNAMES.NOT_FOUND);
     }
   }
 
@@ -46,7 +46,7 @@ class Router implements IRouter {
     const route = this._getRoute(pathname);
 
     if (!route) {
-      this._isRouteExist(pathname)
+      this._isRouteExist(pathname);
       return;
     }
 
