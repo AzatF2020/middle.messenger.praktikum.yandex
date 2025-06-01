@@ -7,11 +7,11 @@ enum STORE_EVENTS {
 }
 
 class Store extends EventBus {
-  static __instance__: Store;
+  static __instance: Store;
 
-  constructor(defaultState: any) {
-    if (Store.__instance__) {
-      return Store.__instance__;
+  constructor(defaultState: Record<string, unknown>) {
+    if (Store.__instance) {
+      return Store.__instance;
     }
 
     super();
@@ -30,10 +30,10 @@ class Store extends EventBus {
       }
     });
 
-    Store.__instance__ = this;
+    Store.__instance = this;
   }
 
-  private state: Record<string, any> = {};
+  private state: Record<string, unknown> = {};
 
   private makeStateProxy<T>(obj: Record<string, T | unknown>) {
     return new Proxy(obj, {
@@ -53,7 +53,7 @@ class Store extends EventBus {
     return this.makeStateProxy(this.state);
   }
 
-  public setState<S = unknown>(value: S) {
+  public setState<S extends Record<string, unknown>>(value: S) {
     const prevState = structuredClone(this.state);
 
     this.state = deepMergeObjects(this.state, value);

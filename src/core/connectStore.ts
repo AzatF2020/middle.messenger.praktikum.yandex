@@ -3,7 +3,7 @@ import { STORE_EVENTS } from './Store';
 
 function connectStore<T extends Record<string, unknown>>(
   Component: typeof Block<T>,
-  mapStateProps: (storeState: any) => any = () => {},
+  mapStateProps: (storeState: Record<string, unknown>) => Partial<T> = () => ({}),
 ) {
   return class extends Component {
     private onChangeStore: () => void;
@@ -18,18 +18,13 @@ function connectStore<T extends Record<string, unknown>>(
         const newStoreState = mapStateProps(store.getState());
 
         if (JSON.stringify(newStoreState) !== JSON.stringify(storeState)) {
-          this.setState({ ...this.state, ...newStoreState });
+          this.setState({ ...this.state, ...newStoreState } as T);
         }
 
         storeState = newStoreState;
       };
 
       store.on(STORE_EVENTS.UPDATED, this.onChangeStore);
-    }
-
-    public componentWillUnmount(): void {
-      // Удалять при переключении страницы
-      // window.store.off(STORE_EVENTS.UPDATED, this.onChangeStore);
     }
   };
 }

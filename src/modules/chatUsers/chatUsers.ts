@@ -1,6 +1,7 @@
 import { Component, connectStore } from '@core/index';
 import ChatsController from '@controllers/ChatsController';
 import UsersController from '@controllers/UsersController';
+import { PATHNAMES } from '@utils/constants/pagesPathnames';
 import template from './template.hbs?raw';
 import './style.scss';
 
@@ -13,7 +14,7 @@ class ChatUsers extends Component implements IChatUsers {
 
   public usersController: UsersController;
 
-  constructor(props: any) {
+  constructor(props?: Record<string, unknown>) {
     super(props);
 
     this.chatsController = new ChatsController();
@@ -21,7 +22,7 @@ class ChatUsers extends Component implements IChatUsers {
 
     this.listeners = {
       handleInputChange: this.handleInputChange.bind(this),
-      goToProfile: () => { window.router.go('/profile'); },
+      goToProfile: () => { window.router.go(PATHNAMES.PROFILE); },
     };
 
     this.state = {

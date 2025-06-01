@@ -1,10 +1,10 @@
-function debounce<T extends Function>(cb: T, wait = 20) {
-  let h: ReturnType<typeof setTimeout>;
-  const callable = (...args: any) => {
-    clearTimeout(h);
-    h = setTimeout(() => cb(...args), wait);
+function debounce<T extends(...args: Parameters<T>) => void>(cb: T, wait = 20) {
+  let timeout: ReturnType<typeof setTimeout>;
+  const callable = (...args: Parameters<T>) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => cb(...args), wait);
   };
-  return <T>(<any>callable);
+  return callable as T;
 }
 
 export default debounce;

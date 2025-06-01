@@ -3,7 +3,7 @@ import template from './template.hbs?raw';
 import './style.scss';
 
 type UsersAddListProps = {
-  usersSearchList: any[]
+  usersSearchList: unknown[]
 }
 
 class UsersAddList extends Component {

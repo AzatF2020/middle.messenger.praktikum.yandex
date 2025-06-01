@@ -1,18 +1,20 @@
 import { PATHNAMES } from '@utils/constants/pagesPathnames';
+import { HTTP_STATUS } from '@utils/constants/httpStatus';
 import AuthAPI from '@api/authAPI';
 import UsersAPI from '@api/usersAPI';
 import ProfileModel from 'src/types/ProfileModel';
 import PasswordModel from 'src/types/PasswordModel';
 
-const authAPI = new AuthAPI();
-const usersAPI = new UsersAPI();
-
 class ProfileController {
+  private readonly authAPI = new AuthAPI();
+
+  private readonly usersAPI = new UsersAPI();
+
   public async logout() {
     try {
-      const { status } = await authAPI.logout() as { status: number };
+      const { status } = await this.authAPI.logout() as { status: number };
 
-      if (status === 200) {
+      if (status === HTTP_STATUS.OK) {
         window.router.go(PATHNAMES.LOGIN);
       }
     } catch (error) {
@@ -23,7 +25,7 @@ class ProfileController {
   public async updateProfile(data: ProfileModel, formData: FormData) {
     try {
       if (formData.get('avatar')) {
-        await usersAPI.uploadProfileAvatar(formData);
+        await this.usersAPI.uploadProfileAvatar(formData);
 
         window.toast.addToast({
           life: 5000,
@@ -34,7 +36,7 @@ class ProfileController {
         });
       }
 
-      await usersAPI.updateProfile(data);
+      await this.usersAPI.updateProfile(data);
 
       window.toast.addToast({
         life: 5000,
@@ -50,7 +52,7 @@ class ProfileController {
 
   public async updatePassword(data: PasswordModel) {
     try {
-      await usersAPI.updatePassword(data) as { response: any };
+      await this.usersAPI.updatePassword(data) as { response: unknown };
 
       window.toast.addToast({
         life: 5000,

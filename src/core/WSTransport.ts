@@ -9,11 +9,11 @@ type SocketURLArgs = {
 class WSTransport {
   static __instance: WSTransport;
 
-  private _ping!: any;
+  private _ping!: ReturnType<typeof setInterval>;
 
   private _wss!: WebSocket;
 
-  private _connectingTimeout!: null | NodeJS.Timeout;
+  private _connectingTimeout!: null | ReturnType<typeof setTimeout>;
 
   public url!: string;
 
@@ -72,8 +72,8 @@ class WSTransport {
     this.leave();
   }
 
-  private _setUserInEveryMessage(messages: any[]): any[] {
-    const result = messages.map((item) => ({
+  private _setUserInEveryMessage(messages: unknown[]): unknown[] {
+    const result = (messages as Record<string, string | number>[]).map((item) => ({
       ...item,
       user: {
         ...((window.store.getState().selectedChat as { members: Array<{ id: number }> }).members
@@ -84,15 +84,22 @@ class WSTransport {
     return result;
   }
 
-  private _updateUserChatsInMenu(messages: any[]): any[] | undefined {
-    const userChats = (window.store.getState()?.userChats ?? []) as any[];
+  private _updateUserChatsInMenu(
+    messages: { user: object; time: string | number; content: string }[],
+  ): { id: number; lastMessage: { user: object; time: string | number; content: string }; [key: string]: unknown }[] | undefined {
+    const userChats = (window.store.getState()?.userChats ?? []) as
+    { id: number;
+      lastMessage: { user: object; time: string | number; content: string };
+      [key: string]: unknown
+    }[];
 
-    if (!userChats.length) return;
+    if (!userChats.length) return undefined;
 
     const lastMessage = messages[messages.length - 1];
 
-    const selectedChat = userChats.find(({ id }:
-      { id: number}) => id === window.store.getState().chatId);
+    const selectedChat = userChats.find(({ id }: { id: number }) => id === window.store.getState().chatId);
+
+    if (!selectedChat) return userChats;
 
     const formattedLastMessage = structuredClone({
       ...selectedChat,
@@ -102,11 +109,14 @@ class WSTransport {
         time: lastMessage.time,
         content: lastMessage.content,
       },
-    });
+    }) as { id: number; lastMessage: { user: object; time: string | number; content: string }; [key: string]: unknown };
 
-    // eslint-disable-next-line consistent-return
-    return userChats.reduce((acc: any[], item: { id: any; }) => {
-      formattedLastMessage.id === item.id ? acc.push(formattedLastMessage) : acc.push(item);
+    return userChats.reduce((acc: {
+        id: number;
+        lastMessage: { user: object; time: string | number; content: string };
+        [key: string]: unknown }[], item: { id: number; lastMessage: { user: object; time: string | number; content: string };
+        [key: string]: unknown }) => {
+      acc.push(formattedLastMessage.id === item.id ? formattedLastMessage : item);
       return acc;
     }, []);
   }
@@ -119,16 +129,16 @@ class WSTransport {
     if (Array.isArray(messages)) {
       window.store.setState({ messages: this._setUserInEveryMessage(messages) });
     } else if (messages?.type === 'message' || messages?.type === 'file') {
-      const messagesWithUsers = this._setUserInEveryMessage([messages, ...(window.store.getState().messages as any[])]);
+      const messagesWithUsers = this._setUserInEveryMessage([messages, ...(window.store.getState().messages as unknown[])]);
 
       window.store.setState({
         messages: messagesWithUsers,
-        userChats: this._updateUserChatsInMenu(messagesWithUsers),
+        userChats: this._updateUserChatsInMenu(messagesWithUsers as { user: object; time: string | number; content: string }[]),
       });
     }
   }
 
-  private _handleError(event: any) {
+  private _handleError(event: unknown) {
     console.info(`[error]: ${JSON.stringify(event)}`);
   }
 

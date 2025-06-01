@@ -140,11 +140,14 @@ class ProfileEdit extends Component implements IProfileEdit {
 
     if (!isValid) return;
 
-    const {
-      errors, avatar, isButtonDisabled, isFormReadonly, isPasswordChangedFlag, ...rest
-    } = this.state;
-
-    await this.profileController.updateProfile(rest, this.formData);
+    await this.profileController.updateProfile({
+      login: this.state.login,
+      email: this.state.email,
+      phone: this.state.phone,
+      first_name: this.state.first_name,
+      second_name: this.state.second_name,
+      display_name: this.state.display_name,
+    }, this.formData);
     this.changeFormDataState();
   }
 

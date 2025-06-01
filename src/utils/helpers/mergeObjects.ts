@@ -1,9 +1,9 @@
-interface AnyObject {
-  [key: string]: any;
+interface GenericObject {
+  [key: string]: unknown;
 }
 
-const deepMergeObjects = (...objects: any) => {
-  const deepCopyObjects: AnyObject[] = objects.map((object: AnyObject) => JSON.parse(JSON.stringify(object)));
+const deepMergeObjects = (...objects: GenericObject[]) => {
+  const deepCopyObjects: GenericObject[] = objects.map((object: GenericObject) => JSON.parse(JSON.stringify(object)));
   return deepCopyObjects.reduce((merged, current) => ({ ...merged, ...current }), {});
 };
 

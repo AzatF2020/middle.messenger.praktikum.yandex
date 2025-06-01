@@ -21,7 +21,7 @@ class EventBus {
     this._listeners[event] = this._listeners[event].filter((listener) => listener !== callback);
   }
 
-  public emit(event: string, ...args: any[]) {
+  public emit(event: string, ...args: unknown[]) {
     this._isEventExist(event);
 
     this._listeners[event].forEach((listener) => {

@@ -104,7 +104,16 @@ class RegisterForm extends Component implements IRegisterForm {
 
     if (!isValid) return;
 
-    this.authController.signup(this.state);
+    const signupData = {
+      first_name: this.state.first_name,
+      second_name: this.state.second_name,
+      login: this.state.login,
+      email: this.state.email,
+      password: this.state.password,
+      phone: this.state.phone,
+    };
+
+    this.authController.signup(signupData);
   }
 
   public validateInput(event: InputEvent) {

@@ -13,7 +13,7 @@ type ChatItemProps = {
   is_read: boolean;
   login: string;
   display_name: string | null;
-  file: Record<string, any>
+  file: Record<string, unknown>
 }
 
 class ChatItem extends Component<ChatItemProps> {

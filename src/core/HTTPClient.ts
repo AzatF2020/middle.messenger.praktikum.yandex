@@ -1,3 +1,4 @@
+import { HTTP_STATUS } from '@utils/constants/httpStatus';
 import { METHOD } from '@utils/constants/httpMethod';
 
 type Options<T = unknown> = {
@@ -26,7 +27,7 @@ class HTTPClient implements IHTTPClient {
     this.baseURL = `${import.meta.env.VITE_BACKEND_URL}${url}`;
   }
 
-  private request<T>(url: string = '', options: Options<any> = {
+  private _request<T>(url: string = '', options: Options<unknown> = {
     method: METHOD.GET,
     headers: { 'Content-Type': 'application/json' },
   }): Promise<T> {
@@ -59,7 +60,7 @@ class HTTPClient implements IHTTPClient {
 
       const onload = () => {
         const { status } = xhr;
-        (status >= 200 && status < 400) ? resolve(xhr as T) : reject(JSON.parse(xhr?.response));
+        (status >= HTTP_STATUS.OK && status < HTTP_STATUS.BadRequest) ? resolve(xhr as T) : reject(JSON.parse(xhr?.response));
       };
 
       xhr.withCredentials = withCredentials;
@@ -80,23 +81,23 @@ class HTTPClient implements IHTTPClient {
   }
 
   public get<T>(url?: string, options?: Omit<Options<unknown>, 'data'>): Promise<T> {
-    return this.request(url, { ...options, method: METHOD.GET });
+    return this._request(url, { ...options, method: METHOD.GET });
   }
 
   public post<T, S>(url: string, options?: Options<S>): Promise<T> {
-    return this.request<T>(url, { ...options, method: METHOD.POST });
+    return this._request<T>(url, { ...options, method: METHOD.POST });
   }
 
   public put<T, S>(url: string, options?: Options<S>): Promise<T> {
-    return this.request(url, { ...options, method: METHOD.PUT });
+    return this._request(url, { ...options, method: METHOD.PUT });
   }
 
   public patch<T, S>(url: string, options?: Options<S>): Promise<T> {
-    return this.request(url, { ...options, method: METHOD.PATCH });
+    return this._request(url, { ...options, method: METHOD.PATCH });
   }
 
   public delete<T, S>(url: string, options?: Options<S>): Promise<T> {
-    return this.request(url, { ...options, method: METHOD.DELETE });
+    return this._request(url, { ...options, method: METHOD.DELETE });
   }
 }
 

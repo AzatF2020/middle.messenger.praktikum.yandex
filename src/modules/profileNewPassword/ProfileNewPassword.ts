@@ -80,7 +80,10 @@ class ProfileNewPassword extends Component implements IProfileNewPassword {
     if (!isValid) return;
 
     try {
-      await this.profileController.updatePassword(this.state);
+      await this.profileController.updatePassword({
+        oldPassword: this.state.oldPassword,
+        newPassword: this.state.newPassword,
+      });
       this.props.cancelSubmit();
     } catch (error) {
       console.error(error);

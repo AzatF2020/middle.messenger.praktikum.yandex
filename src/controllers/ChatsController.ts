@@ -5,14 +5,15 @@ import type { CreateChatModel } from 'src/types/chatModels';
 import initialState from '@utils/constants/initialState';
 import decodeURI from '@utils/constants/decodeURI';
 
-const chatsAPI = new ChatsAPI();
-const wssInstance = new WSTransport(import.meta.env.VITE_BACKEND_WS);
-
 interface IChatsController {
   getChats(): void
 }
 
 class ChatsController implements IChatsController {
+  private readonly chatsAPI = new ChatsAPI();
+
+  private readonly wssInstance = new WSTransport(import.meta.env.VITE_BACKEND_WS);
+
   private openChatWithHashOnMount(chats: Array<{ id: number; title: string }>): void {
     if (PATHNAMES.MESSENGER !== window.router.currentLocation()) return;
 
@@ -29,7 +30,7 @@ class ChatsController implements IChatsController {
 
   public async getChats() {
     try {
-      const { response } = await chatsAPI.getChats() as { response: string };
+      const { response } = await this.chatsAPI.getChats() as { response: string };
 
       const parsedResponse = JSON.parse(response);
 
@@ -50,9 +51,9 @@ class ChatsController implements IChatsController {
 
   public async addUserToChat(users: number[], chatId: number) {
     try {
-      await chatsAPI.addUsersToChat({ chatId, users });
+      await this.chatsAPI.addUsersToChat({ chatId, users });
 
-      const { response: chatUsers } = await chatsAPI.getUsersChat(chatId) as { response: string };
+      const { response: chatUsers } = await this.chatsAPI.getUsersChat(chatId) as { response: string };
 
       const currentChat = window.store.getState().selectedChat as object;
 
@@ -80,9 +81,9 @@ class ChatsController implements IChatsController {
 
   public async removeUsersFromChat(users: number[], chatId: number) {
     try {
-      await chatsAPI.removeUsersFromChat({ chatId, users });
+      await this.chatsAPI.removeUsersFromChat({ chatId, users });
 
-      const { response: chatUsers } = await chatsAPI.getUsersChat(chatId) as { response: string };
+      const { response: chatUsers } = await this.chatsAPI.getUsersChat(chatId) as { response: string };
 
       const currentChat = window.store.getState().selectedChat as object;
 
@@ -110,13 +111,13 @@ class ChatsController implements IChatsController {
 
   public async createChat(createChatModel: CreateChatModel, users: number[]) {
     try {
-      const { response } = await chatsAPI.createChat(createChatModel) as { response: string };
+      const { response } = await this.chatsAPI.createChat(createChatModel) as { response: string };
 
       const chatId = JSON.parse(response).id;
 
-      await chatsAPI.addUsersToChat({ chatId, users });
+      await this.chatsAPI.addUsersToChat({ chatId, users });
 
-      const { response: responseChats } = await chatsAPI.getChats() as { response: string };
+      const { response: responseChats } = await this.chatsAPI.getChats() as { response: string };
 
       window.store.setState({ userChats: JSON.parse(responseChats), search: '' });
 
@@ -136,11 +137,11 @@ class ChatsController implements IChatsController {
     const { chatId } = window.store.getState();
 
     try {
-      await chatsAPI.deleteChat(chatId as number);
+      await this.chatsAPI.deleteChat(chatId as number);
 
       window.router.go(PATHNAMES.MESSENGER);
 
-      const { response } = await chatsAPI.getChats() as { response: string };
+      const { response } = await this.chatsAPI.getChats() as { response: string };
 
       window.store.setState({
         userChats: JSON.parse(response),
@@ -167,13 +168,13 @@ class ChatsController implements IChatsController {
   }
 
   public async sendChatMessage(content: string) {
-    wssInstance.send({ content });
+    this.wssInstance.send({ content });
 
     window.store.setState({ message: '' });
   }
 
   public async sendChatFile(content: string) {
-    wssInstance.send({ type: 'file', content });
+    this.wssInstance.send({ type: 'file', content });
   }
 
   public async openHandleChat(chatId: number) {
@@ -181,13 +182,13 @@ class ChatsController implements IChatsController {
       return;
     }
 
-    wssInstance.leave();
+    this.wssInstance.leave();
 
     try {
       window.store.setState({ isChatLoading: true });
 
-      const { response: chatUsers } = await chatsAPI.getUsersChat(chatId) as { response: string };
-      const { response: responseToken } = await chatsAPI.createChatToken(chatId) as { response: string };
+      const { response: chatUsers } = await this.chatsAPI.getUsersChat(chatId) as { response: string };
+      const { response: responseToken } = await this.chatsAPI.createChatToken(chatId) as { response: string };
 
       const state = window.store.getState() as { user: { id: number } };
       const myId = state.user.id;
@@ -205,7 +206,7 @@ class ChatsController implements IChatsController {
 
       document.title = currentChatInfo.title;
 
-      wssInstance.connectToSocket({
+      this.wssInstance.connectToSocket({
         chatId,
         userId: myId,
         token,

@@ -64,7 +64,7 @@ class Toast implements IToast {
     summary,
     detail,
     severity = 'info' as ToastSeverity,
-  }: { handleRemove: (item: any) => void,
+  }: { handleRemove: (item: string) => void,
     summary?: string,
     detail?: string,
     severity?: ToastSeverity

@@ -25,7 +25,7 @@ interface IChatMessages {
 class ChatMessages extends Component implements IChatMessages {
   public chatsController: ChatsController;
 
-  constructor(props: any) {
+  constructor(props?: Record<string, unknown>) {
     super(props);
 
     this.state = {

@@ -1,53 +1,44 @@
 import Handlebars, { HelperOptions } from 'handlebars';
 import Component from './Component';
 
-export interface ComponentConstructable<Props extends Record<string, unknown>> {
-  new (props: Props): Component;
-}
-
-const registerComponent = (
+const registerComponent = <P extends Record<string, unknown>>(
   componentName: string,
-  componentClass: ComponentConstructable<any>,
+  componentClass: any,
 ) => {
-  Handlebars.registerHelper(
-    componentName,
-    function (this: any, options: HelperOptions) {
-      if (!options.data.root?.children) {
-        options.data.root.children = {};
+  Handlebars.registerHelper(componentName, function (this: Record<string, unknown>, options: HelperOptions) {
+    if (!options.data.root?.children) {
+      options.data.root.children = {};
+    }
+
+    if (!options.data.root?.refs) {
+      options.data.root.refs = {};
+    }
+
+    Object.keys(options.hash).forEach((key: string) => {
+      if (this[key] && typeof this[key] === 'string') {
+        options.hash[key] = options.hash[key].replace(
+          new RegExp(`{{${String(key)}}}`, 'i'),
+          this[key] as string,
+        );
       }
+    });
 
-      if (!options.data.root?.refs) {
-        options.data.root.refs = {};
-      }
+    const component = new componentClass(options.hash as P);
 
-      (Object.keys(options.hash) as any).forEach(
-        (key: string | never) => {
-          if (this[key] && typeof this[key] === 'string') {
-            options.hash[key] = options.hash[key].replace(
-              new RegExp(`{{${String(key)}}}`, 'i'),
-              this[key],
-            );
-          }
-        },
-      );
+    options.data.root.children[component._id] = component;
 
-      const component = new (componentClass as any)(options.hash);
+    component.eventBus().emit(Component.EVENTS.INIT);
 
-      options.data.root.children[component._id] = component;
+    component.eventBus().emit(Component.EVENTS.FLOW_CBM);
 
-      component.eventBus().emit(Component.EVENTS.INIT);
+    component.eventBus().emit(Component.EVENTS.FLOW_CDM);
 
-      component.eventBus().emit(Component.EVENTS.FLOW_CBM);
+    component.eventBus().emit(Component.EVENTS.FLOW_CWU);
 
-      component.eventBus().emit(Component.EVENTS.FLOW_CDM);
-
-      component.eventBus().emit(Component.EVENTS.FLOW_CWU);
-
-      return `
-        <div data-id="${component._id}"></div>
-      `;
-    },
-  );
+    return `
+      <div data-id="${component._id}"></div>
+    `;
+  });
 };
 
 export default registerComponent;

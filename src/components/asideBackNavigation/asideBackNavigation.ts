@@ -3,7 +3,7 @@ import template from './template.hbs?raw';
 import './style.scss';
 
 class AsideBackNavigation extends Component {
-  constructor(props: any) {
+  constructor(props?: Record<string, unknown>) {
     super(props);
 
     this.listeners = { click: () => { window.history.back(); } };

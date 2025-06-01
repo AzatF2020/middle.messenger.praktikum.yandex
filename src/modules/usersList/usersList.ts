@@ -5,7 +5,7 @@ import template from './template.hbs?raw';
 import './style.scss';
 
 type ListItemUserProps = {
-  data: any[]
+  data: unknown[]
 }
 
 class UsersList extends Component {
@@ -26,7 +26,7 @@ class UsersList extends Component {
     };
   }
 
-  public handleOpenUserChat(value: Record<string, any>) {
+  public handleOpenUserChat(value: Record<string, string | number>) {
     return async () => {
       /* Если пользователь был выбран из списка поиска, то открываем его чат. */
       if (value.login) {
@@ -41,7 +41,7 @@ class UsersList extends Component {
         this.openCreateChatModal();
       } else {
         /* Получаем пользователя, если чат был с ним ранее создан. *ID чата */
-        await this.chatsController.openHandleChat(value.id);
+        await this.chatsController.openHandleChat(Number(value.id));
       }
     };
   }
@@ -63,7 +63,10 @@ class UsersList extends Component {
   }
 }
 
-export default connectStore(UsersList, (state) => ({
+export default connectStore(UsersList, (state: {
+  chatId?: number | null;
+  user?: { login: string };
+}) => ({
   chatId: state.chatId,
   myLogin: state.user?.login,
 }));

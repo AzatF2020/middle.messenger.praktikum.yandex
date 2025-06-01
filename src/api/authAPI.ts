@@ -2,23 +2,23 @@ import { HTTPClient } from '@core/index.ts';
 import type LoginModel from 'src/types/LoginModel';
 import type SignupModel from 'src/types/SignupModel';
 
-const http = new HTTPClient('/auth');
-
 class AuthAPI {
+  private readonly http: HTTPClient = new HTTPClient('/auth');
+
   public async login(data: LoginModel): Promise<{ status: number; }> {
-    return await http.post('/login', { data });
+    return await this.http.post('/login', { data });
   }
 
   public async signup(data: SignupModel) {
-    return await http.post('/signup', { data });
+    return await this.http.post('/signup', { data });
   }
 
   public async getUser() {
-    return await http.get('/user');
+    return await this.http.get('/user');
   }
 
   public async logout() {
-    return await http.post('/logout');
+    return await this.http.post('/logout');
   }
 }
 

@@ -13,7 +13,7 @@ type ChatMessagesListProps = {
     content: string;
     is_read: boolean;
     file: null
-    user: Record<string, any>
+    user: Record<string, unknown>
   }>;
 }
 
@@ -54,6 +54,6 @@ class ChatMessagesList extends Component {
   }
 }
 
-export default connectStore<ChatMessagesListProps>(ChatMessagesList, (state) => ({
+export default connectStore(ChatMessagesList, (state: { user?: { id: string | number }}) => ({
   myId: state.user?.id,
 }));

@@ -1,9 +1,8 @@
 import { PATHNAMES } from '@utils/constants/pagesPathnames';
 import AuthAPI from '@api/authAPI.ts';
+import { HTTP_STATUS } from '@utils/constants/httpStatus';
 import type LoginModel from 'src/types/LoginModel';
 import type SignupModel from 'src/types/SignupModel';
-
-const authAPI = new AuthAPI();
 
 interface IAuthController {
   login(data: LoginModel): void;
@@ -18,11 +17,13 @@ type TError = {
 }
 
 class AuthController implements IAuthController {
+  private readonly authAPI = new AuthAPI();
+
   public async login(data: LoginModel) {
     try {
-      const { status } = await authAPI.login(data);
+      const { status } = await this.authAPI.login(data);
 
-      if (status === 200) {
+      if (status === HTTP_STATUS.OK) {
         window.router.go(PATHNAMES.MESSENGER);
       }
     } catch (error) {
@@ -32,9 +33,9 @@ class AuthController implements IAuthController {
 
   public async signup(data: SignupModel) {
     try {
-      const { status } = await authAPI.signup(data) as { status: number };
+      const { status } = await this.authAPI.signup(data) as { status: number };
 
-      if (status === 200) {
+      if (status === HTTP_STATUS.OK) {
         window.router.go(PATHNAMES.MESSENGER);
       }
     } catch (error: unknown) {
@@ -54,7 +55,7 @@ class AuthController implements IAuthController {
     try {
       window.store.setState({ loading: true });
 
-      const result = await authAPI.getUser();
+      const result = await this.authAPI.getUser();
       const { response } = (result as { response: string });
 
       if (currentLocation === PATHNAMES.LOGIN || currentLocation === PATHNAMES.SIGN_UP) {

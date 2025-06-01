@@ -84,7 +84,10 @@ class LoginForm extends Component implements ILoginForm {
 
     if (!isValid) return;
 
-    this.authController.login(this.state);
+    this.authController.login({
+      login: this.state.login,
+      password: this.state.password,
+    });
   }
 
   public validateInput(event: InputEvent) {

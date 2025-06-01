@@ -17,13 +17,13 @@ class Component<P = any> {
 
   private _element: HTMLElement | null = null;
 
-  private _weakSet: WeakSet<any>;
+  private _weakSet: WeakSet<object>;
 
   protected readonly props: P;
 
   protected listeners: {};
 
-  protected state: any = {};
+  protected state: Record<string, any> = {};
 
   protected children: Record<string, Component>;
 
@@ -40,7 +40,7 @@ class Component<P = any> {
 
     this.props = this._makePropsProxy({ ...props, __id: this._id }) as P;
 
-    this.state = this._makePropsProxy(this.state);
+    this.state = this._makePropsProxy(this.state) as Record<string, any>;
 
     this.eventBus = () => eventBus;
 

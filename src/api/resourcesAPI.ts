@@ -1,10 +1,10 @@
 import { HTTPClient } from '@core/index.ts';
 
-const http = new HTTPClient('/resources');
-
 class ResourcesAPI {
+  private readonly http: HTTPClient = new HTTPClient('/resources');
+
   public async uploadFile(data: FormData) {
-    return await http.post('', { data });
+    return await this.http.post('', { data });
   }
 }
 
