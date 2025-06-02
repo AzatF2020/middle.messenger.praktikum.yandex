@@ -1,0 +1,54 @@
+@use "@styles/utilities";
+
+.modal-chat-info {
+  &__inner {
+    width: 40rem;
+  }
+
+  &__title {
+    margin-top: 0 !important;
+    margin-bottom: 2rem;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    column-gap: 2rem;
+  }
+
+  &__header > .avatar {
+    background-color: utilities.$gray-100;
+    margin: 0;
+    width: 8rem;
+    height: 8rem;
+  }
+
+  &__header-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: .5rem;
+  }
+
+  &__line {
+    width: 100%;
+    border: 0;
+    border-top: utilities.$gray-100 .1rem solid;
+    margin-block: 2rem;
+  }
+
+  &__content-list {
+    padding: 0;
+    margin: 0;
+    max-height: 400px;
+    overflow: hidden auto;
+  }
+
+  &__content-title {
+    margin-bottom: 2rem;
+  }
+
+  &__content-list > .list-item-user__chat-user  {
+    cursor: default;
+  }
+}

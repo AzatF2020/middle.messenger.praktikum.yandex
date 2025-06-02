@@ -8,6 +8,9 @@ interface IPopupOptions {
 
 type PopupProps = {
   openAddUserModal(): void;
+
+  openDeleteGroupModal(): void;
+
   openDeleteUserModal(): void;
 };
 
@@ -30,6 +33,9 @@ class PopupOptions extends Component implements IPopupOptions {
 
   public togglePopup(event: Event) {
     const popupWrapper = document.querySelector('.popup-options');
+
+    if (!popupWrapper) return;
+
     const popup = popupWrapper!.querySelector('.popup');
     const button = popupWrapper!.querySelector(
       '.popup-options__button-more',

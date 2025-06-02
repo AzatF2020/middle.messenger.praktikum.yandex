@@ -1,0 +1,11 @@
+.chat-messages-list {
+  width: 100%;
+  max-width: 100rem;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+  height: calc(100svh - 12rem);
+  height: calc(100vh - 12rem);
+  overflow: hidden auto;
+  display: flex;
+  flex-direction: column-reverse;
+}

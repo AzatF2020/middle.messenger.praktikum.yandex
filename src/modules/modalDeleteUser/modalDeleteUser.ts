@@ -1,36 +1,62 @@
-import Component from '@core/Component';
+import { connectStore, Component } from '@core/index';
+import ChatsController from '@controllers/ChatsController';
 import template from './template.hbs?raw';
 import './style.scss';
 
 interface IModalDeleteUser {
-    closeByOverlay(event: Event): void;
-    handleInputChange(event: Event): void;
+  handleCloseModal(event: Event): void;
+
+  closeByOverlay(event: Event): void;
+
+  onSubmit(event: Event): void;
 }
 
-type ModalDeleteUserProps = {
-    handleCloseModal: (event: Event) => void;
-    isActive: boolean;
+type ModalAddUserProps = {
+  handleCloseModal?: (event: Event) => void;
+
+  isActive?: boolean;
 };
 
 class ModalDeleteUser extends Component implements IModalDeleteUser {
-  constructor(props: ModalDeleteUserProps) {
+  public handleCloseModal!: (event: Event) => void;
+
+  public chatsController: ChatsController;
+
+  constructor(props: ModalAddUserProps) {
     super(props);
 
-    this.state = { login: '' };
+    this.state = { selectedUsers: [] };
+
+    this.chatsController = new ChatsController();
 
     this.listeners = {
       click: this.closeByOverlay.bind(this),
-      handleInputChange: this.handleInputChange.bind(this),
+      onSubmit: this.onSubmit.bind(this),
     };
   }
 
-  public handleInputChange(event: Event) {
-    const { name, value } = event.target as HTMLInputElement;
+  public async onSubmit(event: Event) {
+    event.preventDefault();
 
-    this.setState({
-      ...this.state,
-      [name]: value,
-    });
+    const form = (event.currentTarget as HTMLButtonElement).closest('form')!;
+
+    const formData = new FormData(form);
+
+    const selectedUsers = [...formData.entries()].reduce((acc: number[], [name, value]:
+      [string, FormDataEntryValue]) => {
+      if (name !== 'search' && typeof value === 'string') { acc.push(Number(value)); }
+      return acc;
+    }, []);
+
+    this.setState({ ...this.state, selectedUsers });
+
+    try {
+      await this.chatsController.removeUsersFromChat(selectedUsers, this.props.chatId);
+    } catch (error) {
+      console.warn(error);
+    } finally {
+      this.props.handleCloseModal(event);
+    }
   }
 
   public closeByOverlay(event: Event) {
@@ -48,4 +74,8 @@ class ModalDeleteUser extends Component implements IModalDeleteUser {
   }
 }
 
-export default ModalDeleteUser;
+export default connectStore(ModalDeleteUser, (state) => ({
+  selectedChat: state.selectedChat,
+  chatId: state.chatId,
+  me: state.user,
+}));

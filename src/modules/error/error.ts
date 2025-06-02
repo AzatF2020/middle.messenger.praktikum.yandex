@@ -3,8 +3,8 @@ import template from './template.hbs?raw';
 import './style.scss';
 
 type ErrorProps = {
-    readonly title?: string;
-    readonly text?: string;
+  readonly title?: string;
+  readonly text?: string;
 };
 
 class Error extends Component {

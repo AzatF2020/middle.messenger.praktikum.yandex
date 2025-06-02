@@ -1,5 +1,7 @@
 import './styles/style.scss';
-import { render, registerComponent, Component } from '@core/index';
+import { Router, registerComponent } from '@core/index';
+import { PATHNAMES } from '@utils/constants/pagesPathnames';
+import initialState from '@utils/constants/initialState';
 import conditionalsHelper from '@utils/helpers/handlebarsHelpers';
 import components from '@components/index';
 import modules from '@modules/index';
@@ -9,21 +11,9 @@ import RegisterPage from '@pages/register/register';
 import NotFound from '@pages/notFound/notFound';
 import Chats from '@pages/chats/chats';
 import Profile from '@pages/profile/profile';
-import ProfileEdit from '@pages/profileEdit/profileEdit';
-import ProfileNewPassword from '@pages/profileNewPassword/profileNewPassword';
-import Index from '@pages/index/index';
 import ServerError from '@pages/serverError/serverError';
-
-const pages: Record<string, typeof Component> = {
-  login: LoginPage,
-  register: RegisterPage,
-  chats: Chats,
-  profile: Profile,
-  'profile-change-data': ProfileEdit,
-  'profile-new-password': ProfileNewPassword,
-  'not-found': NotFound,
-  'server-error': ServerError,
-};
+import Store from '@core/Store';
+import Toast from '@utils/classes/Toast';
 
 conditionalsHelper();
 
@@ -33,9 +23,17 @@ Object.entries(Object.assign(components, modules)).forEach(
   },
 );
 
-document.addEventListener('DOMContentLoaded', () => {
-  const componentByLocation = pages[window.location.pathname.slice(1)];
-  !componentByLocation
-    ? render(new Index())
-    : render(new componentByLocation());
-});
+window.router = new Router();
+
+window.toast = new Toast({});
+
+window.store = new Store(initialState());
+
+window.router
+  .use(PATHNAMES.LOGIN, LoginPage)
+  .use(PATHNAMES.SIGN_UP, RegisterPage)
+  .use(PATHNAMES.MESSENGER, Chats)
+  .use(PATHNAMES.PROFILE, Profile)
+  .use(PATHNAMES.NOT_FOUND, NotFound)
+  .use(PATHNAMES.SERVER_ERROR, ServerError)
+  .start();

@@ -3,9 +3,9 @@ import template from './template.hbs?raw';
 import './style.scss';
 
 interface AvatarProps {
-    setImg: () => void;
-    imgSrc?: string;
-    readonly?: boolean;
+  setImg: () => void;
+  imgSrc?: string;
+  readonly?: boolean;
 }
 
 class Avatar extends Component {

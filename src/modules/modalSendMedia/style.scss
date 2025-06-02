@@ -1,0 +1,97 @@
+@use '@styles/utilities';
+
+.modal-send-media {
+  &__title {
+    text-align: left;
+    margin-bottom: 1.6rem;
+  }
+
+  &__form {
+    width: 30rem;
+  }
+
+  &__media-wrapper {
+    padding: 0;
+    margin-bottom: 1.6rem;
+    background-color: utilities.$gray-50;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    height: 30rem;
+  }
+
+  &__media-wrapper-label {
+    position: relative;
+    width: 100%;
+    height: 30rem;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: .1rem dashed utilities.$blue-500;
+  }
+
+  &__media-settings {
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: utilities.$gray-100;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1;
+  }
+
+  &__media-settings-delete-button {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    cursor: pointer;
+  }
+
+  &__media-settings-delete-button img {
+    width: 1.8rem;
+    height: auto;
+  }
+
+  &__media-resource {
+    width: 100%;
+    object-fit: contain;
+    height: auto;
+    max-height: 30rem;
+  }
+
+  &__media-wrapper-input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  &__footer {
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    column-gap: 1rem;
+  }
+
+  &__footer > button {
+    flex: 1;
+    padding: 1rem;
+  }
+
+  &__button-reset {
+    background-color: #{utilities.$red-500};
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: #{utilities.$red-600};
+      }
+    }
+  }
+
+  .--is-hidden {
+    display: none;
+  }
+}

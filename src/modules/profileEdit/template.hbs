@@ -1,174 +1,207 @@
 <section class="profile-edit">
-    {{{AsideBackNavigation}}}
-    <form class="container--centered profile-edit__form">
-        <fieldset class="profile-edit__form-header">
-            {{{Avatar setImg=setAvatarImg imgSrc=avatar}}}
-            <h1 class="text-3 profile-edit__form-header-title">
-                {{display_name}}
-            </h1>
-        </fieldset>
-        <fieldset class="profile-edit__form-list-group">
-            <ul class="profile-edit__form-list">
-                <li class="profile-edit__form-item">
-                    <div class="profile-edit__form-item-wrapper">
-                        <label
-                            class="text-4 profile-edit__form-item-label"
-                            for="email"
-                        >
-                            Почта
-                        </label>
-                        {{{Input
-                            onBlur=handleInputBlur
-                            onChange=handleInputChange
-                            value=email
-                            class="text-4 profile-edit__form-item-input"
-                            name="email"
-                            id="email"
-                            type="email"
-                        }}}
-                    </div>
-                    {{#if errors.email.length}}
-                        <div class="error-feedback">
-                            {{#each errors.email}}
-                                <span>{{this}}</span>
-                            {{/each}}
-                        </div>
-                    {{/if}}
-                </li>
-                <li class="profile-edit__form-item">
-                    <div class="profile-edit__form-item-wrapper">
-                        <label
-                            class="text-4 profile-edit__form-item-label"
-                            for="login"
-                        >
-                            Логин
-                        </label>
-                        {{{Input
-                            onBlur=handleInputBlur
-                            onChange=handleInputChange
-                            value=login
-                            class="text-4 profile-edit__form-item-input"
-                            name="login"
-                            id="login"
-                        }}}
-                    </div>
-                    {{#if errors.login.length}}
-                        <div class="error-feedback">
-                            {{#each errors.login}}
-                                <span>{{this}}</span>
-                            {{/each}}
-                        </div>
-                    {{/if}}
-                </li>
-                <li class="profile-edit__form-item">
-                    <div class="profile-edit__form-item-wrapper">
-                        <label
-                            class="text-4 profile-edit__form-item-label"
-                            for="first_name"
-                        >
-                            Имя
-                        </label>
-                        {{{Input
-                            onBlur=handleInputBlur
-                            onChange=handleInputChange
-                            value=first_name
-                            class="text-4 profile-edit__form-item-input"
-                            name="first_name"
-                            id="first_name"
-                        }}}
-                    </div>
-                    {{#if errors.first_name.length}}
-                        <div class="error-feedback">
-                            {{#each errors.first_name}}
-                                <span>{{this}}</span>
-                            {{/each}}
-                        </div>
-                    {{/if}}
-                </li>
-                <li class="profile-edit__form-item">
-                    <div class="profile-edit__form-item-wrapper">
-                        <label
-                            class="text-4 profile-edit__form-item-label"
-                            for="second_name"
-                        >
-                            Фамилия
-                        </label>
-                        {{{Input
-                            onBlur=handleInputBlur
-                            onChange=handleInputChange
-                            value=second_name
-                            class="text-4 profile-edit__form-item-input"
-                            name="second_name"
-                            id="second_name"
-                        }}}
-                    </div>
-                    {{#if errors.second_name.length}}
-                        <div class="error-feedback">
-                            {{#each errors.second_name}}
-                                <span>{{this}}</span>
-                            {{/each}}
-                        </div>
-                    {{/if}}
-                </li>
-                <li class="profile-edit__form-item">
-                    <div class="profile-edit__form-item-wrapper">
-                        <label
-                            class="text-4 profile-edit__form-item-label"
-                            for="display_name"
-                        >
-                            Имя в чате
-                        </label>
-                        {{{Input
-                            onBlur=handleInputBlur
-                            onChange=handleInputChange
-                            value=display_name
-                            class="text-4 profile-edit__form-item-input"
-                            name="display_name"
-                            id="display_name"
-                        }}}
-                    </div>
-                    {{#if errors.display_name.length}}
-                        <div class="error-feedback">
-                            {{#each errors.display_name}}
-                                <span>{{this}}</span>
-                            {{/each}}
-                        </div>
-                    {{/if}}
-                </li>
-                <li class="profile-edit__form-item">
-                    <div class="profile-edit__form-item-wrapper">
-                        <label
-                            class="text-4 profile-edit__form-item-label"
-                            for="phone"
-                        >
-                            Телефон
-                        </label>
-                        {{{Input
-                            onBlur=handleInputBlur
-                            onChange=handleInputChange
-                            value=phone
-                            class="text-4 profile-edit__form-item-input"
-                            name="phone"
-                            id="phone"
-                            type="phone"
-                        }}}
-                    </div>
-                    {{#if errors.phone.length}}
-                        <div class="error-feedback">
-                            {{#each errors.phone}}
-                                <span>{{this}}</span>
-                            {{/each}}
-                        </div>
-                    {{/if}}
-                </li>
-            </ul>
-        </fieldset>
-        {{{Button
-            class="button button-primary profile-edit__form-item-button"
-            label="Сохранить"
-            type="submit"
-            onClick=onSubmit
-            disabled=isButtonDisabled
-        }}}
-    </form>
+  {{{AsideBackNavigation}}}
+  <form class="container--centered profile-edit__form {{#if isPasswordChangedFlag}}hidden{{/if}}">
+    <fieldset class="profile-edit__form-header">
+      {{{Avatar readonly=isFormReadonly setImg=setAvatarImg imgSrc=avatar}}}
+      {{#if display_name}}
+      <h1 class="text-3 profile-edit__form-header-title">
+        {{display_name}}
+      </h1>
+      {{/if}}
+    </fieldset>
+    <fieldset class="profile-edit__form-list-group">
+      <ul class="profile-edit__form-list">
+        <li class="profile-edit__form-item">
+          <div class="profile-edit__form-item-wrapper">
+            <label class="text-4 profile-edit__form-item-label" for="email">
+              Почта
+            </label>
+            {{{Input
+              onBlur=handleInputBlur
+              onChange=handleInputChange
+              value=email
+              class="text-4 profile-edit__form-item-input"
+              name="email"
+              id="email"
+              type="email"
+              readonly=isFormReadonly
+            }}}
+          </div>
+          {{#if errors.email.length}}
+          <div class="error-feedback">
+            {{#each errors.email}}
+            <span>{{this}}</span>
+            {{/each}}
+          </div>
+          {{/if}}
+        </li>
+        <li class="profile-edit__form-item">
+          <div class="profile-edit__form-item-wrapper">
+            <label class="text-4 profile-edit__form-item-label" for="login">
+              Логин
+            </label>
+            {{{Input
+              onBlur=handleInputBlur
+              onChange=handleInputChange
+              value=login
+              class="text-4 profile-edit__form-item-input"
+              name="login"
+              id="login"
+              readonly=isFormReadonly
+            }}}
+          </div>
+          {{#if errors.login.length}}
+          <div class="error-feedback">
+            {{#each errors.login}}
+            <span>{{this}}</span>
+            {{/each}}
+          </div>
+          {{/if}}
+        </li>
+        <li class="profile-edit__form-item">
+          <div class="profile-edit__form-item-wrapper">
+            <label class="text-4 profile-edit__form-item-label" for="first_name">
+              Имя
+            </label>
+            {{{Input
+              onBlur=handleInputBlur
+              onChange=handleInputChange
+              value=first_name
+              class="text-4 profile-edit__form-item-input"
+              name="first_name"
+              id="first_name"
+              readonly=isFormReadonly
+            }}}
+          </div>
+          {{#if errors.first_name.length}}
+          <div class="error-feedback">
+            {{#each errors.first_name}}
+            <span>{{this}}</span>
+            {{/each}}
+          </div>
+          {{/if}}
+        </li>
+        <li class="profile-edit__form-item">
+          <div class="profile-edit__form-item-wrapper">
+            <label class="text-4 profile-edit__form-item-label" for="second_name">
+              Фамилия
+            </label>
+            {{{Input
+              onBlur=handleInputBlur
+              onChange=handleInputChange
+              value=second_name
+              class="text-4 profile-edit__form-item-input"
+              name="second_name"
+              id="second_name"
+              readonly=isFormReadonly
+            }}}
+          </div>
+          {{#if errors.second_name.length}}
+          <div class="error-feedback">
+            {{#each errors.second_name}}
+            <span>{{this}}</span>
+            {{/each}}
+          </div>
+          {{/if}}
+        </li>
+        <li class="profile-edit__form-item">
+          <div class="profile-edit__form-item-wrapper">
+            <label class="text-4 profile-edit__form-item-label" for="display_name">
+              Имя в чате
+            </label>
+            {{{Input
+              onBlur=handleInputBlur
+              onChange=handleInputChange
+              value=display_name
+              class="text-4 profile-edit__form-item-input"
+              name="display_name"
+              id="display_name"
+              readonly=isFormReadonly
+            }}}
+          </div>
+          {{#if errors.display_name.length}}
+          <div class="error-feedback">
+            {{#each errors.display_name}}
+            <span>{{this}}</span>
+            {{/each}}
+          </div>
+          {{/if}}
+        </li>
+        <li class="profile-edit__form-item">
+          <div class="profile-edit__form-item-wrapper">
+            <label class="text-4 profile-edit__form-item-label" for="phone">
+              Телефон
+            </label>
+            {{{Input
+              onBlur=handleInputBlur
+              onChange=handleInputChange
+              value=phone
+              class="text-4 profile-edit__form-item-input"
+              name="phone"
+              id="phone"
+              type="phone"
+              readonly=isFormReadonly
+            }}}
+          </div>
+          {{#if errors.phone.length}}
+          <div class="error-feedback">
+            {{#each errors.phone}}
+            <span>{{this}}</span>
+            {{/each}}
+          </div>
+          {{/if}}
+        </li>
+      </ul>
+
+      <ul class="profile-edit__form-list {{#unless isFormReadonly}}hidden{{/unless}}">
+        <li class="profile-edit__form-item-option">
+          {{{ Button
+            onClick=changeFormDataState
+            type="button"
+            class="text-4 link profile-edit__form-submit"
+            label="Изменить данные"
+          }}}
+        </li>
+          <li class="profile-edit__form-item-option">
+            {{{ Button
+              onClick=showChangePasswordForm
+              type="button"
+              class="text-4 link profile-edit__form-password-link"
+              label="Изменить пароль"
+            }}}
+          </li>
+          <li class="profile-edit__form-item-option">
+            {{{ Button
+              onClick=logout
+              type="button"
+              class="text-4 link profile-edit__form-logout-link"
+              label="Выйти"
+            }}}
+          </li>
+      </ul>
+    </fieldset>
+
+    <div class="profile-edit__form-options {{#if isFormReadonly}}hidden{{/if}}">
+      {{{Button
+        onClick=cancelSubmit
+        type="button"
+        class="link"
+        label="Отменить"
+      }}}
+      {{{Button
+        class="button button-primary profile-edit__form-item-button"
+        label="Сохранить"
+        type="submit"
+        onClick=onSubmit
+        disabled=isButtonDisabled
+      }}}
+    </div>
+  </form>
+
+  <div class="{{#unless isPasswordChangedFlag}}hidden{{/unless}}">
+    {{{ ProfileNewPassword
+      avatar=avatar
+      cancelSubmit=cancelPasswordChange
+    }}}
+  </div>
 </section>

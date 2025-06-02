@@ -3,13 +3,14 @@ import template from './template.hbs?raw';
 import './style.scss';
 
 interface ButtonProps {
-    onClick: () => void;
-    label?: string;
-    disabled?: boolean;
-    class?: string;
-    type?: 'button' | 'submit' | 'reset';
-    title?: string;
-    imgSource?: string;
+  onClick: () => void;
+  label?: string;
+  disabled?: boolean;
+  class?: string;
+  type?: 'button' | 'submit' | 'reset';
+  title?: string;
+  imgSource?: string;
+  loading?: string;
 }
 
 class Button extends Component {

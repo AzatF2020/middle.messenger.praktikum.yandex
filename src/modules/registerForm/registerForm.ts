@@ -1,5 +1,4 @@
-import Component from '@core/Component';
-import FormValidator from '@utils/helpers/FormValidator';
+import { FormValidator, Component } from '@core/index';
 import {
   isEmail,
   maxLength,
@@ -12,13 +11,14 @@ import {
   excludeNumbers,
   onlyNumbers,
 } from '@utils/constants/validationRules';
+import AuthController from '@controllers/AuthController';
 import template from './template.hbs?raw';
 import './style.scss';
 
 interface IRegisterForm {
-    handleInputChange(event: Event): void;
-    validateInput(event: InputEvent): void;
-    onSubmit(event: Event): void;
+  handleInputChange(event: Event): void;
+  validateInput(event: InputEvent): void;
+  onSubmit(event: Event): void;
 }
 
 const validation = new FormValidator({
@@ -56,8 +56,12 @@ const validation = new FormValidator({
 });
 
 class RegisterForm extends Component implements IRegisterForm {
+  public authController: AuthController;
+
   constructor() {
     super();
+
+    this.authController = new AuthController();
 
     this.state = {
       email: '',
@@ -74,6 +78,7 @@ class RegisterForm extends Component implements IRegisterForm {
       handleInputBlur: this.validateInput.bind(this),
       handleInputChange: this.handleInputChange.bind(this),
       onSubmit: this.onSubmit.bind(this),
+      goToLogin: () => { window.router.go('/'); },
     };
   }
 
@@ -88,17 +93,27 @@ class RegisterForm extends Component implements IRegisterForm {
 
   public onSubmit(event: Event) {
     event.preventDefault();
-    console.log(this.state);
 
     const isValid = validation.validate();
 
     this.setState({
       ...this.state,
-      isButtonDisabled: isValid,
+      isButtonDisabled: !isValid,
       errors: validation.errors,
     });
 
     if (!isValid) return;
+
+    const signupData = {
+      first_name: this.state.first_name,
+      second_name: this.state.second_name,
+      login: this.state.login,
+      email: this.state.email,
+      password: this.state.password,
+      phone: this.state.phone,
+    };
+
+    this.authController.signup(signupData);
   }
 
   public validateInput(event: InputEvent) {

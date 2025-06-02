@@ -1,9 +1,5 @@
 class EventBus {
-  private _listeners: Record<string, Function[]>;
-
-  constructor() {
-    this._listeners = {};
-  }
+  private _listeners: Record<string, Function[]> = {};
 
   private _isEventExist(event: string) {
     if (!this._listeners[event]) {
@@ -25,12 +21,16 @@ class EventBus {
     this._listeners[event] = this._listeners[event].filter((listener) => listener !== callback);
   }
 
-  public emit(event: string, ...args: any[]) {
+  public emit(event: string, ...args: unknown[]) {
     this._isEventExist(event);
 
     this._listeners[event].forEach((listener) => {
       listener(...args);
     });
+  }
+
+  public getListeners() {
+    return this._listeners;
   }
 }
 

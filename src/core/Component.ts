@@ -6,6 +6,7 @@ import EventBus from './EventBus';
 class Component<P = any> {
   static EVENTS = {
     INIT: 'INIT',
+    FLOW_CBM: 'flow:component_before_mount',
     FLOW_CDM: 'flow:component_did_mount',
     FLOW_CDU: 'flow:component_did_update',
     FLOW_CWU: 'flow:component_will_unmount',
@@ -16,17 +17,17 @@ class Component<P = any> {
 
   private _element: HTMLElement | null = null;
 
-  private _weakSet: WeakSet<any>;
-
-  _id: string;
+  private _weakSet: WeakSet<object>;
 
   protected readonly props: P;
 
   protected listeners: {};
 
-  protected state: any = {};
+  protected state: Record<string, any> = {};
 
   protected children: Record<string, Component>;
+
+  _id: string;
 
   constructor(props?: P) {
     const eventBus = new EventBus();
@@ -38,7 +39,8 @@ class Component<P = any> {
     this.listeners = {};
 
     this.props = this._makePropsProxy({ ...props, __id: this._id }) as P;
-    this.state = this._makePropsProxy(this.state);
+
+    this.state = this._makePropsProxy(this.state) as Record<string, any>;
 
     this.eventBus = () => eventBus;
 
@@ -47,6 +49,10 @@ class Component<P = any> {
 
   private _registerEvents(eventBus: EventBus) {
     eventBus.on(Component.EVENTS.INIT, this._init.bind(this));
+    eventBus.on(
+      Component.EVENTS.FLOW_CBM,
+      this._componentBeforeMount.bind(this),
+    );
     eventBus.on(
       Component.EVENTS.FLOW_CDM,
       this._componentDidMount.bind(this),
@@ -100,7 +106,7 @@ class Component<P = any> {
       if (!callback) return;
 
       this._element!.addEventListener(event, (evt: Event) => {
-        evt.stopImmediatePropagation();
+        evt.stopPropagation();
         (callback as Function)(evt);
       });
     });
@@ -111,7 +117,7 @@ class Component<P = any> {
       if (!callback) return;
 
       this._element!.removeEventListener(event, (evt: Event) => {
-        evt.stopImmediatePropagation();
+        evt.stopPropagation();
         (callback as Function)(evt);
       });
     });
@@ -121,9 +127,9 @@ class Component<P = any> {
     const fragment = document.createElement('template');
 
     const template = Handlebars.compile(this.render())({
+      ...this.listeners,
       ...this.props,
       ...this.state,
-      ...this.listeners,
       children: this.children,
     });
 
@@ -141,7 +147,7 @@ class Component<P = any> {
         element.innerHTML = stubInnerHTML;
       }
 
-            stub!.replaceWith(element);
+      stub!.replaceWith(element);
     });
 
     return fragment.content;
@@ -153,25 +159,35 @@ class Component<P = any> {
     this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+  public componentDidUpdate(_oldProps: P, _newProps: P) {}
+
   private _componentDidUpdate(oldProps: P, newProps: P) {
     this.componentDidUpdate(oldProps, newProps);
     this._render();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-  public componentDidUpdate(_oldProps: P, _newProps: P) {}
+  public componentBeforeMount() {}
 
-  private _componentDidMount() {
-    tick(() => this.componentDidMount());
+  private _componentBeforeMount() {
+    this.componentBeforeMount();
   }
 
   public componentDidMount() {}
 
-  private _componentWillUnmount() {
-    tick(() => this.componentWillUnmount());
+  private _componentDidMount() {
+    tick(() => {
+      this.componentDidMount();
+    });
   }
 
   public componentWillUnmount() {}
+
+  private _componentWillUnmount() {
+    tick(() => {
+      this.componentWillUnmount();
+    });
+  }
 
   public setState = (nextState: P) => {
     if (!nextState) return;

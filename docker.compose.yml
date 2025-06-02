@@ -1,0 +1,22 @@
+services:
+  frontend:
+    container_name: frontend
+    image: "frontend.messenger"
+    networks:
+      - frontend
+    ports:
+      - 80:80
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+    volumes:
+      - ./:/app
+      - /app/dist
+    env_file:
+      - path: '.env'
+    tty: true
+
+networks:
+  frontend:
+    driver: bridge

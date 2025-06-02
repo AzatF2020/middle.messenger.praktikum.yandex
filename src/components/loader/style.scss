@@ -1,0 +1,22 @@
+@use '@styles/utilities';
+
+.loader {
+  width: 2.6rem;
+  height: 2.6rem;
+  border: .3rem solid utilities.$blue-600;
+  border-bottom-color: transparent !important;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

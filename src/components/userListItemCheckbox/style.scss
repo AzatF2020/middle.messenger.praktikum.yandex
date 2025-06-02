@@ -1,0 +1,75 @@
+@use "@styles/utilities";
+
+.list-item-user-checkbox {
+  box-shadow: none;
+  border: none;
+  width: 100%;
+  list-style-type: none;
+  padding: 1.2rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  column-gap: 1rem;
+  position: relative;
+  border-radius: utilities.$rounded-2;
+  margin-block: .6rem;
+  background-color: transparent;
+  cursor: pointer;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: utilities.$blue-50;
+    }
+  }
+
+  &__input-checkbox {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    opacity: 0;
+  }
+
+  &:has(&__input-checkbox:checked) {
+    background-color: utilities.$blue-200 !important;
+  }
+
+  &__chat-user-image-plug {
+    display: block;
+    min-width: 4.7rem;
+    height: 4.7rem;
+    background-color: utilities.$gray-100;
+    border-radius: utilities.$rounded-6;
+  }
+
+  &__chat-user-info {
+    width: 100%;
+  }
+
+  &__chat-user-name {
+    font-size: utilities.$text-4;
+    font-weight: 600;
+    color: utilities.$black-900;
+    text-decoration: none;
+  }
+
+  &__chat-user-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: inherit;
+    margin-bottom: .4rem;
+  }
+
+    &__chat-user-role {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: utilities.$gray-400;
+  }
+}

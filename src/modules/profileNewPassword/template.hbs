@@ -1,71 +1,73 @@
-<section class="profile-new-password">
-    {{{AsideBackNavigation}}}
-    <form class="container--centered profile-new-password__form">
-        <fieldset class="profile-new-password__form-header">
-            {{{Avatar readonly=true}}}
-        </fieldset>
-        <fieldset class="profile-new-password__form-list-group">
-            <ul class="profile-new-password__form-list">
-                <li class="profile-new-password__form-item">
-                    <div class="profile-new-password__form-item-wrapper">
-                        <label
-                            class="text-4 profile-new-password__form-item-label"
-                            for="oldPassword"
-                        >
-                            Старый пароль
-                        </label>
-                        {{{Input
-                            onChange=handleChangeInput
-                            onBlur=handleInputBlur
-                            class="text-4 profile-new-password__form-item-input"
-                            name="oldPassword"
-                            value=oldPassword
-                            id="oldPassword"
-                            type="password"
-                        }}}
-                    </div>
-                    {{#if errors.oldPassword.length}}
-                        <div class="error-feedback">
-                            {{#each errors.oldPassword}}
-                                <span>{{this}}</span>
-                            {{/each}}
-                        </div>
-                    {{/if}}
-                </li>
-                <li class="profile-new-password__form-item">
-                    <div class="profile-new-password__form-item-wrapper">
-                        <label
-                            class="text-4 profile-new-password__form-item-label"
-                            for="newPassword"
-                        >
-                            Новый пароль
-                        </label>
-                        {{{Input
-                            onChange=handleChangeInput
-                            onBlur=handleInputBlur
-                            class="text-4 profile-new-password__form-item-input"
-                            name="newPassword"
-                            value=newPassword
-                            id="newPassword"
-                            type="password"
-                        }}}
-                    </div>
-                    {{#if errors.newPassword.length}}
-                        <div class="error-feedback">
-                            {{#each errors.newPassword}}
-                                <span>{{this}}</span>
-                            {{/each}}
-                        </div>
-                    {{/if}}
-                </li>
-            </ul>
-        </fieldset>
-        {{{Button
-            onClick=onSubmit
-            class="button profile-new-password__form-item-button"
-            type="submit"
-            disabled=isButtonDisabled
-            label="Сохранить"
-        }}}
-    </form>
-</section>
+<form class="container--centered profile-new-password profile-new-password__form">
+  <fieldset class="profile-new-password__form-header">
+    {{{Avatar imgSrc=avatar readonly=true}}}
+  </fieldset>
+  <fieldset class="profile-new-password__form-list-group">
+    <ul class="profile-new-password__form-list">
+      <li class="profile-new-password__form-item">
+        <div class="profile-new-password__form-item-wrapper">
+          <label class="text-4 profile-new-password__form-item-label" for="oldPassword">
+            Старый пароль
+          </label>
+          {{{ Input
+            onChange=handleChangeInput
+            onBlur=handleInputBlur
+            class="text-4 profile-new-password__form-item-input"
+            name="oldPassword"
+            value=oldPassword
+            placeholder="Введите старый пароль"
+            id="oldPassword"
+            type="password"
+          }}}
+        </div>
+        {{#if errors.oldPassword.length}}
+        <div class="error-feedback">
+          {{#each errors.oldPassword}}
+          <span>{{this}}</span>
+          {{/each}}
+        </div>
+        {{/if}}
+      </li>
+      <li class="profile-new-password__form-item">
+        <div class="profile-new-password__form-item-wrapper">
+          <label class="text-4 profile-new-password__form-item-label" for="newPassword">
+            Новый пароль
+          </label>
+          {{{ Input
+            onChange=handleChangeInput
+            onBlur=handleInputBlur
+            class="text-4 profile-new-password__form-item-input"
+            name="newPassword"
+            value=newPassword
+            placeholder="Введите новый пароль"
+            id="newPassword"
+            type="password"
+          }}}
+        </div>
+        {{#if errors.newPassword.length}}
+        <div class="error-feedback">
+          {{#each errors.newPassword}}
+          <span>{{this}}</span>
+          {{/each}}
+        </div>
+        {{/if}}
+      </li>
+    </ul>
+  </fieldset>
+
+  <div class="profile-new-password__form-options">
+    {{{Button
+      onClick=cancelSubmit
+      type="button"
+      class="link"
+      label="Отменить"
+    }}}
+    {{{ Button
+      onClick=onSubmit
+      class="button profile-new-password__form-item-button"
+      type="submit"
+      disabled=isButtonDisabled
+      label="Сохранить"
+    }}}
+  </div>
+</form>

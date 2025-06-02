@@ -1,0 +1,27 @@
+<label name="{{login}}" class="list-item-user-checkbox">
+  {{{Input
+    type="checkbox"
+    name=login
+    value=id
+    class="list-item-user-checkbox__input-checkbox"
+  }}}
+  {{#if avatar}}
+    <img src="{{ @root.storage }}{{ avatar }}" alt="avatar" class="list-item-user-checkbox__chat-user-image-plug"/>
+  {{else}}
+    <div class="list-item-user-checkbox__chat-user-image-plug"></div>
+  {{/if}}
+  <div class="list-item-user-checkbox__chat-user-info">
+    <div class="list-item-user-checkbox__chat-user-header">
+      <strong>
+        {{#if login}}
+        <span class="list-item-user-checkbox__chat-user-name">
+          {{ login }}
+        </span>
+        {{/if}}
+      </strong>
+      {{#if role}}
+        <span class="list-item-user-checkbox__chat-user-role">{{ role }}</span>
+      {{/if }}
+    </div>
+  </div>
+</label>

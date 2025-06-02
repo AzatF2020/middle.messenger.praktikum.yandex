@@ -1,0 +1,40 @@
+<div class="modal modal-chat-info {{#if isActive}} modal--active {{/if}}" id="modal-chat-info">
+  <div class="modal__wrapper modal-chat-info__inner">
+    {{{ Button
+      onClick=handleCloseModal
+      imgSource="/icons/close.svg"
+      class="modal__close-button"
+      title="Закрыть"
+    }}}
+    <h2 class="heading-6 modal-chat-info__title">Информация о группе</h2>
+    <header class="modal-chat-info__header">
+      {{{Avatar readonly=true}}}
+      <div class="modal-chat-info__header-text-wrapper">
+        <span class="heading-7 modal-chat-info__header-group-title">
+          {{ selectedChat.title }}
+        </span>
+        <span class="text-5 modal-chat-info__header-group-members">
+          {{selectedChat.members.length}} members
+        </span>
+      </div>
+    </header>
+    <hr class="modal-chat-info__line">
+    <div class="modal-chat-info__content">
+      <div class="heading-7 modal-chat-info__content-title">
+        Участники:
+      </div>
+      <ul class="modal-chat-info__content-list">
+        {{#each selectedChat.members}}
+          {{{ UserListItem
+            id=id
+            avatar=avatar
+            login=login
+            first_name=first_name
+            display_name=display_name
+            role=role
+          }}}
+        {{/each}}
+      </div>
+    </ul>
+  </div>
+</div>

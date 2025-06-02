@@ -1,0 +1,28 @@
+<div class="modal {{#if isActive}} modal--active {{/if}}" id="modal-delete-user">
+  <div class="modal__wrapper group-delete-modal__inner">
+    {{{
+      Button onClick=handleCloseModal
+      imgSource="/icons/close.svg"
+      class="modal__close-button"
+      title="Закрыть"
+    }}}
+    <h2 class="heading-6 group-delete-modal__title">Удалить группу</h2>
+    <p class="text-4 group-delete-modal__text">
+      Вы уверены, что хотите удалить группу?
+    </p>
+    <div class="group-delete-modal__footer">
+      {{{
+        Button
+        class="button"
+        onClick=handleCloseModal
+        label="Отменить"
+      }}}
+      {{{
+        Button
+        class="button group-delete-modal__button"
+        onClick=handleDeleteChat
+        label="Удалить"
+      }}}
+    </div>
+  </div>
+</div>

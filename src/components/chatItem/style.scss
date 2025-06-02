@@ -1,0 +1,148 @@
+@use "@styles/utilities";
+
+.chat-item {
+  &__main-time {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    color: utilities.$gray-400;
+    margin-bottom: 3rem;
+    font-weight: 500;
+  }
+
+  &__main-message {
+    padding: 1.1rem;
+    padding-right: 4rem;
+    max-width: 38rem;
+    width: fit-content;
+    margin-block: 1rem;
+    position: relative;
+    background-color: utilities.$gray-50;
+    display: block;
+  }
+
+  &__main-message-top {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__main-message-content {
+    font-size: utilities.$text-5;
+    font-weight: 500;
+    color: utilities.$black-900;
+    word-break: break-word;
+    line-height: 1.3125;
+    text-align: initial;
+    unicode-bidi: plaintext;
+  }
+
+  &__user-name {
+    font-size: utilities.$text-5;
+    font-weight: 500;
+    color: utilities.$blue-700;
+    word-break: break-word;
+    line-height: 1.3125;
+    text-align: initial;
+    unicode-bidi: plaintext;
+  }
+
+  &__main-message img {
+    width: 100%;
+    max-width: 31.6rem;
+    height: auto;
+    object-fit: contain;
+    border-radius: 1rem;
+  }
+
+  &__main-message:has(img) {
+    padding: 0;
+    height: max-content;
+    background-color: transparent;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    row-gap: .6rem;
+  }
+
+  &__main-message:has(img) &__main-message-time {
+    display: block;
+    position: absolute;
+    top: auto;
+    bottom: 1rem;
+    right: 1rem;
+    width: fit-content;
+    height: fit-content;
+    float: none;
+    padding: .2rem .7rem;
+    background-color: #52525250;
+    color: utilities.$white;
+    border-radius: utilities.$rounded-5;
+  }
+
+  &__main-message--sender {
+    border-radius: utilities.$rounded-3 utilities.$rounded-3 utilities.$rounded-3 0;
+  }
+
+  &__main-message--myself  {
+    margin-left: auto;
+    background-color: utilities.$blue-50;
+    border-radius: utilities.$rounded-3 utilities.$rounded-3 0 utilities.$rounded-3;
+  }
+
+  &__main-message--sender + &__main-message--myself {
+    margin-top: 3rem;
+  }
+
+  &__main-message--myself + &__main-message--sender {
+    margin-top: 3rem;
+  }
+
+  &__main-message-time {
+    font-weight: 400;
+    color: utilities.$gray-400;
+    position: absolute;
+    white-space: nowrap;
+    float: right;
+    bottom: .5rem;
+    right: 1rem;
+    padding-left: .8rem;
+  }
+
+  &__main-message--myself &__main-message-time {
+    margin-left: auto;
+    color: utilities.$blue-500;
+  }
+
+  &__main-message:has(img) &__main-message-appendix {
+    display: none;
+  }
+
+  &__main-message-appendix path {
+    fill: utilities.$gray-50;
+  }
+
+  &__main-message--sender &__main-message-appendix {
+    position: absolute;
+    left: -.85rem;
+    bottom: -.3rem;
+    transform: scaleX(-1);
+  }
+
+  &__main-message--myself &__main-message-appendix {
+    position: absolute;
+    right: -.85rem;
+    bottom: -.3rem;
+  }
+
+  &__main-message--myself &__main-message-appendix path {
+    fill: utilities.$blue-50;
+  }
+
+  &__button-image {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+}

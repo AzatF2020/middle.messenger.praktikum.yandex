@@ -1,85 +1,137 @@
 @use "@styles/utilities";
 
 .profile-edit {
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+
+  &__form {
+    flex-direction: column;
+    row-gap: 6rem;
+    padding: 6.3rem;
+  }
+
+  &__form-header-title {
+    text-align: center;
+    font-weight: 600;
+    margin-top: 2.1rem;
+  }
+
+   &__form-list {
     width: 100%;
-    height: 100vh;
-    height: 100svh;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
+    max-width: 51rem;
+    padding: 0;
+    margin: 0 auto;
+    list-style-type: none;
+  }
 
-    &__form {
-        flex-direction: column;
-        row-gap: 6rem;
-        padding: 6.3rem;
-    }
+  &__form-item-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: inherit;
+    padding-block: 0.75rem;
+    border-bottom: utilities.$gray-100 1px solid;
+  }
 
-    &__form-header-title {
-        text-align: center;
-        font-weight: 600;
-        margin-top: 2.1rem;
-    }
+  &__form-item-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: inherit;
+      padding-block: 1rem;
+      border-bottom: utilities.$gray-100 1px solid;
 
-    &__form-list {
-        width: 100%;
-        max-width: 51rem;
-        padding: 0;
-        margin: 0 auto;
-        list-style-type: none;
-    }
-
-    &__form-item-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: inherit;
-        padding-block: 0.75rem;
-        border-bottom: utilities.$gray-100 1px solid;
-    }
-
-    &__form-item:first-child &__form-item-wrapper {
+      &:first-child {
         padding-top: 0;
-    }
+      }
 
-    &__form-item:last-child &__form-item-wrapper {
+      &:last-child {
         border-bottom: 0;
         padding-bottom: 0;
+      }
     }
 
-    &__form-item:has(.error-feedback) &__form-item-wrapper {
-        border-color: utilities.$red-500;
-    }
+  &__form-item:first-child &__form-item-wrapper {
+    padding-top: 0;
+  }
 
-    &__form-item:last-child:has(.error-feedback) &__form-item-wrapper {
-        border-bottom: utilities.$red-500 1px solid;
-        padding-bottom: 0.75rem;
-    }
+  &__form-item:last-child &__form-item-wrapper {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
 
-    &__form-item .error-feedback {
-        text-align: end;
-    }
+  &__form-item:has(.error-feedback) &__form-item-wrapper {
+    border-color: utilities.$red-500;
+  }
 
-    &__form-item-label {
-        font-weight: 500;
-    }
+  &__form-item:last-child:has(.error-feedback) &__form-item-wrapper {
+    border-bottom: utilities.$red-500 1px solid;
+    padding-bottom: 0.75rem;
+  }
 
-    &__form-item-input {
-        border: none;
-        outline: none;
-        color: utilities.$gray-400;
-        font-weight: 500;
-        text-align: end;
-        flex: 0.85;
-    }
+  &__form-item .error-feedback {
+    text-align: end;
+  }
 
-    &__form-list-group {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        row-gap: 6rem;
-        align-items: center;
-    }
+  &__form-item-label {
+    font-weight: 500;
+  }
 
-    &__form-item-button {
-        padding: 1.2rem 10rem;
-    }
+  &__form-item-input {
+    border: none;
+    outline: none;
+    color: utilities.$gray-400;
+    font-weight: 500;
+    text-align: end;
+    flex: 0.85;
+  }
+
+  &__form-item-button {
+    padding: 1.2rem 10rem;
+  }
+
+  &__form-password-link {
+    color: utilities.$blue-500;
+    padding: 0;
+  }
+
+  &__form-logout-link {
+    color: utilities.$red-500;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  &__form-list-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 6rem;
+    align-items: center;
+  }
+
+  &__form-submit {
+    color: utilities.$blue-500;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  &__form-options {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    column-gap: 6rem;
+    max-width: 51rem;
+  }
+
+  .hidden {
+    display: none;
+  }
 }

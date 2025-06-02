@@ -1,4 +1,4 @@
-<form class="register-form"  novalidate>
+<form class="register-form" autocomplete="off" novalidate>
     <h1 class="heading-6 register-form__title">Регистрация</h1>
 
     <fieldset class="register-form__group">
@@ -139,6 +139,6 @@
             disabled=isButtonDisabled
             onClick=onSubmit
         }}}
-        <a href="/#" class="link">Войти</a>
+        {{{ Link label="Войти" onClick=goToLogin }}}
     </div>
 </form>

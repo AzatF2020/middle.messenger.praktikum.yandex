@@ -31,8 +31,24 @@ const conditionalsHelper = () => {
           return instanceOne || instanceTwo
             ? options.fn(this)
             : options.inverse(this);
+        case '<':
+          return instanceOne < instanceTwo
+            ? options.fn(this)
+            : options.inverse(this);
+        case '<=':
+          return instanceOne <= instanceTwo
+            ? options.fn(this)
+            : options.inverse(this);
+        case '>':
+          return instanceOne > instanceTwo
+            ? options.fn(this)
+            : options.inverse(this);
+        case '>=':
+          return instanceOne >= instanceTwo
+            ? options.fn(this)
+            : options.inverse(this);
         default:
-          return options.inverse(this);
+          return options?.inverse(this);
       }
     },
   );

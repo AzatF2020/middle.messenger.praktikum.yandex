@@ -1,39 +1,50 @@
-import Component from '@core/Component';
-import chats from '@utils/pages-data/chats';
+import { Component, connectStore } from '@core/index';
+import ChatsController from '@controllers/ChatsController';
+import UsersController from '@controllers/UsersController';
+import { PATHNAMES } from '@utils/constants/pagesPathnames';
 import template from './template.hbs?raw';
 import './style.scss';
 
 interface IChatUsers {
-    searchUsers: (value: string) => void;
-    handleInputChange: (event: Event) => void;
+  handleInputChange: (event: Event) => void;
 }
 
 class ChatUsers extends Component implements IChatUsers {
-  constructor() {
-    super();
+  public chatsController: ChatsController;
 
-    // eslint-disable-next-line react/no-unused-state
-    this.state = { data: chats, message: '' };
+  public usersController: UsersController;
+
+  constructor(props?: Record<string, unknown>) {
+    super(props);
+
+    this.chatsController = new ChatsController();
+    this.usersController = new UsersController();
+
     this.listeners = {
       handleInputChange: this.handleInputChange.bind(this),
+      goToProfile: () => { window.router.go(PATHNAMES.PROFILE); },
+    };
+
+    this.state = {
+      searchLoading: false,
     };
   }
 
-  public handleInputChange(event: Event) {
-    const { name, value } = event.target as HTMLInputElement;
-
-    this.setState({
-      // eslint-disable-next-line react/no-unused-state
-      data: this.searchUsers(value),
-      [name]: value.trim(),
-    });
+  public async componentDidMount() {
+    await this.chatsController.getChats();
   }
 
-  public searchUsers(value: string) {
-    const usersBySearch = chats.filter(
-      ({ name }: { name: string }) => name.trim() === value.trim(),
-    );
-    return !value.length ? chats : usersBySearch;
+  public async handleInputChange(event: Event) {
+    const { name, value } = event.target as HTMLInputElement;
+
+    try {
+      this.setState({ searchLoading: true });
+      await this.usersController.searchUser({ login: value });
+    } finally {
+      this.setState({ searchLoading: false });
+    }
+
+    window.store.setState({ [name]: value });
   }
 
   public render() {
@@ -41,4 +52,8 @@ class ChatUsers extends Component implements IChatUsers {
   }
 }
 
-export default ChatUsers;
+export default connectStore(ChatUsers, (state) => ({
+  userChats: state.userChats,
+  searchedUserChats: state.searchedUserChats,
+  search: state.search,
+}));

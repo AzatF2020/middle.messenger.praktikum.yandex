@@ -23,6 +23,8 @@
     "paths": {
         "@/*": ["src"],
         "@pages/*": ["src/pages/*"],
+        "@controllers/*": ["src/controllers/*"],
+        "@api/*": ["src/api/*"],
         "@modules/*": ["src/modules/*"],
         "@components/*": ["src/components/*"],
         "@ui/*": ["src/ui/*"],

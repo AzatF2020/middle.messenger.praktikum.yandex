@@ -1,0 +1,47 @@
+<li class="list-item-user__chat-user {{#ifCond chatId '==' id }}list-item-user__chat-user--active{{/ifCond}}">
+  {{#if avatar}}
+    <img loading="lazy" src="{{ @root.storage }}{{ avatar }}" alt="avatar" class="list-item-user__chat-user-image-plug"></img>
+  {{else}}
+    <div class="list-item-user__chat-user-image-plug"></div>
+  {{/if}}
+  <div class="list-item-user__chat-user-info">
+    <div class="list-item-user__chat-user-header">
+      <strong>
+        {{#if display_name}}
+          <span class="list-item-user__chat-user-name">
+            {{ display_name }}
+          </span>
+        {{else if login}}
+          <span class="list-item-user__chat-user-name">
+            {{ login }}
+          </span>
+        {{else if title}}
+          <span class="list-item-user__chat-user-name">
+            {{ title }}
+          </span>
+        {{/if }}
+      </strong>
+      {{#if last_message}}
+      <time class="list-item-user__chat-user-time">
+        {{ last_message.time }}
+      </time>
+      {{/if}}
+      {{#ifCond role '==' 'admin'}}
+        <span class="list-item-user__chat-user-role">{{ role }}</span>
+      {{/ifCond }}
+    </div>
+    {{#if last_message}}
+        <p class="text-5 list-item-user__chat-user-message">
+          {{#ifCond last_message.user.login '==' my_login}}
+            <span class="list-item-user__chat-user-message-sender">Вы:</span>
+          {{/ifCond}}
+          {{ last_message.content }}
+        </p>
+    {{/if}}
+  </div>
+  {{#if unread_count }}
+    <span class="list-item-user__chat-user-unread-messages">
+      {{ unread_count }}
+    </span>
+  {{/if}}
+</li>

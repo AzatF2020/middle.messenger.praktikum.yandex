@@ -1,27 +1,45 @@
-<div class="modal {{#if isActive}} modal--active {{/if}}" id="modal-delete-user">
-    <div class="modal__wrapper user-delete-modal__inner">
-        {{{
-            Button onClick=handleCloseModal
-            imgSource="/icons/close.svg"
-            class="modal__close-button"
-            title="Закрыть"
-        }}}
-        <h1 class="heading-6 user-delete-modal__title">Удалить пользователя</h1>
-        <p class="text-4 user-delete-modal__text">
-            Вы уверены, что хотите удалить пользователя?
-        </p>
-        <div class="user-delete-modal__footer">
-            {{{
-                Button
-                class="button"
-                onClick=handleCloseModal
-                label="Отменить"
-            }}}
-            {{{
-                Button
-                class="button user-delete-modal__button"
-                label="Удалить"
-            }}}
-        </div>
-    </div>
+<div class="modal user-delete-modal {{#if isActive}} modal--active {{/if}}" id="modal-add-user">
+  <div class="user-delete-modal__inner modal__wrapper">
+    {{{ Button
+      onClick=handleCloseModal
+      imgSource="/icons/close.svg"
+      class="modal__close-button"
+      title="Закрыть"
+    }}}
+
+    <form class="user-delete-modal__form">
+      <h2 class="heading-6 user-delete-modal__title">Удалить пользователя</h2>
+      <ul class="user-delete-modal__list">
+        {{#each selectedChat.members}}
+          {{#ifCond id '==' @root.me.id }}
+            <li class="user-delete-modal__item">
+              {{{ UserListItemCheckbox
+                id=id
+                display_name=display_name
+                login=login
+                avatar=avatar
+                role='Вы'
+              }}}
+            </li>
+          {{else}}
+            <li class="user-delete-modal__item">
+              {{{ UserListItemCheckbox
+                id=id
+                display_name=display_name
+                login=login
+                avatar=avatar
+              }}}
+            </li>
+          {{/ifCond}}
+        {{/each}}
+      </ul>
+      {{{ Button
+        class="button button-primary user-delete-modal__button"
+        type="submit"
+        onClick=onSubmit
+        label="Удалить"
+      }}}
+    </form>
+  </div>
 </div>
+

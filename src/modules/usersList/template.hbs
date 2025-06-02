@@ -1,0 +1,19 @@
+<ul class="chats">
+  {{#each data }}
+    {{{ UserListItem
+      onClick=@root.handleOpenUserChat
+      my_login=@root.myLogin
+      chatId=@root.chatId
+      id=id
+      title=title
+      avatar=avatar
+      login=login
+      first_name=first_name
+      last_name=last_name
+      display_name=display_name
+      last_message=last_message
+      unread_count=unread_count
+    }}}
+  {{/each}}
+  {{{ ModalCreateChat handleCloseModal=closeCreateChatModal isActive=modalCreateChatOpened }}}
+</ul>

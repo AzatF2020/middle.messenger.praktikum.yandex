@@ -1,88 +1,88 @@
-import Component from '@core/Component';
-import FormValidator from '@utils/helpers/FormValidator';
-import {
-  minLength,
-  maxLength,
-  acceptedSigns,
-  hasAlphanumericContent,
-  isLatin,
-} from '@utils/constants/validationRules';
+import { connectStore, Component } from '@core/index';
+import UsersController from '@controllers/UsersController';
+import ChatsController from '@controllers/ChatsController';
 import template from './template.hbs?raw';
 import './style.scss';
 
 interface IModalAddUser {
-    handleCloseModal(event: Event): void;
-    closeByOverlay(event: Event): void;
-    handleInputChange(event: Event): void;
-    validateInput(event: InputEvent): void;
-    onSubmit(event: Event): void;
+  handleCloseModal(event: Event): void;
+
+  closeByOverlay(event: Event): void;
+
+  handleInputSearch(event: Event): void;
+
+  onSubmit(event: Event): void;
 }
 
 type ModalAddUserProps = {
-    handleCloseModal?: (event: Event) => void;
-    isActive?: boolean;
+  handleCloseModal?: (event: Event) => void;
+
+  isActive?: boolean;
 };
 
-const validation = new FormValidator({
-  formSelector: '.user-add-modal__form',
-  rules: {
-    login: {
-      isLatin,
-      hasAlphanumericContent,
-      minLength: minLength(3),
-      maxLength: maxLength(20),
-      acceptedSigns: acceptedSigns('_', '-'),
-    },
-  },
-});
-
 class ModalAddUser extends Component implements IModalAddUser {
+  public usersController: UsersController;
+
+  public chatsController: ChatsController;
+
   constructor(props: ModalAddUserProps) {
     super(props);
 
     this.state = {
-      login: '',
-      isButtonDisabled: false,
-      errors: {},
+      search: '',
+      selectedUsers: [],
     };
 
+    this.usersController = new UsersController();
+    this.chatsController = new ChatsController();
+
     this.listeners = {
-      handleInputBlur: this.validateInput.bind(this),
       click: this.closeByOverlay.bind(this),
-      handleInputChange: this.handleInputChange.bind(this),
+      handleInputSearch: this.handleInputSearch.bind(this),
+      handleCloseModal: this.handleCloseModal.bind(this),
       onSubmit: this.onSubmit.bind(this),
     };
   }
 
-  public handleCloseModal!: (event: Event) => void;
+  public handleCloseModal(event: Event) {
+    this.props.handleCloseModal(event);
+    window.store.setState({ searchedUserForAdd: [] });
+  }
 
-  public handleInputChange(event: Event) {
+  public async handleInputSearch(event: Event) {
     const { name, value } = event.target as HTMLInputElement;
-    this.setState({ ...this.state, [name]: value });
+
+    if (value.length) {
+      await this.usersController.searchUserForAdd({ login: value });
+      this.setState({ ...this.state, [name]: value });
+    } else {
+      this.setState({ ...this.state, [name]: '' });
+      window.store.setState({ searchedUserForAdd: [] });
+    }
   }
 
-  public onSubmit(event: Event) {
+  public async onSubmit(event: Event) {
     event.preventDefault();
-    console.log(this.state);
 
-    const isValid = validation.validate();
+    const form = (event.currentTarget as HTMLButtonElement).closest('form')!;
 
-    this.setState({
-      ...this.state,
-      isButtonDisabled: isValid,
-      errors: validation.errors,
-    });
+    const formData = new FormData(form);
 
-    if (!isValid) return;
-  }
+    const selectedUsers = [...formData.entries()].reduce((acc: number[], [name, value]:
+      [string, FormDataEntryValue]) => {
+      if (name !== 'search' && typeof value === 'string') { acc.push(Number(value)); }
+      return acc;
+    }, []);
 
-  public validateInput(event: InputEvent) {
-    validation.handleValidateInput(event);
-    this.setState({
-      ...this.state,
-      isButtonDisabled: validation.hasFormErrors(),
-      errors: validation.errors,
-    });
+    this.setState({ ...this.state, selectedUsers });
+
+    try {
+      await this.chatsController.addUserToChat(selectedUsers, this.props.chatId);
+    } catch (error) {
+      console.warn(error);
+    } finally {
+      this.handleCloseModal(event);
+    }
   }
 
   public closeByOverlay(event: Event) {
@@ -91,7 +91,7 @@ class ModalAddUser extends Component implements IModalAddUser {
     ) as HTMLElement;
 
     if (!modalInner.contains(event.target as HTMLElement)) {
-      this.props.handleCloseModal(event);
+      this.handleCloseModal(event);
     }
   }
 
@@ -100,4 +100,7 @@ class ModalAddUser extends Component implements IModalAddUser {
   }
 }
 
-export default ModalAddUser;
+export default connectStore(ModalAddUser, (state) => ({
+  searchedUserForAdd: state.searchedUserForAdd,
+  chatId: state.chatId,
+}));

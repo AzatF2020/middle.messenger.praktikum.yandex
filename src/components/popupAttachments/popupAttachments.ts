@@ -6,12 +6,17 @@ interface IPopupAttachments {
   togglePopup(event: Event): void;
 }
 
+type PopupAttachmentsProps = {
+  openModalSendMediaModal(): void
+}
+
 class PopupAttachments extends Component implements IPopupAttachments {
-  constructor() {
-    super();
+  constructor(props: PopupAttachmentsProps) {
+    super(props);
 
     this.listeners = {
       togglePopup: this.togglePopup.bind(this),
+      openModalSendMediaModal: this.props.openModalSendMediaModal,
     };
   }
 
@@ -27,6 +32,8 @@ class PopupAttachments extends Component implements IPopupAttachments {
     const popupWrapper = document.querySelector(
       '.popup-attachments__button-attach-wrapper',
     );
+    if (!popupWrapper) return;
+
     const popup = popupWrapper!.querySelector('.popup');
     const button = popupWrapper!.querySelector(
       '.popup-attachments__button-attach',
@@ -34,7 +41,7 @@ class PopupAttachments extends Component implements IPopupAttachments {
 
     if (
       button?.contains(event.target as HTMLElement)
-            && popup?.classList.contains('popup--active')
+      && popup?.classList.contains('popup--active')
     ) {
       popup?.classList.remove('popup--active');
       return;
