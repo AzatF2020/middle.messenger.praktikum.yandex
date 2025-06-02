@@ -19,6 +19,8 @@
     "noUnusedParameters": true,
     "sourceMap": true,
     "strictNullChecks": true,
+    "checkJs": false,
+    "allowJs": true,
     "baseUrl": "./",
     "paths": {
         "@/*": ["src"],
