@@ -10,6 +10,10 @@ class ProfileController {
 
   private readonly usersAPI = new UsersAPI();
 
+  constructor() {
+    this.logout = this.logout.bind(this);
+  }
+
   public async logout() {
     try {
       const { status } = await this.authAPI.logout() as { status: number };

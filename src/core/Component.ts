@@ -1,7 +1,7 @@
 import Handlebars from 'handlebars';
-import uuid from '@utils/helpers/uuid';
-import tick from '@utils/helpers/tick';
-import EventBus from './EventBus';
+import tick from '../utils/helpers/tick.ts';
+import uuid from '../utils/helpers/uuid.ts';
+import EventBus from './EventBus.ts';
 
 class Component<P = any> {
   static EVENTS = {

@@ -1,6 +1,6 @@
-import Router from '@core/Router';
-import Store from '@core/Store';
-import Toast from '@utils/classes/Toast';
+import Toast from './utils/classes/Toast';
+import Router from './core/Router';
+import Store from './core/Store';
 
 declare global {
   interface Window {
@@ -9,5 +9,11 @@ declare global {
     router: Router;
 
     toast: Toast;
+  }
+
+  namespace NodeJS {
+    interface Global {
+      store: Store;
+    }
   }
 }

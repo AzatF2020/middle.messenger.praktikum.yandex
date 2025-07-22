@@ -1,4 +1,4 @@
-import { Component } from '.';
+import Component from './Component.ts';
 
 const render = (block: Component): HTMLElement | null => {
   const root: HTMLElement = document.querySelector('#app')!;

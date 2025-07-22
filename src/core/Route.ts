@@ -1,5 +1,5 @@
-import render from './render';
-import Component from './Component';
+import render from './render.ts';
+import Component from './Component.ts';
 
 interface IRoute {
   navigate(pathname: string): void

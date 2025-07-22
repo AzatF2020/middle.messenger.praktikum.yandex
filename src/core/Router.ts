@@ -1,6 +1,6 @@
-import { PATHNAMES } from '@utils/constants/pagesPathnames';
-import Component from './Component';
-import Route from './Route';
+import { PATHNAMES } from '../utils/constants/pagesPathnames.ts';
+import Component from './Component.ts';
+import Route from './Route.ts';
 
 interface IRouter {
   use(pathname: string, block: typeof Component): void;
