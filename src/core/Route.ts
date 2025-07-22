@@ -51,7 +51,6 @@ class Route implements IRoute {
       render(this.block!);
       return;
     }
-    // show
   }
 }
 
