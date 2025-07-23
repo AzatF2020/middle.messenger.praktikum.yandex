@@ -47,12 +47,8 @@
     "vite": "^6.0.5",
     "vite-plugin-handlebars": "^2.0.0"
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "npm run test"
-    ],
-    "*.{css,scss}": [
-      "npm run lint:css"
-    ]
+  "husky": {
+    "pre-commit": "npm-run-all lint:fix lint:css:fix",
+    "pre-push": "npm-run-all lint lint:css test"
   }
 }
