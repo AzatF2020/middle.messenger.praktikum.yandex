@@ -16,7 +16,7 @@
     "lint:css:fix": "npx stylelint '**/*.{css,scss}' --fix",
     "lint:all": "npm-run-all lint lint:css",
     "test": "mocha --import=ts-node/esm",
-    "postinstall": "husky install"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@types/chai": "^5.2.2",
@@ -30,6 +30,7 @@
     "eslint-plugin-import": "^2.31.0",
     "handlebars": "^4.7.8",
     "jsdom": "^26.1.0",
+    "lint-staged": "^16.1.2",
     "mocha": "^11.7.1",
     "npm-run-all": "^4.1.5",
     "sass": "^1.77.8",
@@ -45,7 +46,9 @@
     "vite": "^6.0.5",
     "vite-plugin-handlebars": "^2.0.0"
   },
-  "husky": {
-    "pre-commit": "npm-run-all lint:fix lint:css:fix"
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": ["npm run lint"],
+    "*.{css,scss}": ["npm run lint:css"],
+    "*.{js,jsx,ts,tsx}": ["npm run test"]
   }
 }
