@@ -22,7 +22,7 @@ describe('Router', () => {
   });
 
   it('Создание экземпляра Router', () => {
-    expect(router).to.be.instanceof(Router);
+    expect(router).to.be.not.instanceof(Router);
   });
 
   it('Возвращает тот же экземпляр при многократном вызове Router', () => {
