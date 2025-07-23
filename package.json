@@ -16,7 +16,7 @@
     "lint:css:fix": "npx stylelint '**/*.{css,scss}' --fix",
     "lint:all": "npm-run-all lint lint:css",
     "test": "mocha --import=ts-node/esm",
-    "prepare": "husky",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@types/chai": "^5.2.2",
