@@ -13,13 +13,13 @@ interface IRoute {
 
 type RouteProps = {
   pathname: string;
-  view: typeof Component
+  view: typeof Component | null
 }
 
 class Route implements IRoute {
   public pathname;
 
-  public view;
+  public view: typeof Component | null = null;
 
   public block: Component | null = null;
 
