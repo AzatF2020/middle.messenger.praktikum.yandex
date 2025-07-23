@@ -19,13 +19,13 @@ class Component<P = any> {
 
   private _weakSet: WeakSet<object>;
 
-  protected readonly props: P;
-
   protected listeners: {};
 
   protected state: Record<string, any> = {};
 
   protected children: Record<string, Component>;
+
+  public readonly props: P;
 
   _id: string;
 
@@ -68,7 +68,7 @@ class Component<P = any> {
     eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  private _createDocumentElement(): HTMLElement {
+  public createDocumentElement(): HTMLElement {
     return document.createElement('div');
   }
 
@@ -154,7 +154,7 @@ class Component<P = any> {
   }
 
   private _init() {
-    this._element = this._createDocumentElement();
+    this._element = this.createDocumentElement();
 
     this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
   }

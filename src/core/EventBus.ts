@@ -21,6 +21,10 @@ class EventBus {
     this._listeners[event] = this._listeners[event].filter((listener) => listener !== callback);
   }
 
+  public clearAll() {
+    this._listeners = {};
+  }
+
   public emit(event: string, ...args: unknown[]) {
     this._isEventExist(event);
 
