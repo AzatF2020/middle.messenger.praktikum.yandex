@@ -1,2 +1,1 @@
-echo "npm-run-all lint lint:css test" > .husky/pre-push
-chmod +x .husky/pre-push
+npm-run-all lint lint:css test

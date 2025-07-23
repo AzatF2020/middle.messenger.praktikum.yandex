@@ -1,2 +1,1 @@
-echo "npm-run-all lint:fix lint:css:fix" > .husky/pre-commit
-chmod +x .husky/pre-commit
+npm-run-all lint:fix lint:css:fix
