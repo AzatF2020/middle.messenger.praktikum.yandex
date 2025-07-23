@@ -46,6 +46,6 @@
     "vite-plugin-handlebars": "^2.0.0"
   },
   "husky": {
-    "pre-commit": "npm-run-all lint:fix lint:css:fix",
+    "pre-commit": "npm-run-all lint:fix lint:css:fix"
   }
 }
