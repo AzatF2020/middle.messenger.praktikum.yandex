@@ -13,22 +13,42 @@
     "lint": "npx eslint --ext .ts .",
     "lint:fix": "npx eslint --fix --ext .ts .",
     "lint:css": "npx stylelint '**/*.{css,scss}'",
-    "lint:css:fix": "npx stylelint '**/*.{css,scss}' --fix"
+    "lint:css:fix": "npx stylelint '**/*.{css,scss}' --fix",
+    "lint:all": "npm-run-all lint lint:css",
+    "test": "mocha --import=ts-node/esm",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "@types/chai": "^5.2.2",
+    "@types/mocha": "^10.0.10",
+    "@types/sinon": "^17.0.4",
     "@typescript-eslint/eslint-plugin": "^8.24.1",
     "@typescript-eslint/parser": "^8.24.1",
+    "chai": "^5.2.1",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.31.0",
     "handlebars": "^4.7.8",
+    "husky": "^9.1.7",
+    "jsdom": "^26.1.0",
+    "lint-staged": "^16.1.2",
+    "mocha": "^11.7.1",
+    "npm-run-all": "^4.1.5",
     "sass": "^1.77.8",
+    "sinon": "^21.0.0",
+    "sinon-chai": "^4.0.0",
     "stylelint": "^16.14.1",
     "stylelint-config-standard": "^37.0.0",
     "stylelint-config-standard-scss": "^14.0.0",
     "stylelint-scss": "^6.11.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "~5.6.2",
     "vite": "^6.0.5",
     "vite-plugin-handlebars": "^2.0.0"
+  },
+  "lint-staged": {
+    "**/*.{js,ts}": "npm run lint",
+    "**/*.{css,scss}": "npm run lint:css"
   }
 }

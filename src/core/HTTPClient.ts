@@ -1,5 +1,5 @@
-import { HTTP_STATUS } from '@utils/constants/httpStatus';
-import { METHOD } from '@utils/constants/httpMethod';
+import { HTTP_STATUS } from '../utils/constants/httpStatus.ts';
+import { METHOD } from '../utils/constants/httpMethod.ts';
 
 type Options<T = unknown> = {
   data?: T,
@@ -24,7 +24,7 @@ class HTTPClient implements IHTTPClient {
   private baseURL: string;
 
   constructor(url: string) {
-    this.baseURL = `${import.meta.env.VITE_BACKEND_URL}${url}`;
+    this.baseURL = `https://ya-praktikum.tech/api/v2${url}`;
   }
 
   private _request<T>(url: string = '', options: Options<unknown> = {

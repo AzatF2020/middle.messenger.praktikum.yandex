@@ -1,5 +1,5 @@
-import render from './render';
-import Component from './Component';
+import render from './render.ts';
+import Component from './Component.ts';
 
 interface IRoute {
   navigate(pathname: string): void
@@ -13,13 +13,13 @@ interface IRoute {
 
 type RouteProps = {
   pathname: string;
-  view: typeof Component
+  view: typeof Component | null
 }
 
 class Route implements IRoute {
   public pathname;
 
-  public view;
+  public view: typeof Component | null = null;
 
   public block: Component | null = null;
 
@@ -51,7 +51,6 @@ class Route implements IRoute {
       render(this.block!);
       return;
     }
-    // show
   }
 }
 

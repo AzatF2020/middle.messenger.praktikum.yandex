@@ -1,6 +1,6 @@
-import { PATHNAMES } from '@utils/constants/pagesPathnames';
-import Component from './Component';
-import Route from './Route';
+import { PATHNAMES } from '../utils/constants/pagesPathnames.ts';
+import Component from './Component.ts';
+import Route from './Route.ts';
 
 interface IRouter {
   use(pathname: string, block: typeof Component): void;
@@ -43,7 +43,7 @@ class Router implements IRouter {
   }
 
   private _onRoute(pathname: string) {
-    const route = this._getRoute(pathname);
+    const route = this.getRoute(pathname);
 
     if (!route) {
       this._isRouteExist(pathname);
@@ -59,8 +59,14 @@ class Router implements IRouter {
     route.render();
   }
 
-  private _getRoute(pathname: string): Route {
-    return this.routes?.find((route: Route) => route.match(pathname));
+  public getRoute(pathname: string): Route {
+    const currentRoute = this.routes?.find((route: Route) => route.match(pathname));
+
+    if (!currentRoute) {
+      return this.routes?.find((route: Route) => route.match('*'));
+    }
+
+    return currentRoute;
   }
 
   public use(pathname: string, block: typeof Component) {
@@ -84,6 +90,10 @@ class Router implements IRouter {
   }
 
   public back() {
+    window.addEventListener('popstate', () => this._onRoute(window.location.pathname), {
+      once: true,
+    });
+
     this.history!.back();
   }
 

@@ -1,5 +1,5 @@
-import tick from '@utils/helpers/tick';
-import deepMergeObjects from '@utils/helpers/mergeObjects';
+import deepMergeObjects from '../utils/helpers/mergeObjects';
+import tick from '../utils/helpers/tick';
 import EventBus from './EventBus';
 
 enum STORE_EVENTS {
